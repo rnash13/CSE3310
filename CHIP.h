@@ -1,3 +1,4 @@
+// 1000845009	Mathew Zinke
 
 /***********************************************************************************************************
 *
@@ -10,31 +11,24 @@
 *
 ***********************************************************************************************************/
 
-#ifndef _CARD_
-#define _CARD_
+
+#ifndef _CHIP_
+#define _CHIP_
 
 #include<gtkmm.h>
 
-#include"GLOBAL.h"
-
-
-class CARD
+class CHIP
 {
 	public:
-		CARD(std::string, Gtk::Box*);
-		~CARD();
-
-		Gtk::Image* image();
-		void image(std::string);
-		void image(std::string name, Gtk::Box*);
-
-		std::string name();
-		void name(std::string);
+		CHIP(int, Gtk::Box*);
+		~CHIP();
 
 	private:
-		std::string _name;
+		Gtk::Box* _chip_box;
+		int _stack_size = 1;
+
 		Gtk::Image* _image;
-		Gtk::Box* _box;
+
 };
 
 #endif

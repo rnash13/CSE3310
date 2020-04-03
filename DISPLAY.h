@@ -18,6 +18,7 @@
 #include<gtkmm.h>
 
 #include"CARD.h"
+#include"CHIP_BOX.h"
 #include"OTHER_PLAYER.h"
 #include"PLAYER.h"
 #include"USER.h"
@@ -37,7 +38,7 @@ class DISPLAY: public Gtk::Window
 		void assign_player_to_all_players_array(int, std::string);
 
 	private:
-		int _total_players = 1;
+		int _total_players = 1;  // default to just you
 		PLAYER* all_players[6] = {};
 
 		Gtk::Box* main_box;
@@ -57,6 +58,7 @@ class DISPLAY: public Gtk::Window
 		// —— CELLS ——
 		Gtk::Box* middle_left_box;
 		Gtk::Box* pot_box;
+		CHIP_BOX* pot;
 		Gtk::Box* middle_right_box;
 
 		// ————  ————
@@ -68,14 +70,6 @@ class DISPLAY: public Gtk::Window
 		// ———— BOTTOM ROW ————
 		USER* user;
 		Gtk::Box* bottom_row_box;
-		
-
-		// Gtk::Box* user_display;
-		// Gtk::Box* chips_box;
-		// Gtk::Box* cards_and_chips_box;
-		// Gtk::Box* card_box;
-		// CARD player_cards[5];
-		// Gtk::Box* option_box;
 };
 
 #endif

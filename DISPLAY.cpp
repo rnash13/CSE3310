@@ -44,8 +44,9 @@ _player_number{player_number}
 	// —— CELLS ——
 	middle_left_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
 	middle_row->pack_start(*middle_left_box);
-	pot_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
+	pot_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
 	middle_row->pack_start(*pot_box);
+	pot = new CHIP_BOX(pot_box);
 	middle_right_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 50));
 	middle_row->pack_start(*middle_right_box);
 
@@ -55,31 +56,11 @@ _player_number{player_number}
 	all_players[0]->override_background_color(*COLOR_RED);
 	all_players[0]->name_label()->override_color(*COLOR_WHITE);
 
-	pot_label = Gtk::manage(new Gtk::Label("POT"));
-	pot_box->pack_start(*pot_label);
-
-
-
 	// ———————————————— PLAYER ————————————————
 	// ———— BOTTOM ROW ————
 	bottom_row_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
 	main_box->pack_start(*bottom_row_box);
 	user = new USER(_player_number, "ME :)", bottom_row_box);
-	// —— CELLS ——
-
-
-
-	// ———— TEST  ————
-	// std::vector<CARD> test_cards;
-	// std::vector<std::string> test_crd_nm =	{
-	// 												"Ace of Spades", "9 of Clubs", 
-	// 												"5 of Hearts", "King of Diamonds",
-	// 												"6 of Hearts"
-	// 											};
-	// for(int x = 0; x < 5; x++)
-	// 	test_cards.push_back(CARD(test_crd_nm[x], player_cards_box));
-
-
 
 	main_box->show_all();
 }
@@ -91,9 +72,12 @@ DISPLAY::~DISPLAY()
 }
 
 
+// new player joined game after display created; create dependencies & add to players array
 void DISPLAY::assign_player_to_all_players_array(int player_number, std::string player_name)
 {
 	_total_players++;
+
+	// holds box pointers in order
 	Gtk::Box* box_array[5] =	{
 									middle_left_box, top_left_box, top_center_box,
 									top_right_box, middle_right_box
