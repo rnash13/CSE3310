@@ -15,10 +15,23 @@
 
 #include<gtkmm.h>
 
-typedef struct CARD
+#include"GLOBAL.h"
+
+
+class CARD
 {
-	std::string name;
-	Gtk::Image* image;
-} CARD;
+	public:
+		CARD(std::string);
+
+		Gtk::Image* image();
+		void image(std::string);
+
+		std::string name();
+		void name(std::string);
+
+	private:
+		std::string _name;
+		Gtk::Image* _image;
+};
 
 #endif

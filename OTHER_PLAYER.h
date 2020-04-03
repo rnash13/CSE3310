@@ -16,6 +16,7 @@
 #define _OTHER_PLAYER_
 
 #include<gtkmm.h>
+
 #include"CARD.h"
 #include"PLAYER.h"
 
@@ -32,7 +33,7 @@ class OTHER_PLAYER : public PLAYER
 		Gtk::Label* _chip_amount_label;
 
 		int _current_chip_amount;
-		CARD _player_cards[5] = {};
+		CARD* _player_cards[5];
 };
 
 #endif

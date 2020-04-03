@@ -75,6 +75,22 @@ _player_number{player_number}
 	bottom_row_box->pack_start(*player_actions_box);
 
 
+	// ———— TEST  ————
+	std::vector<CARD> test_cards;
+	std::vector<std::string> test_crd_nm =	{
+													"Ace of Spades", "9 of Clubs", 
+													"5 of Hearts", "King of Diamonds",
+													"6 of Hearts"
+												};
+	for(int x = 0; x < 5; x++)
+	{
+		test_cards.push_back(CARD(test_crd_nm[x]));
+		player_cards_box->pack_start(*(test_cards[x].image()));
+
+	}
+
+
+
 	main_box->show_all();
 }
 

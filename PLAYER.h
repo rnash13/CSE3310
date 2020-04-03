@@ -23,10 +23,7 @@ class PLAYER
 		PLAYER(std::string, Gtk::Box*);
 
 		Gtk::Label* name_label();
-		void name_label(Gtk::Label*);
-
 		Gtk::Box* player_box();
-		void player_box(Gtk::Box*);
 
 	private:
 		std::string _name;
