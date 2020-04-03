@@ -83,11 +83,7 @@ _player_number{player_number}
 													"6 of Hearts"
 												};
 	for(int x = 0; x < 5; x++)
-	{
-		test_cards.push_back(CARD(test_crd_nm[x]));
-		player_cards_box->pack_start(*(test_cards[x].image()));
-
-	}
+		test_cards.push_back(CARD(test_crd_nm[x], player_cards_box));
 
 
 
