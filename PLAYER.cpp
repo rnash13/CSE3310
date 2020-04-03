@@ -13,19 +13,34 @@
 
 #include"PLAYER.h"
 
-PLAYER::PLAYER(std::string name, Gtk::Box* player_box) :
-_name{name}, _player_box{player_box}
+PLAYER::PLAYER(int player_number, std::string name, Gtk::Box* parent_box, Gtk::Orientation orientation, int spacing) :
+Gtk::Box(orientation, spacing)
 {
+	_player_number = player_number;
+	_name = name;
+	_parent_box = parent_box;
+
+	_parent_box->pack_start(*this);
+
 	_name_label = Gtk::manage(new Gtk::Label(Glib::ustring(name)));
-	_player_box->pack_start(*_name_label, Gtk::PACK_SHRINK, 50);
+	this->pack_start(*_name_label);
 }
+
+PLAYER::~PLAYER()
+{
+	this->remove(*_name_label);
+}
+
 
 Gtk::Label* PLAYER::name_label()
 {
 	return _name_label;
 }
 
-Gtk::Box* PLAYER::player_box()
+
+void PLAYER::name_label(std::string name)
 {
-	return _player_box;
+	this->remove(*_name_label);
+	_name_label = Gtk::manage(new Gtk::Label(Glib::ustring(name)));
+	this->pack_start(*_name_label);
 }

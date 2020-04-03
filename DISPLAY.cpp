@@ -52,7 +52,7 @@ _player_number{player_number}
 	// ———— SETUP PRE-EXISTING PLAYERS AND DEALER ————
 	assign_players_to_all_players_array();
 	// dealer
-	all_players[0]->player_box()->override_background_color(*COLOR_RED);
+	all_players[0]->override_background_color(*COLOR_RED);
 	all_players[0]->name_label()->override_color(*COLOR_WHITE);
 
 	pot_label = Gtk::manage(new Gtk::Label("POT"));
@@ -62,28 +62,22 @@ _player_number{player_number}
 
 	// ———————————————— PLAYER ————————————————
 	// ———— BOTTOM ROW ————
-	bottom_row_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
+	bottom_row_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
 	main_box->pack_start(*bottom_row_box);
+	user = new USER(_player_number, "ME :)", bottom_row_box);
 	// —— CELLS ——
-	player_chips_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
-	bottom_row_box->pack_start(*player_chips_box);
-	player_cards_and_action_buttons_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
-	bottom_row_box->pack_start(*player_cards_and_action_buttons_box);
-	player_cards_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
-	bottom_row_box->pack_start(*player_cards_box);
-	player_actions_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
-	bottom_row_box->pack_start(*player_actions_box);
+
 
 
 	// ———— TEST  ————
-	std::vector<CARD> test_cards;
-	std::vector<std::string> test_crd_nm =	{
-													"Ace of Spades", "9 of Clubs", 
-													"5 of Hearts", "King of Diamonds",
-													"6 of Hearts"
-												};
-	for(int x = 0; x < 5; x++)
-		test_cards.push_back(CARD(test_crd_nm[x], player_cards_box));
+	// std::vector<CARD> test_cards;
+	// std::vector<std::string> test_crd_nm =	{
+	// 												"Ace of Spades", "9 of Clubs", 
+	// 												"5 of Hearts", "King of Diamonds",
+	// 												"6 of Hearts"
+	// 											};
+	// for(int x = 0; x < 5; x++)
+	// 	test_cards.push_back(CARD(test_crd_nm[x], player_cards_box));
 
 
 
@@ -97,7 +91,7 @@ DISPLAY::~DISPLAY()
 }
 
 
-void DISPLAY::assign_player_to_all_players_array(std::string player_name, int player_number)
+void DISPLAY::assign_player_to_all_players_array(int player_number, std::string player_name)
 {
 	_total_players++;
 	Gtk::Box* box_array[5] =	{
@@ -105,7 +99,7 @@ void DISPLAY::assign_player_to_all_players_array(std::string player_name, int pl
 									top_right_box, middle_right_box
 								};
 	Gtk::Box* desire_box = box_array[player_number - _player_number];
-	all_players[player_number] = new PLAYER(player_name, desire_box);
+	all_players[player_number] = new OTHER_PLAYER(player_number, player_name, desire_box);
 }
 
 
@@ -122,13 +116,15 @@ void DISPLAY::assign_players_to_all_players_array()
 								};
 
 	// assign dealer as a PLAYER
-	all_players[0] = new PLAYER("DEALER", box_array[5 - _player_number]);
+	all_players[0] = new PLAYER(0, "DEALER", box_array[5 - _player_number]);
 	// copy in order the pointers of the boxes
 	for(int x = 6 - _player_number, y = 1; x < 5; x++, y++)
 	{
-		all_players[y] = new OTHER_PLAYER(test_names[y-1], box_array[x]);
+		all_players[y] = new OTHER_PLAYER(y, test_names[y-1], box_array[x]);
 	}
 	all_players[_player_number] = NULL;  // constant so NULL put in for good measure
+
+	// create Labels for empty spaces
 }
 
 

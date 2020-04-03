@@ -17,19 +17,21 @@
 
 #include<gtkmm.h>
 
-class PLAYER
+class PLAYER : public Gtk::Box
 {
 	public:
-		PLAYER(std::string, Gtk::Box*);
+		PLAYER(int, std::string, Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_VERTICAL, int=0);
+		~PLAYER();
 
 		Gtk::Label* name_label();
-		Gtk::Box* player_box();
+		void name_label(std::string);
 
 	private:
+		int _player_number;
 		std::string _name;
 
 		Gtk::Label* _name_label;
-		Gtk::Box* _player_box;
+		Gtk::Box* _parent_box;
 };
 
 #endif

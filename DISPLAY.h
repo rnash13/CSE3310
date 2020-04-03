@@ -17,9 +17,10 @@
 
 #include<gtkmm.h>
 
-#include"PLAYER.h"
-#include"OTHER_PLAYER.h"
 #include"CARD.h"
+#include"OTHER_PLAYER.h"
+#include"PLAYER.h"
+#include"USER.h"
 
 class DISPLAY: public Gtk::Window
 {
@@ -33,18 +34,11 @@ class DISPLAY: public Gtk::Window
 
 		// ————————————— OBJECT CREATION —————————————
 		void assign_players_to_all_players_array();
-		void assign_player_to_all_players_array(std::string, int);
+		void assign_player_to_all_players_array(int, std::string);
 
 	private:
 		int _total_players = 1;
 		PLAYER* all_players[6] = {};
-
-
-		Gdk::RGBA* COLOR_RED = new Gdk::RGBA("#DD0000");
-		Gdk::RGBA* COLOR_GREEN = new Gdk::RGBA("#009900");
-		Gdk::RGBA* COLOR_BLUE = new Gdk::RGBA("#000099");
-		Gdk::RGBA* COLOR_WHITE = new Gdk::RGBA("#FFFFFF");
-		Gdk::RGBA* COLOR_BLACK = new Gdk::RGBA("#000000");
 
 		Gtk::Box* main_box;
 
@@ -72,12 +66,9 @@ class DISPLAY: public Gtk::Window
 		int _player_number;
 
 		// ———— BOTTOM ROW ————
+		USER* user;
 		Gtk::Box* bottom_row_box;
-		// —— CELLS ——
-		Gtk::Box* player_chips_box;
-		Gtk::Box* player_cards_and_action_buttons_box;
-		Gtk::Box* player_cards_box;
-		Gtk::Box* player_actions_box;
+		
 
 		// Gtk::Box* user_display;
 		// Gtk::Box* chips_box;
