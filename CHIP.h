@@ -17,18 +17,26 @@
 
 #include<gtkmm.h>
 
-class CHIP
+#include"GLOBAL.h"
+
+class CHIP : public Gtk::Box
 {
 	public:
-		CHIP(int, Gtk::Box*);
-		~CHIP();
+		CHIP(int, std::string);
+		CHIP(int, std::string, int);
+
+		void change_chip_count(int);
+
 
 	private:
-		Gtk::Box* _chip_box;
-		int _stack_size = 1;
+		void image(std::string, int=75);
 
+		void label();
+
+		int _chip_count;
+
+		Gtk::Label* _chip_count_label;
 		Gtk::Image* _image;
-
 };
 
 #endif

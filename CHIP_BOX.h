@@ -23,33 +23,24 @@
 class CHIP_BOX : public Gtk::Box
 {
 	public:
-		CHIP_BOX(Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_VERTICAL, int=0);
-		CHIP_BOX(int, Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_VERTICAL, int=0);
-		~CHIP_BOX();
+		CHIP_BOX(Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_HORIZONTAL, int=75);
+		CHIP_BOX(int, Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_HORIZONTAL, int=75);
 
 		int current_value();
 
-		void add_chips(int, int, int);
-		void remove_chips(int);
-
-		int white_chip_count();
-		int red_chip_count();
-		int blue_chip_count();
+		void change_chip_amount(int);
 
 		Gtk::Box* parent_box();
 
 	private:
 		int _current_chip_value=DEFAULT_CHIP_AMOUNT;
 
-		std::vector<CHIP*> _white_chips;
-		std::vector<CHIP*> _red_chips;
-		std::vector<CHIP*> _blue_chips;
+		CHIP* _white_chip;
+		CHIP* _red_chip;
+		CHIP* _blue_chip;
 
 		// Gtk stuff
 		Gtk::Box* _parent_box;
-
-		Gtk::Label* _chip_amount_label;
-		Gtk::Box* _chip_stacks_box;  // holds chips horizontally
 };
 
 #endif

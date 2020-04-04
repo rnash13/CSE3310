@@ -19,6 +19,7 @@
 
 #include"CARD.h"
 #include"CHIP_BOX.h"
+#include"GLOBAL.h"
 #include"OTHER_PLAYER.h"
 #include"PLAYER.h"
 #include"USER.h"
@@ -34,9 +35,11 @@ class DISPLAY: public Gtk::Window
 		void remove_cards_from_player(std::vector<std::string> card_names);
 
 		// ————————————— OBJECT CREATION —————————————
-		void assign_players_to_all_players_array();
-		void assign_player_to_all_players_array(int, std::string);
+		void assign_starting_players_to_all_players_array();
+		void assign_new_player_to_all_players_array(int, std::string);
 
+		const int _player_number;
+		USER* user;
 	private:
 		int _total_players = 1;  // default to just you
 		PLAYER* all_players[6] = {};
@@ -58,17 +61,11 @@ class DISPLAY: public Gtk::Window
 		// —— CELLS ——
 		Gtk::Box* middle_left_box;
 		Gtk::Box* pot_box;
+		Gtk::Label* pot_label;
 		CHIP_BOX* pot;
 		Gtk::Box* middle_right_box;
 
-		// ————  ————
-		Gtk::Label* pot_label;
-
-		// ———————————————— PLAYER ————————————————	
-		int _player_number;
-
 		// ———— BOTTOM ROW ————
-		USER* user;
 		Gtk::Box* bottom_row_box;
 };
 

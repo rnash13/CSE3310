@@ -39,5 +39,6 @@ std::map<std::string, std::string> CARD_NAMES_AND_IMAGES =
 	{"7 of Diamonds", "7ofDiamonds.jpg"}, {"8 of Diamonds", "8ofDiamonds.jpg"},
 	{"9 of Diamonds", "9ofDiamonds.jpg"}, {"10 of Diamonds", "10ofDiamonds.jpg"},
 	{"Jack of Diamonds", "JackofDiamonds.jpg"}, {"Queen of Diamonds", "QueenofDiamonds.jpg"},
-	{"King of Diamonds", "KingofDiamonds.jpg"}
+	{"King of Diamonds", "KingofDiamonds.jpg"}, 
+	{"Back", "Back.jpg"}, {"Stacked Back", "StackedBack.jpg"}
 };

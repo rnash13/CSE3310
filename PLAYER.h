@@ -26,6 +26,8 @@ class PLAYER : public Gtk::Box
 		Gtk::Label* name_label();
 		void name_label(std::string);
 
+		virtual void display_card_backs() {}
+
 	private:
 		int _player_number;
 		std::string _name;

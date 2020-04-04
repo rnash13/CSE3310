@@ -19,22 +19,21 @@
 
 #include"CARD.h"
 #include"CHIP_BOX.h"
-#include"PLAYER.h"
+#include"CARD_PLAYER.h"
 
-class OTHER_PLAYER : public PLAYER
+class OTHER_PLAYER : public CARD_PLAYER
 {
 	public:
 		OTHER_PLAYER(int, std::string, Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_VERTICAL, int=0);
 		~OTHER_PLAYER();
 
-		void assign_cards(std::vector<std::string> card_labels);
+		void assign_stacked_cards(std::vector<std::string> card_labels);
 		void change_chip_amount(int amount);
+		void display_card_backs();
 
 	private:
 		Gtk::Label* _chip_amount_label;
 
-		// CARD_BOX* _card_box;  // managed by this
-		CARD* _player_cards[5];
 		int _current_chip_amount;
 		CHIP_BOX* _chip_box;
 };
