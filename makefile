@@ -11,8 +11,11 @@ OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 default: ${OBJ_FILES}
 	${CXX} $^ ${CXXFLAGS} -o ${BUILD_DIR}/Poker++
 
-debug: 
-	${CXX} -g CARD.o CHIP_BOX.o CHIP.o DISPLAY.o GLOBAL.o OTHER_PLAYER.o PLAYER.o Poker++.o USER.o ${CXXFLAGS} -o Debug
+debug: CXXFLAGS+=-g 
+debug: clean debug_compile
+debug_compile: ${OBJ_FILES}
+	${CXX}  $^ ${CXXFLAGS} -o ${BUILD_DIR}/Debug
+
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp 
 	$(CXX) -c -o $@ $< ${CXXFLAGS}
