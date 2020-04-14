@@ -17,6 +17,7 @@ SERVER_OBJ:= $(patsubst $(SERVER_DIR)/%.cpp,$(OBJ_DIR)/server/%.o,$(SERVER_FILES
 
 
 default: client server
+	rm ./build/Images
 	ln -sr Images ./build/Images
 
 client: ${OBJ_FILES} ${CLIENT_OBJ}

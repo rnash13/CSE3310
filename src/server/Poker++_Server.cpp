@@ -19,7 +19,7 @@
 
 int main(int argc, char* argv[])
 {
-	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "Poker++");
+	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "org.gtkmm.pokersserver");
 	DISPLAY main_window(4);
 
 	app->run(main_window);
