@@ -23,7 +23,7 @@ _player_number{player_number}
 	set_title("Poker++");
 	set_position(Gtk::WIN_POS_CENTER);
 
-	main_box->override_background_color(*COLOR_GREEN);
+	main_box->override_background_color(Gdk::RGA{"#006400"});
 
 
 	// ———————————— OTHER PLAYERS & POT ————————————	
