@@ -17,6 +17,7 @@ SERVER_OBJ:= $(patsubst $(SERVER_DIR)/%.cpp,$(OBJ_DIR)/server/%.o,$(SERVER_FILES
 
 
 default: client server
+	ln -sr Images ./build/Images
 
 client: ${OBJ_FILES} ${CLIENT_OBJ}
 	${CXX} $^ ${CXXFLAGS} -o ${BUILD_DIR}/Poker++_Client
@@ -25,8 +26,7 @@ server: ${OBJ_FILES} ${SERVER_OBJ}
 	${CXX} $^ ${CXXFLAGS} -o ${BUILD_DIR}/Poker++_Server
 
 debug: CXXFLAGS+=-g 
-debug: clean debug_compile
-debug_compile: default
+debug: clean default 
 
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp 
