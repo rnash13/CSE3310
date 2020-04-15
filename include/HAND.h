@@ -19,12 +19,4 @@ class HAND{
         Card cards[5];
 };
 
-void to_json(nlohmann::json& j, const HAND& hand){
-    j = nlohmann::json{{"cards", hand.cards}};
-}
-
-void from_json(const nlohmann::json& j, HAND& hand){
-   j.at("cards").get_to(hand.cards); 
-}
-
 #endif

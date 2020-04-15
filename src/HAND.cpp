@@ -18,7 +18,7 @@ HAND::HAND(Card inCards[5]){
 
 void HAND::sort(){
     std::sort(cards, cards+5, [](Card a, Card b) {
-        return cardAsInt(a) > cardAsInt(b);
+        return cardAsInt(a) < cardAsInt(b);
     });
 }
 
@@ -155,32 +155,41 @@ unsigned char HAND::value(){
     sort();
     unsigned char value = cards[4].rank;
     if(checkRFlush(cards))
-        value += (9<<2);
+        value += (9<<4);
     //Straight Flush
     else if(checkSFlush(cards))
-        value += (8<<2);
+        value += (8<<4);
     //Four of a Kind
     else if(checkFourOfKind(cards))
-        value += (7<<2);
+        value += (7<<4);
     //Full House
     else if(checkFullHouse(cards))
-        value += (6<<2);
+        value += (6<<4);
     //Flush
     else if(checkFlush(cards))
-        value += (5<<2);
+        value += (5<<4);
     //Straight
     else if(checkStraight(cards))
-        value += (4<<2);
+        value += (4<<4);
     //Three of a Kind
     else if(checkThreeOfAKind(cards))
-        value += (3<<2);
+        value += (3<<4);
     //Two Pairs
     else if(checkTwoPairs(cards))
-        value += (2<<2);
+        value += (2<<4);
     //One Pair
     else if(checkOnePair(cards))
-        value += (1<<2);
+        value += (1<<4);
     //Lone High Card (do nothing)
 
     return value;
 }
+
+void to_json(nlohmann::json& j, const HAND& hand){
+    j = nlohmann::json{{"cards", hand.cards}};
+}
+
+void from_json(const nlohmann::json& j, HAND& hand){
+   j.at("cards").get_to(hand.cards); 
+}
+
