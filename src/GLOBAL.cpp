@@ -3,7 +3,7 @@
 
 
 Gdk::RGBA* COLOR_RED = new Gdk::RGBA("#DD0000");
-Gdk::RGBA* COLOR_GREEN = new Gdk::RGBA("#009900");
+Gdk::RGBA* COLOR_GREEN = new Gdk::RGBA("#006400");
 Gdk::RGBA* COLOR_BLUE = new Gdk::RGBA("#000099");
 Gdk::RGBA* COLOR_WHITE = new Gdk::RGBA("#FFFFFF");
 Gdk::RGBA* COLOR_BLACK = new Gdk::RGBA("#000000");
