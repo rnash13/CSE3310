@@ -42,14 +42,12 @@ class USER : public CARD_PLAYER
 	private:
 		// ———————————————— GUI —————————————————
 		Gtk::Box* _player_actions_box;
-		Gtk::Button* _bet_button;
-		Gtk::Button* _check_button;
-		Gtk::Button* _fold_button;
-		Gtk::Button* _trade_button;
-		// button bet
-		// button check
-		// button fold
-		// trade
+		Gtk::Button* _check_button;//check button
+		Gtk::Button* _bet_button;//bet button
+		Gtk::Button* _raise_button;//raise button
+		Gtk::Button* _call_button;//call button
+		Gtk::Button* _fold_button;//fold button
+		Gtk::Button* _trade_button;//trade button
 };
 
 #endif
