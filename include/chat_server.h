@@ -44,6 +44,7 @@ public:
   {
     participants_.insert(participant);
     // CSE3310 (server)  previous chat messages are sent to a client
+    std::cout << "User has joined, now at " << participants_.size() << std::endl;
     for (auto msg: recent_msgs_)
       participant->deliver(msg);
   }
@@ -199,7 +200,7 @@ private:
 };
 
 //----------------------------------------------------------------------
-
+/*
 int main(int argc, char* argv[])
 {
   try
@@ -227,4 +228,4 @@ int main(int argc, char* argv[])
   }
 
   return 0;
-}
+}*/
