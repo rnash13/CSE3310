@@ -47,6 +47,7 @@ _player_number{player_number}
 	pot_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
 	middle_row->pack_start(*pot_box);
 	pot_label = Gtk::manage(new Gtk::Label("POT"));
+	pot_label->override_color(*COLOR_WHITE);
 	pot_box->pack_start(*pot_label);
 	pot = new CHIP_BOX(pot_box);
 	middle_right_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 50));
@@ -115,6 +116,7 @@ void DISPLAY::assign_starting_players_to_all_players_array()
 	for(int x = 6 - _player_number, y = 1; x < 5; x++, y++)
 	{
 		all_players[y] = new OTHER_PLAYER(y, test_names[y-1], box_array[x]);
+		all_players[y]->name_label()->override_color(*COLOR_WHITE);
 	}
 	all_players[_player_number] = NULL;  // constant so NULL put in for good measure
 
