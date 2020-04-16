@@ -64,6 +64,7 @@ _player_number{player_number}
 	bottom_row_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
 	main_box->pack_start(*bottom_row_box);
 	user = new USER(_player_number, "ME :)", bottom_row_box);
+	user->override_color(*COLOR_WHITE);
 
 	std::vector<std::string> test_names =	{
 												"10 of Spades", "Jack of Spades", "Queen of Spades",
