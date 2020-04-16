@@ -1,8 +1,9 @@
 #include <iostream>
-#include <list>
+#include <vector>
+#include <thread>
 
 #include "asio.hpp"
-#include "chat_server.h"
+#include "GAME_SERVER.h"
 
 int main(int argc, char* argv[])
 {
@@ -16,11 +17,13 @@ int main(int argc, char* argv[])
 
     asio::io_context io_context;
 
-    std::list<chat_server> servers;
+    std::vector<GAME_SERVER> servers;
+    std::vector<std::thread> serverThreads;
     for (int i = 1; i < argc; ++i)
     {
       tcp::endpoint endpoint(tcp::v4(), std::atoi(argv[i]));
       servers.emplace_back(io_context, endpoint);
+      serverThreads.emplace_back(&GAME_SERVER::loop, &servers[i]);
     }
 
     io_context.run();
