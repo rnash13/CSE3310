@@ -41,6 +41,7 @@ void CHIP::image(std::string image_name, int image_size)
 void CHIP::label()
 {
 	_chip_count_label = Gtk::manage(new Gtk::Label(std::to_string(_chip_count)));
+	_chip_count_label->override_color(*COLOR_WHITE);
 	this->pack_start(*_chip_count_label, Gtk::PACK_SHRINK, 10);
 }
 
