@@ -9,6 +9,6 @@ GAME_SERVER::GAME_SERVER(asio::io_context& io_context, const tcp::endpoint& endp
 void GAME_SERVER::loop() {
     while(true) {
         sleep(1);
-        std::cout << &room_.getChatParticipants() << " " << room_.participantsSize() << std::endl;
+        std::cout << &room_ << " " << room_.participantsSize() << std::endl;
     }
 }

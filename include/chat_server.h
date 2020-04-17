@@ -1,16 +1,5 @@
-#ifndef CLASSNAME_inc
-#define CLASSNAME_inc
-
-class CLASSNAME {
-public:
-
-private:
-
-protected:
-
-};
-
-#endif
+#ifndef chat_server_inc
+#define chat_server_inc
 //
 // chat_server.cpp
 // ~~~~~~~~~~~~~~~
@@ -41,7 +30,7 @@ typedef std::deque<chat_message> chat_message_queue;
 
 class chat_participant {
 public:
-    virtual ~chat_participant();
+    virtual ~chat_participant() {}
     virtual void deliver(const chat_message& msg) = 0;
 };
 
@@ -61,7 +50,7 @@ public:
 
     const std::set<chat_participant_ptr>& getChatParticipants();
 
-    int participantsSize();
+    std::size_t participantsSize();
 
 private:
     std::set<chat_participant_ptr> participants_;
@@ -109,3 +98,4 @@ protected:
     tcp::acceptor acceptor_;
     chat_room room_;
 };
+#endif

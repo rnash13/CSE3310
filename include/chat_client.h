@@ -1,3 +1,6 @@
+#ifndef chat_client_inc
+#define chat_client_inc
+
 //
 // chat_client.h
 // ~~~~~~~~~~~~~~~
@@ -44,3 +47,4 @@ private:
     chat_message_queue write_msgs_;
 };
 
+#endif
