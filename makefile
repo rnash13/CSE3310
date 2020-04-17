@@ -46,7 +46,7 @@ ${TEST_DIR}/%.test: ${TEST_DIR}/%.cpp
 	$(CXX) -c -o $@ $< ${CXXFLAGS}
 
 prettify:
-	find -type f \( -iname \*.h -o -iname \*.hpp -o -iname \*.cpp \) -exec astyle --style=${BRACKET_STYLE} {} \; | grep ^Formatted*
+	find -type f \( -iname \*.h -o -iname \*.hpp -o -iname \*.cpp \) -exec astyle -n --style=${BRACKET_STYLE} {} \; | grep ^Formatted*
 
 clean:
 	-rm -rf ${BUILD_DIR}/*
