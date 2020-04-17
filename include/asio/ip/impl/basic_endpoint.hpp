@@ -27,10 +27,9 @@ namespace ip {
 template <typename Elem, typename Traits, typename InternetProtocol>
 std::basic_ostream<Elem, Traits>& operator<<(
     std::basic_ostream<Elem, Traits>& os,
-    const basic_endpoint<InternetProtocol>& endpoint)
-{
-  asio::ip::detail::endpoint tmp_ep(endpoint.address(), endpoint.port());
-  return os << tmp_ep.to_string().c_str();
+    const basic_endpoint<InternetProtocol>& endpoint) {
+    asio::ip::detail::endpoint tmp_ep(endpoint.address(), endpoint.port());
+    return os << tmp_ep.to_string().c_str();
 }
 
 } // namespace ip

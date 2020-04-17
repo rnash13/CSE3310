@@ -26,68 +26,58 @@ namespace detail {
 
 // Implement the resource acquisition is initialisation idiom for sockets.
 class socket_holder
-  : private noncopyable
-{
+    : private noncopyable {
 public:
-  // Construct as an uninitialised socket.
-  socket_holder()
-    : socket_(invalid_socket)
-  {
-  }
-
-  // Construct to take ownership of the specified socket.
-  explicit socket_holder(socket_type s)
-    : socket_(s)
-  {
-  }
-
-  // Destructor.
-  ~socket_holder()
-  {
-    if (socket_ != invalid_socket)
-    {
-      asio::error_code ec;
-      socket_ops::state_type state = 0;
-      socket_ops::close(socket_, state, true, ec);
+    // Construct as an uninitialised socket.
+    socket_holder()
+        : socket_(invalid_socket) {
     }
-  }
 
-  // Get the underlying socket.
-  socket_type get() const
-  {
-    return socket_;
-  }
-
-  // Reset to an uninitialised socket.
-  void reset()
-  {
-    if (socket_ != invalid_socket)
-    {
-      asio::error_code ec;
-      socket_ops::state_type state = 0;
-      socket_ops::close(socket_, state, true, ec);
-      socket_ = invalid_socket;
+    // Construct to take ownership of the specified socket.
+    explicit socket_holder(socket_type s)
+        : socket_(s) {
     }
-  }
 
-  // Reset to take ownership of the specified socket.
-  void reset(socket_type s)
-  {
-    reset();
-    socket_ = s;
-  }
+    // Destructor.
+    ~socket_holder() {
+        if (socket_ != invalid_socket) {
+            asio::error_code ec;
+            socket_ops::state_type state = 0;
+            socket_ops::close(socket_, state, true, ec);
+        }
+    }
 
-  // Release ownership of the socket.
-  socket_type release()
-  {
-    socket_type tmp = socket_;
-    socket_ = invalid_socket;
-    return tmp;
-  }
+    // Get the underlying socket.
+    socket_type get() const {
+        return socket_;
+    }
+
+    // Reset to an uninitialised socket.
+    void reset() {
+        if (socket_ != invalid_socket) {
+            asio::error_code ec;
+            socket_ops::state_type state = 0;
+            socket_ops::close(socket_, state, true, ec);
+            socket_ = invalid_socket;
+        }
+    }
+
+    // Reset to take ownership of the specified socket.
+    void reset(socket_type s) {
+        reset();
+        socket_ = s;
+    }
+
+    // Release ownership of the socket.
+    socket_type release() {
+        socket_type tmp = socket_;
+        socket_ = invalid_socket;
+        return tmp;
+    }
 
 private:
-  // The underlying socket.
-  socket_type socket_;
+    // The underlying socket.
+    socket_type socket_;
 };
 
 } // namespace detail

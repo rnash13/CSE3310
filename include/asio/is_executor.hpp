@@ -32,9 +32,9 @@ namespace asio {
 template <typename T>
 struct is_executor
 #if defined(GENERATING_DOCUMENTATION)
-  : integral_constant<bool, automatically_determined>
+    : integral_constant<bool, automatically_determined>
 #else // defined(GENERATING_DOCUMENTATION)
-  : asio::detail::is_executor<T>
+    : asio::detail::is_executor<T>
 #endif // defined(GENERATING_DOCUMENTATION)
 {
 };

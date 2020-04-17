@@ -27,14 +27,13 @@
 namespace asio_handler_cont_helpers {
 
 template <typename Context>
-inline bool is_continuation(Context& context)
-{
+inline bool is_continuation(Context& context) {
 #if !defined(ASIO_HAS_HANDLER_HOOKS)
-  return false;
+    return false;
 #else
-  using asio::asio_handler_is_continuation;
-  return asio_handler_is_continuation(
-      asio::detail::addressof(context));
+    using asio::asio_handler_is_continuation;
+    return asio_handler_is_continuation(
+               asio::detail::addressof(context));
 #endif
 }
 

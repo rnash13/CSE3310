@@ -27,25 +27,21 @@ namespace asio {
 namespace experimental {
 namespace detail {
 
-  // Class to adapt a detached_t as a completion handler.
-  class detached_handler
-  {
-  public:
-    detached_handler(detached_t)
-    {
+// Class to adapt a detached_t as a completion handler.
+class detached_handler {
+public:
+    detached_handler(detached_t) {
     }
 
 #if defined(ASIO_HAS_VARIADIC_TEMPLATES)
 
     template <typename... Args>
-    void operator()(Args...)
-    {
+    void operator()(Args...) {
     }
 
 #else // defined(ASIO_HAS_VARIADIC_TEMPLATES)
 
-    void operator()()
-    {
+    void operator()() {
     }
 
 #define ASIO_PRIVATE_DETACHED_DEF(n) \
@@ -58,7 +54,7 @@ namespace detail {
 #undef ASIO_PRIVATE_DETACHED_DEF
 
 #endif // defined(ASIO_HAS_VARIADIC_TEMPLATES)
-  };
+};
 
 } // namespace detail
 } // namespace experimental
@@ -66,20 +62,17 @@ namespace detail {
 #if !defined(GENERATING_DOCUMENTATION)
 
 template <typename Signature>
-struct async_result<experimental::detached_t, Signature>
-{
-  typedef asio::experimental::detail::detached_handler
+struct async_result<experimental::detached_t, Signature> {
+    typedef asio::experimental::detail::detached_handler
     completion_handler_type;
 
-  typedef void return_type;
+    typedef void return_type;
 
-  explicit async_result(completion_handler_type&)
-  {
-  }
+    explicit async_result(completion_handler_type&) {
+    }
 
-  void get()
-  {
-  }
+    void get() {
+    }
 };
 
 #endif // !defined(GENERATING_DOCUMENTATION)

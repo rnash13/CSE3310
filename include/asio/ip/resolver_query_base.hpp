@@ -26,13 +26,11 @@ namespace ip {
 /// The resolver_query_base class is used as a base for the
 /// basic_resolver_query class templates to provide a common place to define
 /// the flag constants.
-class resolver_query_base : public resolver_base
-{
+class resolver_query_base : public resolver_base {
 protected:
-  /// Protected destructor to prevent deletion through this type.
-  ~resolver_query_base()
-  {
-  }
+    /// Protected destructor to prevent deletion through this type.
+    ~resolver_query_base() {
+    }
 };
 
 } // namespace ip

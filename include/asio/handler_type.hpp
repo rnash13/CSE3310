@@ -33,14 +33,13 @@ namespace asio {
  * This template may be specialised for user-defined completion token types.
  */
 template <typename CompletionToken, typename Signature, typename = void>
-struct handler_type
-{
-  /// The handler type for the specific signature.
-  typedef typename conditional<
+struct handler_type {
+    /// The handler type for the specific signature.
+    typedef typename conditional<
     is_same<CompletionToken, typename decay<CompletionToken>::type>::value,
-    decay<CompletionToken>,
-    handler_type<typename decay<CompletionToken>::type, Signature>
-  >::type::type type;
+            decay<CompletionToken>,
+            handler_type<typename decay<CompletionToken>::type, Signature>
+            >::type::type type;
 };
 
 } // namespace asio

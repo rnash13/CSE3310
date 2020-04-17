@@ -31,35 +31,31 @@ namespace detail {
 class posix_event;
 
 class posix_mutex
-  : private noncopyable
-{
+    : private noncopyable {
 public:
-  typedef asio::detail::scoped_lock<posix_mutex> scoped_lock;
+    typedef asio::detail::scoped_lock<posix_mutex> scoped_lock;
 
-  // Constructor.
-  ASIO_DECL posix_mutex();
+    // Constructor.
+    ASIO_DECL posix_mutex();
 
-  // Destructor.
-  ~posix_mutex()
-  {
-    ::pthread_mutex_destroy(&mutex_); // Ignore EBUSY.
-  }
+    // Destructor.
+    ~posix_mutex() {
+        ::pthread_mutex_destroy(&mutex_); // Ignore EBUSY.
+    }
 
-  // Lock the mutex.
-  void lock()
-  {
-    (void)::pthread_mutex_lock(&mutex_); // Ignore EINVAL.
-  }
+    // Lock the mutex.
+    void lock() {
+        (void)::pthread_mutex_lock(&mutex_); // Ignore EINVAL.
+    }
 
-  // Unlock the mutex.
-  void unlock()
-  {
-    (void)::pthread_mutex_unlock(&mutex_); // Ignore EINVAL.
-  }
+    // Unlock the mutex.
+    void unlock() {
+        (void)::pthread_mutex_unlock(&mutex_); // Ignore EINVAL.
+    }
 
 private:
-  friend class posix_event;
-  ::pthread_mutex_t mutex_;
+    friend class posix_event;
+    ::pthread_mutex_t mutex_;
 };
 
 } // namespace detail

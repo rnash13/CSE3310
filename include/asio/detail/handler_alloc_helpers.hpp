@@ -30,24 +30,22 @@
 namespace asio_handler_alloc_helpers {
 
 template <typename Handler>
-inline void* allocate(std::size_t s, Handler& h)
-{
+inline void* allocate(std::size_t s, Handler& h) {
 #if !defined(ASIO_HAS_HANDLER_HOOKS)
-  return ::operator new(s);
+    return ::operator new(s);
 #else
-  using asio::asio_handler_allocate;
-  return asio_handler_allocate(s, asio::detail::addressof(h));
+    using asio::asio_handler_allocate;
+    return asio_handler_allocate(s, asio::detail::addressof(h));
 #endif
 }
 
 template <typename Handler>
-inline void deallocate(void* p, std::size_t s, Handler& h)
-{
+inline void deallocate(void* p, std::size_t s, Handler& h) {
 #if !defined(ASIO_HAS_HANDLER_HOOKS)
-  ::operator delete(p);
+    ::operator delete(p);
 #else
-  using asio::asio_handler_deallocate;
-  asio_handler_deallocate(p, s, asio::detail::addressof(h));
+    using asio::asio_handler_deallocate;
+    asio_handler_deallocate(p, s, asio::detail::addressof(h));
 #endif
 }
 
@@ -57,90 +55,76 @@ namespace asio {
 namespace detail {
 
 template <typename Handler, typename T>
-class hook_allocator
-{
+class hook_allocator {
 public:
-  typedef T value_type;
+    typedef T value_type;
 
-  template <typename U>
-  struct rebind
-  {
-    typedef hook_allocator<Handler, U> other;
-  };
+    template <typename U>
+    struct rebind {
+        typedef hook_allocator<Handler, U> other;
+    };
 
-  explicit hook_allocator(Handler& h)
-    : handler_(h)
-  {
-  }
+    explicit hook_allocator(Handler& h)
+        : handler_(h) {
+    }
 
-  template <typename U>
-  hook_allocator(const hook_allocator<Handler, U>& a)
-    : handler_(a.handler_)
-  {
-  }
+    template <typename U>
+    hook_allocator(const hook_allocator<Handler, U>& a)
+        : handler_(a.handler_) {
+    }
 
-  T* allocate(std::size_t n)
-  {
-    return static_cast<T*>(
-        asio_handler_alloc_helpers::allocate(sizeof(T) * n, handler_));
-  }
+    T* allocate(std::size_t n) {
+        return static_cast<T*>(
+                   asio_handler_alloc_helpers::allocate(sizeof(T) * n, handler_));
+    }
 
-  void deallocate(T* p, std::size_t n)
-  {
-    asio_handler_alloc_helpers::deallocate(p, sizeof(T) * n, handler_);
-  }
+    void deallocate(T* p, std::size_t n) {
+        asio_handler_alloc_helpers::deallocate(p, sizeof(T) * n, handler_);
+    }
 
 //private:
-  Handler& handler_;
+    Handler& handler_;
 };
 
 template <typename Handler>
-class hook_allocator<Handler, void>
-{
+class hook_allocator<Handler, void> {
 public:
-  typedef void value_type;
+    typedef void value_type;
 
-  template <typename U>
-  struct rebind
-  {
-    typedef hook_allocator<Handler, U> other;
-  };
+    template <typename U>
+    struct rebind {
+        typedef hook_allocator<Handler, U> other;
+    };
 
-  explicit hook_allocator(Handler& h)
-    : handler_(h)
-  {
-  }
+    explicit hook_allocator(Handler& h)
+        : handler_(h) {
+    }
 
-  template <typename U>
-  hook_allocator(const hook_allocator<Handler, U>& a)
-    : handler_(a.handler_)
-  {
-  }
+    template <typename U>
+    hook_allocator(const hook_allocator<Handler, U>& a)
+        : handler_(a.handler_) {
+    }
 
 //private:
-  Handler& handler_;
+    Handler& handler_;
 };
 
 template <typename Handler, typename Allocator>
-struct get_hook_allocator
-{
-  typedef Allocator type;
+struct get_hook_allocator {
+    typedef Allocator type;
 
-  static type get(Handler&, const Allocator& a)
-  {
-    return a;
-  }
+    static type get(Handler&, const Allocator& a) {
+        return a;
+    }
 };
 
 template <typename Handler, typename T>
-struct get_hook_allocator<Handler, std::allocator<T> >
-{
-  typedef hook_allocator<Handler, T> type;
+struct get_hook_allocator<Handler, std::allocator<T> > {
+    typedef hook_allocator<Handler, T> type;
 
-  static type get(Handler& handler, const std::allocator<T>&)
-  {
-    return type(handler);
-  }
+    static type get(Handler& handler, const std::allocator<T>&) {
+        return type(handler);
+    }
 };
 
 } // namespace detail

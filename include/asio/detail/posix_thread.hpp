@@ -30,69 +30,64 @@ namespace detail {
 
 extern "C"
 {
-  ASIO_DECL void* asio_detail_posix_thread_function(void* arg);
+    ASIO_DECL void* asio_detail_posix_thread_function(void* arg);
 }
 
 class posix_thread
-  : private noncopyable
-{
+    : private noncopyable {
 public:
-  // Constructor.
-  template <typename Function>
-  posix_thread(Function f, unsigned int = 0)
-    : joined_(false)
-  {
-    start_thread(new func<Function>(f));
-  }
+    // Constructor.
+    template <typename Function>
+    posix_thread(Function f, unsigned int = 0)
+        : joined_(false) {
+        start_thread(new func<Function>(f));
+    }
 
-  // Destructor.
-  ASIO_DECL ~posix_thread();
+    // Destructor.
+    ASIO_DECL ~posix_thread();
 
-  // Wait for the thread to exit.
-  ASIO_DECL void join();
+    // Wait for the thread to exit.
+    ASIO_DECL void join();
 
-  // Get number of CPUs.
-  ASIO_DECL static std::size_t hardware_concurrency();
+    // Get number of CPUs.
+    ASIO_DECL static std::size_t hardware_concurrency();
 
 private:
-  friend void* asio_detail_posix_thread_function(void* arg);
+    friend void* asio_detail_posix_thread_function(void* arg);
 
-  class func_base
-  {
-  public:
-    virtual ~func_base() {}
-    virtual void run() = 0;
-  };
+    class func_base {
+    public:
+        virtual ~func_base() {}
+        virtual void run() = 0;
+    };
 
-  struct auto_func_base_ptr
-  {
-    func_base* ptr;
-    ~auto_func_base_ptr() { delete ptr; }
-  };
+    struct auto_func_base_ptr {
+        func_base* ptr;
+        ~auto_func_base_ptr() {
+            delete ptr;
+        }
+    };
 
-  template <typename Function>
-  class func
-    : public func_base
-  {
-  public:
-    func(Function f)
-      : f_(f)
-    {
-    }
+    template <typename Function>
+    class func
+        : public func_base {
+    public:
+        func(Function f)
+            : f_(f) {
+        }
 
-    virtual void run()
-    {
-      f_();
-    }
+        virtual void run() {
+            f_();
+        }
 
-  private:
-    Function f_;
-  };
+    private:
+        Function f_;
+    };
 
-  ASIO_DECL void start_thread(func_base* arg);
+    ASIO_DECL void start_thread(func_base* arg);
 
-  ::pthread_t thread_;
-  bool joined_;
+    ::pthread_t thread_;
+    bool joined_;
 };
 
 } // namespace detail

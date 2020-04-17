@@ -20,27 +20,26 @@
 #include"CHIP.h"
 #include"GLOBAL.h"
 
-class CHIP_BOX : public Gtk::Box
-{
-	public:
-		CHIP_BOX(Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_HORIZONTAL, int=75);
-		CHIP_BOX(int, Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_HORIZONTAL, int=75);
+class CHIP_BOX : public Gtk::Box {
+public:
+    CHIP_BOX(Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_HORIZONTAL, int=75);
+    CHIP_BOX(int, Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_HORIZONTAL, int=75);
 
-		int current_value();
+    int current_value();
 
-		void change_chip_amount(int);
+    void change_chip_amount(int);
 
-		Gtk::Box* parent_box();
+    Gtk::Box* parent_box();
 
-	private:
-		int _current_chip_value=DEFAULT_CHIP_AMOUNT;
+private:
+    int _current_chip_value=DEFAULT_CHIP_AMOUNT;
 
-		CHIP* _white_chip;
-		CHIP* _red_chip;
-		CHIP* _blue_chip;
+    CHIP* _white_chip;
+    CHIP* _red_chip;
+    CHIP* _blue_chip;
 
-		// Gtk stuff
-		Gtk::Box* _parent_box;
+    // Gtk stuff
+    Gtk::Box* _parent_box;
 };
 
 #endif

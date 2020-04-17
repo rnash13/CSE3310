@@ -61,81 +61,71 @@ unspecified signal_number;
 #elif defined(ASIO_HAS_BOOST_BIND)
 # if defined(__BORLANDC__) || defined(__GNUC__)
 
-inline boost::arg<1> error()
-{
-  return boost::arg<1>();
+inline boost::arg<1> error() {
+    return boost::arg<1>();
 }
 
-inline boost::arg<2> bytes_transferred()
-{
-  return boost::arg<2>();
+inline boost::arg<2> bytes_transferred() {
+    return boost::arg<2>();
 }
 
-inline boost::arg<2> iterator()
-{
-  return boost::arg<2>();
+inline boost::arg<2> iterator() {
+    return boost::arg<2>();
 }
 
-inline boost::arg<2> results()
-{
-  return boost::arg<2>();
+inline boost::arg<2> results() {
+    return boost::arg<2>();
 }
 
-inline boost::arg<2> endpoint()
-{
-  return boost::arg<2>();
+inline boost::arg<2> endpoint() {
+    return boost::arg<2>();
 }
 
-inline boost::arg<2> signal_number()
-{
-  return boost::arg<2>();
+inline boost::arg<2> signal_number() {
+    return boost::arg<2>();
 }
 
 # else
 
-namespace detail
-{
-  template <int Number>
-  struct placeholder
-  {
-    static boost::arg<Number>& get()
-    {
-      static boost::arg<Number> result;
-      return result;
+namespace detail {
+template <int Number>
+struct placeholder {
+    static boost::arg<Number>& get() {
+        static boost::arg<Number> result;
+        return result;
     }
-  };
+};
 }
 
 #  if defined(ASIO_MSVC) && (ASIO_MSVC < 1400)
 
 static boost::arg<1>& error
-  = asio::placeholders::detail::placeholder<1>::get();
+    = asio::placeholders::detail::placeholder<1>::get();
 static boost::arg<2>& bytes_transferred
-  = asio::placeholders::detail::placeholder<2>::get();
+    = asio::placeholders::detail::placeholder<2>::get();
 static boost::arg<2>& iterator
-  = asio::placeholders::detail::placeholder<2>::get();
+    = asio::placeholders::detail::placeholder<2>::get();
 static boost::arg<2>& results
-  = asio::placeholders::detail::placeholder<2>::get();
+    = asio::placeholders::detail::placeholder<2>::get();
 static boost::arg<2>& endpoint
-  = asio::placeholders::detail::placeholder<2>::get();
+    = asio::placeholders::detail::placeholder<2>::get();
 static boost::arg<2>& signal_number
-  = asio::placeholders::detail::placeholder<2>::get();
+    = asio::placeholders::detail::placeholder<2>::get();
 
 #  else
 
-namespace
-{
-  boost::arg<1>& error
+namespace {
+boost::arg<1>& error
     = asio::placeholders::detail::placeholder<1>::get();
-  boost::arg<2>& bytes_transferred
+boost::arg<2>& bytes_transferred
     = asio::placeholders::detail::placeholder<2>::get();
-  boost::arg<2>& iterator
+boost::arg<2>& iterator
     = asio::placeholders::detail::placeholder<2>::get();
-  boost::arg<2>& results
+boost::arg<2>& results
     = asio::placeholders::detail::placeholder<2>::get();
-  boost::arg<2>& endpoint
+boost::arg<2>& endpoint
     = asio::placeholders::detail::placeholder<2>::get();
-  boost::arg<2>& signal_number
+boost::arg<2>& signal_number
     = asio::placeholders::detail::placeholder<2>::get();
 } // namespace
 

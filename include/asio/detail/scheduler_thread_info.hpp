@@ -26,10 +26,9 @@ namespace detail {
 class scheduler;
 class scheduler_operation;
 
-struct scheduler_thread_info : public thread_info_base
-{
-  op_queue<scheduler_operation> private_op_queue;
-  long private_outstanding_work;
+struct scheduler_thread_info : public thread_info_base {
+    op_queue<scheduler_operation> private_op_queue;
+    long private_outstanding_work;
 };
 
 } // namespace detail

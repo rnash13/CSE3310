@@ -22,14 +22,13 @@
 namespace asio {
 namespace detail {
 
-class noncopyable
-{
+class noncopyable {
 protected:
-  noncopyable() {}
-  ~noncopyable() {}
+    noncopyable() {}
+    ~noncopyable() {}
 private:
-  noncopyable(const noncopyable&);
-  const noncopyable& operator=(const noncopyable&);
+    noncopyable(const noncopyable&);
+    const noncopyable& operator=(const noncopyable&);
 };
 
 } // namespace detail

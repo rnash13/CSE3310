@@ -25,32 +25,28 @@ namespace asio {
 namespace ssl {
 namespace detail {
 
-class handshake_op
-{
+class handshake_op {
 public:
-  handshake_op(stream_base::handshake_type type)
-    : type_(type)
-  {
-  }
+    handshake_op(stream_base::handshake_type type)
+        : type_(type) {
+    }
 
-  engine::want operator()(engine& eng,
-      asio::error_code& ec,
-      std::size_t& bytes_transferred) const
-  {
-    bytes_transferred = 0;
-    return eng.handshake(type_, ec);
-  }
+    engine::want operator()(engine& eng,
+                            asio::error_code& ec,
+                            std::size_t& bytes_transferred) const {
+        bytes_transferred = 0;
+        return eng.handshake(type_, ec);
+    }
 
-  template <typename Handler>
-  void call_handler(Handler& handler,
-      const asio::error_code& ec,
-      const std::size_t&) const
-  {
-    handler(ec);
-  }
+    template <typename Handler>
+    void call_handler(Handler& handler,
+                      const asio::error_code& ec,
+                      const std::size_t&) const {
+        handler(ec);
+    }
 
 private:
-  stream_base::handshake_type type_;
+    stream_base::handshake_type type_;
 };
 
 } // namespace detail

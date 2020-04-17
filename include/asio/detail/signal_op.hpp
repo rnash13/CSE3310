@@ -24,21 +24,19 @@ namespace asio {
 namespace detail {
 
 class signal_op
-  : public operation
-{
+    : public operation {
 public:
-  // The error code to be passed to the completion handler.
-  asio::error_code ec_;
+    // The error code to be passed to the completion handler.
+    asio::error_code ec_;
 
-  // The signal number to be passed to the completion handler.
-  int signal_number_;
+    // The signal number to be passed to the completion handler.
+    int signal_number_;
 
 protected:
-  signal_op(func_type func)
-    : operation(func),
-      signal_number_(0)
-  {
-  }
+    signal_op(func_type func)
+        : operation(func),
+          signal_number_(0) {
+    }
 };
 
 } // namespace detail

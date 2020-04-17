@@ -2,11 +2,11 @@
 #define CLASSNAME_inc
 
 class CLASSNAME {
-    public:
+public:
 
-    private:
+private:
 
-    protected:
+protected:
 
 };
 
@@ -39,77 +39,73 @@ typedef std::deque<chat_message> chat_message_queue;
 
 //----------------------------------------------------------------------
 
-class chat_participant
-{
-    public:
-        virtual ~chat_participant();
-        virtual void deliver(const chat_message& msg) = 0;
+class chat_participant {
+public:
+    virtual ~chat_participant();
+    virtual void deliver(const chat_message& msg) = 0;
 };
 
 typedef std::shared_ptr<chat_participant> chat_participant_ptr;
 
 //----------------------------------------------------------------------
 
-class chat_room
-{
-    public:
-        void join(chat_participant_ptr participant);
-        void leave(chat_participant_ptr participant);
-        
+class chat_room {
+public:
+    void join(chat_participant_ptr participant);
+    void leave(chat_participant_ptr participant);
 
-        void deliver(const chat_message& msg); 
 
-        void deliverTo(const chat_message& msg, chat_participant_ptr participant); 
+    void deliver(const chat_message& msg);
 
-        const std::set<chat_participant_ptr>& getChatParticipants(); 
+    void deliverTo(const chat_message& msg, chat_participant_ptr participant);
 
-        int participantsSize();
+    const std::set<chat_participant_ptr>& getChatParticipants();
 
-    private:
-        std::set<chat_participant_ptr> participants_;
-        // CSE3310 (server) maximum number of messages are stored
-        enum { max_recent_msgs = 100 };
-        chat_message_queue recent_msgs_;
+    int participantsSize();
+
+private:
+    std::set<chat_participant_ptr> participants_;
+    // CSE3310 (server) maximum number of messages are stored
+    enum { max_recent_msgs = 100 };
+    chat_message_queue recent_msgs_;
 };
 
 //----------------------------------------------------------------------
 
 class chat_session
-: public chat_participant,
-    public std::enable_shared_from_this<chat_session>
-{
-    public:
+    : public chat_participant,
+      public std::enable_shared_from_this<chat_session> {
+public:
 
-        chat_session(tcp::socket socket, chat_room& room); 
+    chat_session(tcp::socket socket, chat_room& room);
 
-        void start(); 
+    void start();
 
-        void deliver(const chat_message& msg); 
+    void deliver(const chat_message& msg);
 
-    private:
-        void do_read_header(); 
+private:
+    void do_read_header();
 
-        void do_read_body(); 
+    void do_read_body();
 
-        void do_write(); 
+    void do_write();
 
-        tcp::socket socket_;
-        chat_room& room_;
-        chat_message read_msg_;
-        chat_message_queue write_msgs_;
+    tcp::socket socket_;
+    chat_room& room_;
+    chat_message read_msg_;
+    chat_message_queue write_msgs_;
 };
 
 //----------------------------------------------------------------------
 
-class chat_server
-{
-    public:
-        chat_server(asio::io_context& io_context,
+class chat_server {
+public:
+    chat_server(asio::io_context& io_context,
                 const tcp::endpoint& endpoint);
 
-    protected:
-        void do_accept(); 
+protected:
+    void do_accept();
 
-        tcp::acceptor acceptor_;
-        chat_room room_;
+    tcp::acceptor acceptor_;
+    chat_room room_;
 };

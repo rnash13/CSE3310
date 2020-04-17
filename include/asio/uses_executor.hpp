@@ -31,12 +31,10 @@ namespace asio {
  * immediately followed by an argument of a type that satisfies the Executor
  * type requirements.
  */
-struct executor_arg_t
-{
-  /// Constructor.
-  ASIO_CONSTEXPR executor_arg_t() ASIO_NOEXCEPT
-  {
-  }
+struct executor_arg_t {
+    /// Constructor.
+    ASIO_CONSTEXPR executor_arg_t() ASIO_NOEXCEPT {
+    }
 };
 
 /// A special value, similar to std::nothrow, used to disambiguate constructors

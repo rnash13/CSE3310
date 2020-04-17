@@ -30,13 +30,19 @@ namespace detail {
 
 #if !defined(ASIO_HAS_THREADS)
 typedef long atomic_count;
-inline void increment(atomic_count& a, long b) { a += b; }
+inline void increment(atomic_count& a, long b) {
+    a += b;
+}
 #elif defined(ASIO_HAS_STD_ATOMIC)
 typedef std::atomic<long> atomic_count;
-inline void increment(atomic_count& a, long b) { a += b; }
+inline void increment(atomic_count& a, long b) {
+    a += b;
+}
 #else // defined(ASIO_HAS_STD_ATOMIC)
 typedef boost::detail::atomic_count atomic_count;
-inline void increment(atomic_count& a, long b) { while (b > 0) ++a, --b; }
+inline void increment(atomic_count& a, long b) {
+    while (b > 0) ++a, --b;
+}
 #endif // defined(ASIO_HAS_STD_ATOMIC)
 
 } // namespace detail

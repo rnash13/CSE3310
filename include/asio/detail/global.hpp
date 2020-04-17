@@ -33,16 +33,15 @@ namespace asio {
 namespace detail {
 
 template <typename T>
-inline T& global()
-{
+inline T& global() {
 #if !defined(ASIO_HAS_THREADS)
-  return null_global<T>();
+    return null_global<T>();
 #elif defined(ASIO_WINDOWS)
-  return win_global<T>();
+    return win_global<T>();
 #elif defined(ASIO_HAS_PTHREADS)
-  return posix_global<T>();
+    return posix_global<T>();
 #elif defined(ASIO_HAS_STD_CALL_ONCE)
-  return std_global<T>();
+    return std_global<T>();
 #endif
 }
 

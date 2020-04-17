@@ -63,17 +63,15 @@ namespace asio {
 
 /// Default handler invocation hook used for non-const function objects.
 template <typename Function>
-inline void asio_handler_invoke(Function& function, ...)
-{
-  function();
+inline void asio_handler_invoke(Function& function, ...) {
+    function();
 }
 
 /// Default handler invocation hook used for const function objects.
 template <typename Function>
-inline void asio_handler_invoke(const Function& function, ...)
-{
-  Function tmp(function);
-  tmp();
+inline void asio_handler_invoke(const Function& function, ...) {
+    Function tmp(function);
+    tmp();
 }
 
 /*@}*/

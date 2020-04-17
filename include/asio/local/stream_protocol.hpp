@@ -43,39 +43,35 @@ namespace local {
  * @par Concepts:
  * Protocol.
  */
-class stream_protocol
-{
+class stream_protocol {
 public:
-  /// Obtain an identifier for the type of the protocol.
-  int type() const
-  {
-    return SOCK_STREAM;
-  }
+    /// Obtain an identifier for the type of the protocol.
+    int type() const {
+        return SOCK_STREAM;
+    }
 
-  /// Obtain an identifier for the protocol.
-  int protocol() const
-  {
-    return 0;
-  }
+    /// Obtain an identifier for the protocol.
+    int protocol() const {
+        return 0;
+    }
 
-  /// Obtain an identifier for the protocol family.
-  int family() const
-  {
-    return AF_UNIX;
-  }
+    /// Obtain an identifier for the protocol family.
+    int family() const {
+        return AF_UNIX;
+    }
 
-  /// The type of a UNIX domain endpoint.
-  typedef basic_endpoint<stream_protocol> endpoint;
+    /// The type of a UNIX domain endpoint.
+    typedef basic_endpoint<stream_protocol> endpoint;
 
-  /// The UNIX domain socket type.
-  typedef basic_stream_socket<stream_protocol> socket;
+    /// The UNIX domain socket type.
+    typedef basic_stream_socket<stream_protocol> socket;
 
-  /// The UNIX domain acceptor type.
-  typedef basic_socket_acceptor<stream_protocol> acceptor;
+    /// The UNIX domain acceptor type.
+    typedef basic_socket_acceptor<stream_protocol> acceptor;
 
 #if !defined(ASIO_NO_IOSTREAM)
-  /// The UNIX domain iostream type.
-  typedef basic_socket_iostream<stream_protocol> iostream;
+    /// The UNIX domain iostream type.
+    typedef basic_socket_iostream<stream_protocol> iostream;
 #endif // !defined(ASIO_NO_IOSTREAM)
 };
 
@@ -85,6 +81,6 @@ public:
 #include "asio/detail/pop_options.hpp"
 
 #endif // defined(ASIO_HAS_LOCAL_SOCKETS)
-       //   || defined(GENERATING_DOCUMENTATION)
+//   || defined(GENERATING_DOCUMENTATION)
 
 #endif // ASIO_LOCAL_STREAM_PROTOCOL_HPP

@@ -17,23 +17,22 @@
 
 #include<gtkmm.h>
 
-class PLAYER : public Gtk::Box
-{
-	public:
-		PLAYER(int, std::string, Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_VERTICAL, int=0);
-		~PLAYER();
+class PLAYER : public Gtk::Box {
+public:
+    PLAYER(int, std::string, Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_VERTICAL, int=0);
+    ~PLAYER();
 
-		Gtk::Label* name_label();
-		void name_label(std::string);
+    Gtk::Label* name_label();
+    void name_label(std::string);
 
-		virtual void display_card_backs() {}
+    virtual void display_card_backs() {}
 
-	private:
-		int _player_number;
-		std::string _name;
+private:
+    int _player_number;
+    std::string _name;
 
-		Gtk::Label* _name_label;
-		Gtk::Box* _parent_box;
+    Gtk::Label* _name_label;
+    Gtk::Box* _parent_box;
 };
 
 #endif

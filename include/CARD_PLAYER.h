@@ -21,26 +21,25 @@
 #include"CHIP_BOX.h"
 #include"PLAYER.h"
 
-class CARD_PLAYER : public PLAYER
-{
-	public:
-		CARD_PLAYER(int, std::string, Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_VERTICAL, int=0);
-		~CARD_PLAYER();
+class CARD_PLAYER : public PLAYER {
+public:
+    CARD_PLAYER(int, std::string, Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_VERTICAL, int=0);
+    ~CARD_PLAYER();
 
-		void assign_cards(std::vector<std::string>);
+    void assign_cards(std::vector<std::string>);
 
-		// ———————————— GETTER FUNCTIONS —————————————
-		void change_chip_amount(int);
-		int chip_amount();
+    // ———————————— GETTER FUNCTIONS —————————————
+    void change_chip_amount(int);
+    int chip_amount();
 
-	protected:
-		void remove_all_cards();
+protected:
+    void remove_all_cards();
 
-		Gtk::Box* _cards_and_chip_box;
-		Gtk::Box* _card_box;
-		CARD* _cards[5] = {NULL};
+    Gtk::Box* _cards_and_chip_box;
+    Gtk::Box* _card_box;
+    CARD* _cards[5] = {NULL};
 
-		CHIP_BOX* _chip_box;
+    CHIP_BOX* _chip_box;
 
 };
 

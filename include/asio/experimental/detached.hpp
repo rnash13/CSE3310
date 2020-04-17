@@ -35,13 +35,11 @@ namespace experimental {
  * @code my_socket.async_send(my_buffer, asio::experimental::detached);
  * @endcode
  */
-class detached_t
-{
+class detached_t {
 public:
-  /// Constructor. 
-  ASIO_CONSTEXPR detached_t()
-  {
-  }
+    /// Constructor.
+    ASIO_CONSTEXPR detached_t() {
+    }
 };
 
 /// A special value, similar to std::nothrow.

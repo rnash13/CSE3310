@@ -53,89 +53,80 @@ class packaged_handler;
  * system_error and passed back to the caller via the future.
  */
 template <typename Allocator = std::allocator<void> >
-class use_future_t
-{
+class use_future_t {
 public:
-  /// The allocator type. The allocator is used when constructing the
-  /// @c std::promise object for a given asynchronous operation.
-  typedef Allocator allocator_type;
+    /// The allocator type. The allocator is used when constructing the
+    /// @c std::promise object for a given asynchronous operation.
+    typedef Allocator allocator_type;
 
-  /// Construct using default-constructed allocator.
-  ASIO_CONSTEXPR use_future_t()
-  {
-  }
+    /// Construct using default-constructed allocator.
+    ASIO_CONSTEXPR use_future_t() {
+    }
 
-  /// Construct using specified allocator.
-  explicit use_future_t(const Allocator& allocator)
-    : allocator_(allocator)
-  {
-  }
+    /// Construct using specified allocator.
+    explicit use_future_t(const Allocator& allocator)
+        : allocator_(allocator) {
+    }
 
 #if !defined(ASIO_NO_DEPRECATED)
-  /// (Deprecated: Use rebind().) Specify an alternate allocator.
-  template <typename OtherAllocator>
-  use_future_t<OtherAllocator> operator[](const OtherAllocator& allocator) const
-  {
-    return use_future_t<OtherAllocator>(allocator);
-  }
+    /// (Deprecated: Use rebind().) Specify an alternate allocator.
+    template <typename OtherAllocator>
+    use_future_t<OtherAllocator> operator[](const OtherAllocator& allocator) const {
+        return use_future_t<OtherAllocator>(allocator);
+    }
 #endif // !defined(ASIO_NO_DEPRECATED)
 
-  /// Specify an alternate allocator.
-  template <typename OtherAllocator>
-  use_future_t<OtherAllocator> rebind(const OtherAllocator& allocator) const
-  {
-    return use_future_t<OtherAllocator>(allocator);
-  }
+    /// Specify an alternate allocator.
+    template <typename OtherAllocator>
+    use_future_t<OtherAllocator> rebind(const OtherAllocator& allocator) const {
+        return use_future_t<OtherAllocator>(allocator);
+    }
 
-  /// Obtain allocator.
-  allocator_type get_allocator() const
-  {
-    return allocator_;
-  }
+    /// Obtain allocator.
+    allocator_type get_allocator() const {
+        return allocator_;
+    }
 
-  /// Wrap a function object in a packaged task.
-  /**
-   * The @c package function is used to adapt a function object as a packaged
-   * task. When this adapter is passed as a completion token to an asynchronous
-   * operation, the result of the function object is retuned via a std::future.
-   *
-   * @par Example
-   *
-   * @code std::future<std::size_t> fut =
-   *   my_socket.async_read_some(buffer,
-   *     use_future([](asio::error_code ec, std::size_t n)
-   *       {
-   *         return ec ? 0 : n;
-   *       }));
-   * ...
-   * std::size_t n = fut.get(); @endcode
-   */
-  template <typename Function>
+    /// Wrap a function object in a packaged task.
+    /**
+     * The @c package function is used to adapt a function object as a packaged
+     * task. When this adapter is passed as a completion token to an asynchronous
+     * operation, the result of the function object is retuned via a std::future.
+     *
+     * @par Example
+     *
+     * @code std::future<std::size_t> fut =
+     *   my_socket.async_read_some(buffer,
+     *     use_future([](asio::error_code ec, std::size_t n)
+     *       {
+     *         return ec ? 0 : n;
+     *       }));
+     * ...
+     * std::size_t n = fut.get(); @endcode
+     */
+    template <typename Function>
 #if defined(GENERATING_DOCUMENTATION)
-  unspecified
+    unspecified
 #else // defined(GENERATING_DOCUMENTATION)
-  detail::packaged_token<typename decay<Function>::type, Allocator>
+    detail::packaged_token<typename decay<Function>::type, Allocator>
 #endif // defined(GENERATING_DOCUMENTATION)
-  operator()(ASIO_MOVE_ARG(Function) f) const;
+    operator()(ASIO_MOVE_ARG(Function) f) const;
 
 private:
-  // Helper type to ensure that use_future can be constexpr default-constructed
-  // even when std::allocator<void> can't be.
-  struct std_allocator_void
-  {
-    ASIO_CONSTEXPR std_allocator_void()
-    {
-    }
+    // Helper type to ensure that use_future can be constexpr default-constructed
+    // even when std::allocator<void> can't be.
+    struct std_allocator_void {
+        ASIO_CONSTEXPR std_allocator_void() {
+        }
 
-    operator std::allocator<void>() const
-    {
-      return std::allocator<void>();
-    }
-  };
+        operator std::allocator<void>() const {
+            return std::allocator<void>();
+        }
+    };
 
-  typename conditional<
+    typename conditional<
     is_same<std::allocator<void>, Allocator>::value,
-    std_allocator_void, Allocator>::type allocator_;
+            std_allocator_void, Allocator>::type allocator_;
 };
 
 /// A special value, similar to std::nothrow.
@@ -155,6 +146,6 @@ __declspec(selectany) use_future_t<> use_future;
 #include "asio/impl/use_future.hpp"
 
 #endif // defined(ASIO_HAS_STD_FUTURE_CLASS)
-       //   || defined(GENERATING_DOCUMENTATION)
+//   || defined(GENERATING_DOCUMENTATION)
 
 #endif // ASIO_USE_FUTURE_HPP

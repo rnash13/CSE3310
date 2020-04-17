@@ -37,9 +37,8 @@ void throw_exception(const Exception& e);
 // function.
 # if !defined(ASIO_NO_EXCEPTIONS)
 template <typename Exception>
-void throw_exception(const Exception& e)
-{
-  throw e;
+void throw_exception(const Exception& e) {
+    throw e;
 }
 # endif // !defined(ASIO_NO_EXCEPTIONS)
 

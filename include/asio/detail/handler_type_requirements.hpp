@@ -62,7 +62,7 @@ namespace detail {
 
 template <typename Handler>
 auto zero_arg_copyable_handler_test(Handler h, void*)
-  -> decltype(
+-> decltype(
     sizeof(Handler(static_cast<const Handler&>(h))),
     ((h)()),
     char(0));
@@ -72,7 +72,7 @@ char (&zero_arg_copyable_handler_test(Handler, ...))[2];
 
 template <typename Handler, typename Arg1>
 auto one_arg_handler_test(Handler h, Arg1* a1)
-  -> decltype(
+-> decltype(
     sizeof(Handler(ASIO_MOVE_CAST(Handler)(h))),
     ((h)(*a1)),
     char(0));
@@ -82,7 +82,7 @@ char (&one_arg_handler_test(Handler h, ...))[2];
 
 template <typename Handler, typename Arg1, typename Arg2>
 auto two_arg_handler_test(Handler h, Arg1* a1, Arg2* a2)
-  -> decltype(
+-> decltype(
     sizeof(Handler(ASIO_MOVE_CAST(Handler)(h))),
     ((h)(*a1, *a2)),
     char(0));
@@ -92,7 +92,7 @@ char (&two_arg_handler_test(Handler, ...))[2];
 
 template <typename Handler, typename Arg1, typename Arg2>
 auto two_arg_move_handler_test(Handler h, Arg1* a1, Arg2* a2)
-  -> decltype(
+-> decltype(
     sizeof(Handler(ASIO_MOVE_CAST(Handler)(h))),
     ((h)(*a1, ASIO_MOVE_CAST(Arg2)(*a2))),
     char(0));
@@ -123,8 +123,7 @@ template <typename T> const T& rvref(T);
 template <typename T> char argbyv(T);
 
 template <int>
-struct handler_type_requirements
-{
+struct handler_type_requirements {
 };
 
 #define ASIO_LEGACY_COMPLETION_HANDLER_CHECK( \

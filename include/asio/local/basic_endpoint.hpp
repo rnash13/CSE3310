@@ -45,166 +45,143 @@ namespace local {
  * Endpoint.
  */
 template <typename Protocol>
-class basic_endpoint
-{
+class basic_endpoint {
 public:
-  /// The protocol type associated with the endpoint.
-  typedef Protocol protocol_type;
+    /// The protocol type associated with the endpoint.
+    typedef Protocol protocol_type;
 
-  /// The type of the endpoint structure. This type is dependent on the
-  /// underlying implementation of the socket layer.
+    /// The type of the endpoint structure. This type is dependent on the
+    /// underlying implementation of the socket layer.
 #if defined(GENERATING_DOCUMENTATION)
-  typedef implementation_defined data_type;
+    typedef implementation_defined data_type;
 #else
-  typedef asio::detail::socket_addr_type data_type;
+    typedef asio::detail::socket_addr_type data_type;
 #endif
 
-  /// Default constructor.
-  basic_endpoint()
-  {
-  }
+    /// Default constructor.
+    basic_endpoint() {
+    }
 
-  /// Construct an endpoint using the specified path name.
-  basic_endpoint(const char* path_name)
-    : impl_(path_name)
-  {
-  }
+    /// Construct an endpoint using the specified path name.
+    basic_endpoint(const char* path_name)
+        : impl_(path_name) {
+    }
 
-  /// Construct an endpoint using the specified path name.
-  basic_endpoint(const std::string& path_name)
-    : impl_(path_name)
-  {
-  }
+    /// Construct an endpoint using the specified path name.
+    basic_endpoint(const std::string& path_name)
+        : impl_(path_name) {
+    }
 
-  /// Copy constructor.
-  basic_endpoint(const basic_endpoint& other)
-    : impl_(other.impl_)
-  {
-  }
+    /// Copy constructor.
+    basic_endpoint(const basic_endpoint& other)
+        : impl_(other.impl_) {
+    }
 
 #if defined(ASIO_HAS_MOVE)
-  /// Move constructor.
-  basic_endpoint(basic_endpoint&& other)
-    : impl_(other.impl_)
-  {
-  }
+    /// Move constructor.
+    basic_endpoint(basic_endpoint&& other)
+        : impl_(other.impl_) {
+    }
 #endif // defined(ASIO_HAS_MOVE)
 
-  /// Assign from another endpoint.
-  basic_endpoint& operator=(const basic_endpoint& other)
-  {
-    impl_ = other.impl_;
-    return *this;
-  }
+    /// Assign from another endpoint.
+    basic_endpoint& operator=(const basic_endpoint& other) {
+        impl_ = other.impl_;
+        return *this;
+    }
 
 #if defined(ASIO_HAS_MOVE)
-  /// Move-assign from another endpoint.
-  basic_endpoint& operator=(basic_endpoint&& other)
-  {
-    impl_ = other.impl_;
-    return *this;
-  }
+    /// Move-assign from another endpoint.
+    basic_endpoint& operator=(basic_endpoint&& other) {
+        impl_ = other.impl_;
+        return *this;
+    }
 #endif // defined(ASIO_HAS_MOVE)
 
-  /// The protocol associated with the endpoint.
-  protocol_type protocol() const
-  {
-    return protocol_type();
-  }
+    /// The protocol associated with the endpoint.
+    protocol_type protocol() const {
+        return protocol_type();
+    }
 
-  /// Get the underlying endpoint in the native type.
-  data_type* data()
-  {
-    return impl_.data();
-  }
+    /// Get the underlying endpoint in the native type.
+    data_type* data() {
+        return impl_.data();
+    }
 
-  /// Get the underlying endpoint in the native type.
-  const data_type* data() const
-  {
-    return impl_.data();
-  }
+    /// Get the underlying endpoint in the native type.
+    const data_type* data() const {
+        return impl_.data();
+    }
 
-  /// Get the underlying size of the endpoint in the native type.
-  std::size_t size() const
-  {
-    return impl_.size();
-  }
+    /// Get the underlying size of the endpoint in the native type.
+    std::size_t size() const {
+        return impl_.size();
+    }
 
-  /// Set the underlying size of the endpoint in the native type.
-  void resize(std::size_t new_size)
-  {
-    impl_.resize(new_size);
-  }
+    /// Set the underlying size of the endpoint in the native type.
+    void resize(std::size_t new_size) {
+        impl_.resize(new_size);
+    }
 
-  /// Get the capacity of the endpoint in the native type.
-  std::size_t capacity() const
-  {
-    return impl_.capacity();
-  }
+    /// Get the capacity of the endpoint in the native type.
+    std::size_t capacity() const {
+        return impl_.capacity();
+    }
 
-  /// Get the path associated with the endpoint.
-  std::string path() const
-  {
-    return impl_.path();
-  }
+    /// Get the path associated with the endpoint.
+    std::string path() const {
+        return impl_.path();
+    }
 
-  /// Set the path associated with the endpoint.
-  void path(const char* p)
-  {
-    impl_.path(p);
-  }
+    /// Set the path associated with the endpoint.
+    void path(const char* p) {
+        impl_.path(p);
+    }
 
-  /// Set the path associated with the endpoint.
-  void path(const std::string& p)
-  {
-    impl_.path(p);
-  }
+    /// Set the path associated with the endpoint.
+    void path(const std::string& p) {
+        impl_.path(p);
+    }
 
-  /// Compare two endpoints for equality.
-  friend bool operator==(const basic_endpoint<Protocol>& e1,
-      const basic_endpoint<Protocol>& e2)
-  {
-    return e1.impl_ == e2.impl_;
-  }
+    /// Compare two endpoints for equality.
+    friend bool operator==(const basic_endpoint<Protocol>& e1,
+                           const basic_endpoint<Protocol>& e2) {
+        return e1.impl_ == e2.impl_;
+    }
 
-  /// Compare two endpoints for inequality.
-  friend bool operator!=(const basic_endpoint<Protocol>& e1,
-      const basic_endpoint<Protocol>& e2)
-  {
-    return !(e1.impl_ == e2.impl_);
-  }
+    /// Compare two endpoints for inequality.
+    friend bool operator!=(const basic_endpoint<Protocol>& e1,
+                           const basic_endpoint<Protocol>& e2) {
+        return !(e1.impl_ == e2.impl_);
+    }
 
-  /// Compare endpoints for ordering.
-  friend bool operator<(const basic_endpoint<Protocol>& e1,
-      const basic_endpoint<Protocol>& e2)
-  {
-    return e1.impl_ < e2.impl_;
-  }
+    /// Compare endpoints for ordering.
+    friend bool operator<(const basic_endpoint<Protocol>& e1,
+                          const basic_endpoint<Protocol>& e2) {
+        return e1.impl_ < e2.impl_;
+    }
 
-  /// Compare endpoints for ordering.
-  friend bool operator>(const basic_endpoint<Protocol>& e1,
-      const basic_endpoint<Protocol>& e2)
-  {
-    return e2.impl_ < e1.impl_;
-  }
+    /// Compare endpoints for ordering.
+    friend bool operator>(const basic_endpoint<Protocol>& e1,
+                          const basic_endpoint<Protocol>& e2) {
+        return e2.impl_ < e1.impl_;
+    }
 
-  /// Compare endpoints for ordering.
-  friend bool operator<=(const basic_endpoint<Protocol>& e1,
-      const basic_endpoint<Protocol>& e2)
-  {
-    return !(e2 < e1);
-  }
+    /// Compare endpoints for ordering.
+    friend bool operator<=(const basic_endpoint<Protocol>& e1,
+                           const basic_endpoint<Protocol>& e2) {
+        return !(e2 < e1);
+    }
 
-  /// Compare endpoints for ordering.
-  friend bool operator>=(const basic_endpoint<Protocol>& e1,
-      const basic_endpoint<Protocol>& e2)
-  {
-    return !(e1 < e2);
-  }
+    /// Compare endpoints for ordering.
+    friend bool operator>=(const basic_endpoint<Protocol>& e1,
+                           const basic_endpoint<Protocol>& e2) {
+        return !(e1 < e2);
+    }
 
 private:
-  // The underlying UNIX domain endpoint.
-  asio::local::detail::endpoint impl_;
+    // The underlying UNIX domain endpoint.
+    asio::local::detail::endpoint impl_;
 };
 
 /// Output an endpoint as a string.
@@ -222,10 +199,9 @@ private:
 template <typename Elem, typename Traits, typename Protocol>
 std::basic_ostream<Elem, Traits>& operator<<(
     std::basic_ostream<Elem, Traits>& os,
-    const basic_endpoint<Protocol>& endpoint)
-{
-  os << endpoint.path();
-  return os;
+    const basic_endpoint<Protocol>& endpoint) {
+    os << endpoint.path();
+    return os;
 }
 
 } // namespace local
@@ -234,6 +210,6 @@ std::basic_ostream<Elem, Traits>& operator<<(
 #include "asio/detail/pop_options.hpp"
 
 #endif // defined(ASIO_HAS_LOCAL_SOCKETS)
-       //   || defined(GENERATING_DOCUMENTATION)
+//   || defined(GENERATING_DOCUMENTATION)
 
 #endif // ASIO_LOCAL_BASIC_ENDPOINT_HPP

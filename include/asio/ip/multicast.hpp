@@ -32,7 +32,7 @@ namespace multicast {
  * @par Examples
  * Setting the option to join a multicast group:
  * @code
- * asio::ip::udp::socket socket(io_context); 
+ * asio::ip::udp::socket socket(io_context);
  * ...
  * asio::ip::address multicast_address =
  *   asio::ip::address::from_string("225.0.0.1");
@@ -47,10 +47,10 @@ namespace multicast {
 typedef implementation_defined join_group;
 #else
 typedef asio::ip::detail::socket_option::multicast_request<
-  ASIO_OS_DEF(IPPROTO_IP),
-  ASIO_OS_DEF(IP_ADD_MEMBERSHIP),
-  ASIO_OS_DEF(IPPROTO_IPV6),
-  ASIO_OS_DEF(IPV6_JOIN_GROUP)> join_group;
+ASIO_OS_DEF(IPPROTO_IP),
+            ASIO_OS_DEF(IP_ADD_MEMBERSHIP),
+            ASIO_OS_DEF(IPPROTO_IPV6),
+            ASIO_OS_DEF(IPV6_JOIN_GROUP)> join_group;
 #endif
 
 /// Socket option to leave a multicast group on a specified interface.
@@ -60,7 +60,7 @@ typedef asio::ip::detail::socket_option::multicast_request<
  * @par Examples
  * Setting the option to leave a multicast group:
  * @code
- * asio::ip::udp::socket socket(io_context); 
+ * asio::ip::udp::socket socket(io_context);
  * ...
  * asio::ip::address multicast_address =
  *   asio::ip::address::from_string("225.0.0.1");
@@ -75,10 +75,10 @@ typedef asio::ip::detail::socket_option::multicast_request<
 typedef implementation_defined leave_group;
 #else
 typedef asio::ip::detail::socket_option::multicast_request<
-  ASIO_OS_DEF(IPPROTO_IP),
-  ASIO_OS_DEF(IP_DROP_MEMBERSHIP),
-  ASIO_OS_DEF(IPPROTO_IPV6),
-  ASIO_OS_DEF(IPV6_LEAVE_GROUP)> leave_group;
+ASIO_OS_DEF(IPPROTO_IP),
+            ASIO_OS_DEF(IP_DROP_MEMBERSHIP),
+            ASIO_OS_DEF(IPPROTO_IPV6),
+            ASIO_OS_DEF(IPV6_LEAVE_GROUP)> leave_group;
 #endif
 
 /// Socket option for local interface to use for outgoing multicast packets.
@@ -88,7 +88,7 @@ typedef asio::ip::detail::socket_option::multicast_request<
  * @par Examples
  * Setting the option:
  * @code
- * asio::ip::udp::socket socket(io_context); 
+ * asio::ip::udp::socket socket(io_context);
  * ...
  * asio::ip::address_v4 local_interface =
  *   asio::ip::address_v4::from_string("1.2.3.4");
@@ -103,10 +103,10 @@ typedef asio::ip::detail::socket_option::multicast_request<
 typedef implementation_defined outbound_interface;
 #else
 typedef asio::ip::detail::socket_option::network_interface<
-  ASIO_OS_DEF(IPPROTO_IP),
-  ASIO_OS_DEF(IP_MULTICAST_IF),
-  ASIO_OS_DEF(IPPROTO_IPV6),
-  ASIO_OS_DEF(IPV6_MULTICAST_IF)> outbound_interface;
+ASIO_OS_DEF(IPPROTO_IP),
+            ASIO_OS_DEF(IP_MULTICAST_IF),
+            ASIO_OS_DEF(IPPROTO_IPV6),
+            ASIO_OS_DEF(IPV6_MULTICAST_IF)> outbound_interface;
 #endif
 
 /// Socket option for time-to-live associated with outgoing multicast packets.
@@ -116,7 +116,7 @@ typedef asio::ip::detail::socket_option::network_interface<
  * @par Examples
  * Setting the option:
  * @code
- * asio::ip::udp::socket socket(io_context); 
+ * asio::ip::udp::socket socket(io_context);
  * ...
  * asio::ip::multicast::hops option(4);
  * socket.set_option(option);
@@ -125,7 +125,7 @@ typedef asio::ip::detail::socket_option::network_interface<
  * @par
  * Getting the current option value:
  * @code
- * asio::ip::udp::socket socket(io_context); 
+ * asio::ip::udp::socket socket(io_context);
  * ...
  * asio::ip::multicast::hops option;
  * socket.get_option(option);
@@ -139,10 +139,10 @@ typedef asio::ip::detail::socket_option::network_interface<
 typedef implementation_defined hops;
 #else
 typedef asio::ip::detail::socket_option::multicast_hops<
-  ASIO_OS_DEF(IPPROTO_IP),
-  ASIO_OS_DEF(IP_MULTICAST_TTL),
-  ASIO_OS_DEF(IPPROTO_IPV6),
-  ASIO_OS_DEF(IPV6_MULTICAST_HOPS)> hops;
+ASIO_OS_DEF(IPPROTO_IP),
+            ASIO_OS_DEF(IP_MULTICAST_TTL),
+            ASIO_OS_DEF(IPPROTO_IPV6),
+            ASIO_OS_DEF(IPV6_MULTICAST_HOPS)> hops;
 #endif
 
 /// Socket option determining whether outgoing multicast packets will be
@@ -153,7 +153,7 @@ typedef asio::ip::detail::socket_option::multicast_hops<
  * @par Examples
  * Setting the option:
  * @code
- * asio::ip::udp::socket socket(io_context); 
+ * asio::ip::udp::socket socket(io_context);
  * ...
  * asio::ip::multicast::enable_loopback option(true);
  * socket.set_option(option);
@@ -162,7 +162,7 @@ typedef asio::ip::detail::socket_option::multicast_hops<
  * @par
  * Getting the current option value:
  * @code
- * asio::ip::udp::socket socket(io_context); 
+ * asio::ip::udp::socket socket(io_context);
  * ...
  * asio::ip::multicast::enable_loopback option;
  * socket.get_option(option);
@@ -176,10 +176,10 @@ typedef asio::ip::detail::socket_option::multicast_hops<
 typedef implementation_defined enable_loopback;
 #else
 typedef asio::ip::detail::socket_option::multicast_enable_loopback<
-  ASIO_OS_DEF(IPPROTO_IP),
-  ASIO_OS_DEF(IP_MULTICAST_LOOP),
-  ASIO_OS_DEF(IPPROTO_IPV6),
-  ASIO_OS_DEF(IPV6_MULTICAST_LOOP)> enable_loopback;
+ASIO_OS_DEF(IPPROTO_IP),
+            ASIO_OS_DEF(IP_MULTICAST_LOOP),
+            ASIO_OS_DEF(IPPROTO_IPV6),
+            ASIO_OS_DEF(IPV6_MULTICAST_LOOP)> enable_loopback;
 #endif
 
 } // namespace multicast

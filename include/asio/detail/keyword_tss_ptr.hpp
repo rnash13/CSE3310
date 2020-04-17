@@ -28,33 +28,28 @@ namespace detail {
 
 template <typename T>
 class keyword_tss_ptr
-  : private noncopyable
-{
+    : private noncopyable {
 public:
-  // Constructor.
-  keyword_tss_ptr()
-  {
-  }
+    // Constructor.
+    keyword_tss_ptr() {
+    }
 
-  // Destructor.
-  ~keyword_tss_ptr()
-  {
-  }
+    // Destructor.
+    ~keyword_tss_ptr() {
+    }
 
-  // Get the value.
-  operator T*() const
-  {
-    return value_;
-  }
+    // Get the value.
+    operator T*() const {
+        return value_;
+    }
 
-  // Set the value.
-  void operator=(T* value)
-  {
-    value_ = value;
-  }
+    // Set the value.
+    void operator=(T* value) {
+        value_ = value;
+    }
 
 private:
-  static ASIO_THREAD_KEYWORD T* value_;
+    static ASIO_THREAD_KEYWORD T* value_;
 };
 
 template <typename T>

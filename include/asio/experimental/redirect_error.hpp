@@ -31,30 +31,27 @@ namespace experimental {
  * by an asynchronous operation is captured to a specified variable.
  */
 template <typename CompletionToken>
-class redirect_error_t
-{
+class redirect_error_t {
 public:
-  /// Constructor. 
-  template <typename T>
-  redirect_error_t(ASIO_MOVE_ARG(T) completion_token,
-      asio::error_code& ec)
-    : token_(ASIO_MOVE_CAST(T)(completion_token)),
-      ec_(ec)
-  {
-  }
+    /// Constructor.
+    template <typename T>
+    redirect_error_t(ASIO_MOVE_ARG(T) completion_token,
+                     asio::error_code& ec)
+        : token_(ASIO_MOVE_CAST(T)(completion_token)),
+          ec_(ec) {
+    }
 
 //private:
-  CompletionToken token_;
-  asio::error_code& ec_;
+    CompletionToken token_;
+    asio::error_code& ec_;
 };
 
 /// Create a completion token to capture error_code values to a variable.
 template <typename CompletionToken>
 inline redirect_error_t<typename decay<CompletionToken>::type> redirect_error(
-    CompletionToken&& completion_token, asio::error_code& ec)
-{
-  return redirect_error_t<typename decay<CompletionToken>::type>(
-      ASIO_MOVE_CAST(CompletionToken)(completion_token), ec);
+    CompletionToken&& completion_token, asio::error_code& ec) {
+    return redirect_error_t<typename decay<CompletionToken>::type>(
+               ASIO_MOVE_CAST(CompletionToken)(completion_token), ec);
 }
 
 } // namespace experimental

@@ -5,9 +5,9 @@
 #include "asio.hpp"
 
 class GAME_SERVER: public chat_server {
-    public:
-        GAME_SERVER(asio::io_context& io_context, const tcp::endpoint& endpoint);
-        void loop();
+public:
+    GAME_SERVER(asio::io_context& io_context, const tcp::endpoint& endpoint);
+    void loop();
 };
 
 #endif

@@ -39,70 +39,60 @@ namespace windows {
  * @e Shared @e objects: Unsafe.
  */
 class overlapped_ptr
-  : private noncopyable
-{
+    : private noncopyable {
 public:
-  /// Construct an empty overlapped_ptr.
-  overlapped_ptr()
-    : impl_()
-  {
-  }
+    /// Construct an empty overlapped_ptr.
+    overlapped_ptr()
+        : impl_() {
+    }
 
-  /// Construct an overlapped_ptr to contain the specified handler.
-  template <typename Handler>
-  explicit overlapped_ptr(asio::io_context& io_context,
-      ASIO_MOVE_ARG(Handler) handler)
-    : impl_(io_context, ASIO_MOVE_CAST(Handler)(handler))
-  {
-  }
+    /// Construct an overlapped_ptr to contain the specified handler.
+    template <typename Handler>
+    explicit overlapped_ptr(asio::io_context& io_context,
+                            ASIO_MOVE_ARG(Handler) handler)
+        : impl_(io_context, ASIO_MOVE_CAST(Handler)(handler)) {
+    }
 
-  /// Destructor automatically frees the OVERLAPPED object unless released.
-  ~overlapped_ptr()
-  {
-  }
+    /// Destructor automatically frees the OVERLAPPED object unless released.
+    ~overlapped_ptr() {
+    }
 
-  /// Reset to empty.
-  void reset()
-  {
-    impl_.reset();
-  }
+    /// Reset to empty.
+    void reset() {
+        impl_.reset();
+    }
 
-  /// Reset to contain the specified handler, freeing any current OVERLAPPED
-  /// object.
-  template <typename Handler>
-  void reset(asio::io_context& io_context,
-      ASIO_MOVE_ARG(Handler) handler)
-  {
-    impl_.reset(io_context, ASIO_MOVE_CAST(Handler)(handler));
-  }
+    /// Reset to contain the specified handler, freeing any current OVERLAPPED
+    /// object.
+    template <typename Handler>
+    void reset(asio::io_context& io_context,
+               ASIO_MOVE_ARG(Handler) handler) {
+        impl_.reset(io_context, ASIO_MOVE_CAST(Handler)(handler));
+    }
 
-  /// Get the contained OVERLAPPED object.
-  OVERLAPPED* get()
-  {
-    return impl_.get();
-  }
+    /// Get the contained OVERLAPPED object.
+    OVERLAPPED* get() {
+        return impl_.get();
+    }
 
-  /// Get the contained OVERLAPPED object.
-  const OVERLAPPED* get() const
-  {
-    return impl_.get();
-  }
+    /// Get the contained OVERLAPPED object.
+    const OVERLAPPED* get() const {
+        return impl_.get();
+    }
 
-  /// Release ownership of the OVERLAPPED object.
-  OVERLAPPED* release()
-  {
-    return impl_.release();
-  }
+    /// Release ownership of the OVERLAPPED object.
+    OVERLAPPED* release() {
+        return impl_.release();
+    }
 
-  /// Post completion notification for overlapped operation. Releases ownership.
-  void complete(const asio::error_code& ec,
-      std::size_t bytes_transferred)
-  {
-    impl_.complete(ec, bytes_transferred);
-  }
+    /// Post completion notification for overlapped operation. Releases ownership.
+    void complete(const asio::error_code& ec,
+                  std::size_t bytes_transferred) {
+        impl_.complete(ec, bytes_transferred);
+    }
 
 private:
-  detail::win_iocp_overlapped_ptr impl_;
+    detail::win_iocp_overlapped_ptr impl_;
 };
 
 } // namespace windows
@@ -111,6 +101,6 @@ private:
 #include "asio/detail/pop_options.hpp"
 
 #endif // defined(ASIO_HAS_WINDOWS_OVERLAPPED_PTR)
-       //   || defined(GENERATING_DOCUMENTATION)
+//   || defined(GENERATING_DOCUMENTATION)
 
 #endif // ASIO_WINDOWS_OVERLAPPED_PTR_HPP

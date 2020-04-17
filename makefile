@@ -7,6 +7,8 @@ SERVER_DIR=./src/server
 TEST_DIR=./tests
 BUILD_DIR=./build
 
+BRACKET_STYLE=java
+
 OUTPUT=Poker++
 
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
@@ -33,7 +35,6 @@ test: clean ${OBJ_FILES} ${TEST_FILES}
 debug: CXXFLAGS+=-g 
 debug: clean default 
 
-
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp 
 	$(CXX) -c -o $@ $< ${CXXFLAGS}
 
@@ -43,6 +44,9 @@ ${TEST_DIR}/%.test: ${TEST_DIR}/%.cpp
 
 */%.o: ${SRC_DIR}/%.cpp 
 	$(CXX) -c -o $@ $< ${CXXFLAGS}
+
+prettify:
+	find -type f \( -iname \*.h -o -iname \*.hpp -o -iname \*.cpp \) -exec astyle --style=${BRACKET_STYLE} {} \; | grep ^Formatted*
 
 clean:
 	-rm -rf ${BUILD_DIR}/*

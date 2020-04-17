@@ -18,17 +18,18 @@
 #include"chat_client.h"
 #include"asio.hpp"
 
-int main(int argc, char* argv[])
-{
-    try{ 
+int main(int argc, char* argv[]) {
+    try {
         asio::io_context io_context;
 
         tcp::resolver resolver(io_context);
         auto endpoints = resolver.resolve("localhost", "10000");
         chat_client c(io_context, endpoints);
-        
-        std::thread t([&io_context](){io_context.run();}); 
-        
+
+        std::thread t([&io_context]() {
+            io_context.run();
+        });
+
         Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "org.gtkmm.poker");
         DISPLAY main_window(4);
 
@@ -36,9 +37,9 @@ int main(int argc, char* argv[])
 
         c.close();
         t.join();
-    } catch (std::exception& e){
+    } catch (std::exception& e) {
         std::cerr << "Exception " << e.what() << "\n";
     }
-	
-	return 0;
+
+    return 0;
 }

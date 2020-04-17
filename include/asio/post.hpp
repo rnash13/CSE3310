@@ -96,7 +96,7 @@ template <typename ExecutionContext, typename CompletionToken>
 ASIO_INITFN_RESULT_TYPE(CompletionToken, void()) post(
     ExecutionContext& ctx, ASIO_MOVE_ARG(CompletionToken) token,
     typename enable_if<is_convertible<
-      ExecutionContext&, execution_context&>::value>::type* = 0);
+    ExecutionContext&, execution_context&>::value>::type* = 0);
 
 } // namespace asio
 

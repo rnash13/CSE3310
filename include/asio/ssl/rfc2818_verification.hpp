@@ -57,29 +57,27 @@ namespace ssl {
  * // ... read and write as normal ...
  * @endcode
  */
-class rfc2818_verification
-{
+class rfc2818_verification {
 public:
-  /// The type of the function object's result.
-  typedef bool result_type;
+    /// The type of the function object's result.
+    typedef bool result_type;
 
-  /// Constructor.
-  explicit rfc2818_verification(const std::string& host)
-    : host_(host)
-  {
-  }
+    /// Constructor.
+    explicit rfc2818_verification(const std::string& host)
+        : host_(host) {
+    }
 
-  /// Perform certificate verification.
-  ASIO_DECL bool operator()(bool preverified, verify_context& ctx) const;
+    /// Perform certificate verification.
+    ASIO_DECL bool operator()(bool preverified, verify_context& ctx) const;
 
 private:
-  // Helper function to check a host name against a pattern.
-  ASIO_DECL static bool match_pattern(const char* pattern,
-      std::size_t pattern_length, const char* host);
+    // Helper function to check a host name against a pattern.
+    ASIO_DECL static bool match_pattern(const char* pattern,
+                                        std::size_t pattern_length, const char* host);
 
-  // Helper function to check a host name against an IPv4 address
-  // The host name to be checked.
-  std::string host_;
+    // Helper function to check a host name against an IPv4 address
+    // The host name to be checked.
+    std::string host_;
 };
 
 } // namespace ssl

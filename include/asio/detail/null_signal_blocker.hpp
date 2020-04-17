@@ -31,28 +31,23 @@ namespace asio {
 namespace detail {
 
 class null_signal_blocker
-  : private noncopyable
-{
+    : private noncopyable {
 public:
-  // Constructor blocks all signals for the calling thread.
-  null_signal_blocker()
-  {
-  }
+    // Constructor blocks all signals for the calling thread.
+    null_signal_blocker() {
+    }
 
-  // Destructor restores the previous signal mask.
-  ~null_signal_blocker()
-  {
-  }
+    // Destructor restores the previous signal mask.
+    ~null_signal_blocker() {
+    }
 
-  // Block all signals for the calling thread.
-  void block()
-  {
-  }
+    // Block all signals for the calling thread.
+    void block() {
+    }
 
-  // Restore the previous signal mask.
-  void unblock()
-  {
-  }
+    // Restore the previous signal mask.
+    void unblock() {
+    }
 };
 
 } // namespace detail
@@ -61,9 +56,9 @@ public:
 #include "asio/detail/pop_options.hpp"
 
 #endif // !defined(ASIO_HAS_THREADS)
-       // || defined(ASIO_WINDOWS)
-       // || defined(ASIO_WINDOWS_RUNTIME)
-       // || defined(__CYGWIN__)
-       // || defined(__SYMBIAN32__)
+// || defined(ASIO_WINDOWS)
+// || defined(ASIO_WINDOWS_RUNTIME)
+// || defined(__CYGWIN__)
+// || defined(__SYMBIAN32__)
 
 #endif // ASIO_DETAIL_NULL_SIGNAL_BLOCKER_HPP

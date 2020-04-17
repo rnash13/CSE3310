@@ -19,24 +19,23 @@
 
 #include"GLOBAL.h"
 
-class CHIP : public Gtk::Box
-{
-	public:
-		CHIP(int, std::string);
-		CHIP(int, std::string, int);
+class CHIP : public Gtk::Box {
+public:
+    CHIP(int, std::string);
+    CHIP(int, std::string, int);
 
-		void change_chip_count(int);
+    void change_chip_count(int);
 
 
-	private:
-		void image(std::string, int=75);
+private:
+    void image(std::string, int=75);
 
-		void label();
+    void label();
 
-		int _chip_count;
+    int _chip_count;
 
-		Gtk::Label* _chip_count_label;
-		Gtk::Image* _image;
+    Gtk::Label* _chip_count_label;
+    Gtk::Image* _image;
 };
 
 #endif

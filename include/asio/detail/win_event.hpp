@@ -29,112 +29,101 @@ namespace asio {
 namespace detail {
 
 class win_event
-  : private noncopyable
-{
+    : private noncopyable {
 public:
-  // Constructor.
-  ASIO_DECL win_event();
+    // Constructor.
+    ASIO_DECL win_event();
 
-  // Destructor.
-  ASIO_DECL ~win_event();
+    // Destructor.
+    ASIO_DECL ~win_event();
 
-  // Signal the event. (Retained for backward compatibility.)
-  template <typename Lock>
-  void signal(Lock& lock)
-  {
-    this->signal_all(lock);
-  }
-
-  // Signal all waiters.
-  template <typename Lock>
-  void signal_all(Lock& lock)
-  {
-    ASIO_ASSERT(lock.locked());
-    (void)lock;
-    state_ |= 1;
-    ::SetEvent(events_[0]);
-  }
-
-  // Unlock the mutex and signal one waiter.
-  template <typename Lock>
-  void unlock_and_signal_one(Lock& lock)
-  {
-    ASIO_ASSERT(lock.locked());
-    state_ |= 1;
-    bool have_waiters = (state_ > 1);
-    lock.unlock();
-    if (have_waiters)
-      ::SetEvent(events_[1]);
-  }
-
-  // If there's a waiter, unlock the mutex and signal it.
-  template <typename Lock>
-  bool maybe_unlock_and_signal_one(Lock& lock)
-  {
-    ASIO_ASSERT(lock.locked());
-    state_ |= 1;
-    if (state_ > 1)
-    {
-      lock.unlock();
-      ::SetEvent(events_[1]);
-      return true;
+    // Signal the event. (Retained for backward compatibility.)
+    template <typename Lock>
+    void signal(Lock& lock) {
+        this->signal_all(lock);
     }
-    return false;
-  }
 
-  // Reset the event.
-  template <typename Lock>
-  void clear(Lock& lock)
-  {
-    ASIO_ASSERT(lock.locked());
-    (void)lock;
-    ::ResetEvent(events_[0]);
-    state_ &= ~std::size_t(1);
-  }
+    // Signal all waiters.
+    template <typename Lock>
+    void signal_all(Lock& lock) {
+        ASIO_ASSERT(lock.locked());
+        (void)lock;
+        state_ |= 1;
+        ::SetEvent(events_[0]);
+    }
 
-  // Wait for the event to become signalled.
-  template <typename Lock>
-  void wait(Lock& lock)
-  {
-    ASIO_ASSERT(lock.locked());
-    while ((state_ & 1) == 0)
-    {
-      state_ += 2;
-      lock.unlock();
+    // Unlock the mutex and signal one waiter.
+    template <typename Lock>
+    void unlock_and_signal_one(Lock& lock) {
+        ASIO_ASSERT(lock.locked());
+        state_ |= 1;
+        bool have_waiters = (state_ > 1);
+        lock.unlock();
+        if (have_waiters)
+            ::SetEvent(events_[1]);
+    }
+
+    // If there's a waiter, unlock the mutex and signal it.
+    template <typename Lock>
+    bool maybe_unlock_and_signal_one(Lock& lock) {
+        ASIO_ASSERT(lock.locked());
+        state_ |= 1;
+        if (state_ > 1) {
+            lock.unlock();
+            ::SetEvent(events_[1]);
+            return true;
+        }
+        return false;
+    }
+
+    // Reset the event.
+    template <typename Lock>
+    void clear(Lock& lock) {
+        ASIO_ASSERT(lock.locked());
+        (void)lock;
+        ::ResetEvent(events_[0]);
+        state_ &= ~std::size_t(1);
+    }
+
+    // Wait for the event to become signalled.
+    template <typename Lock>
+    void wait(Lock& lock) {
+        ASIO_ASSERT(lock.locked());
+        while ((state_ & 1) == 0) {
+            state_ += 2;
+            lock.unlock();
 #if defined(ASIO_WINDOWS_APP)
-      ::WaitForMultipleObjectsEx(2, events_, false, INFINITE, false);
+            ::WaitForMultipleObjectsEx(2, events_, false, INFINITE, false);
 #else // defined(ASIO_WINDOWS_APP)
-      ::WaitForMultipleObjects(2, events_, false, INFINITE);
+            ::WaitForMultipleObjects(2, events_, false, INFINITE);
 #endif // defined(ASIO_WINDOWS_APP)
-      lock.lock();
-      state_ -= 2;
+            lock.lock();
+            state_ -= 2;
+        }
     }
-  }
 
-  // Timed wait for the event to become signalled.
-  template <typename Lock>
-  bool wait_for_usec(Lock& lock, long usec)
-  {
-    ASIO_ASSERT(lock.locked());
-    if ((state_ & 1) == 0)
-    {
-      state_ += 2;
-      lock.unlock();
-      DWORD msec = usec > 0 ? (usec < 1000 ? 1 : usec / 1000) : 0;
+    // Timed wait for the event to become signalled.
+    template <typename Lock>
+    bool wait_for_usec(Lock& lock, long usec) {
+        ASIO_ASSERT(lock.locked());
+        if ((state_ & 1) == 0) {
+            state_ += 2;
+            lock.unlock();
+            DWORD msec = usec > 0 ? (usec < 1000 ? 1 : usec / 1000) : 0;
 #if defined(ASIO_WINDOWS_APP)
-      ::WaitForMultipleObjectsEx(2, events_, false, msec, false);
+            ::WaitForMultipleObjectsEx(2, events_, false, msec, false);
 #else // defined(ASIO_WINDOWS_APP)
-      ::WaitForMultipleObjects(2, events_, false, msec);
+            ::WaitForMultipleObjects(2, events_, false, msec);
 #endif // defined(ASIO_WINDOWS_APP)
-      lock.lock();
-      state_ -= 2;
+            lock.lock();
+            state_ -= 2;
+        }
+        return (state_ & 1) != 0;
     }
-    return (state_ & 1) != 0;
-  }
 
 private:
-  HANDLE events_[2];
-  std::size_t state_;
+    HANDLE events_[2];
+    std::size_t state_;
 };
 
 } // namespace detail

@@ -23,9 +23,8 @@ namespace asio {
 namespace detail {
 
 template <typename DependsOn, typename T>
-struct dependent_type
-{
-  typedef T type;
+struct dependent_type {
+    typedef T type;
 };
 
 } // namespace detail

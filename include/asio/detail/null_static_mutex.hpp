@@ -26,26 +26,22 @@
 namespace asio {
 namespace detail {
 
-struct null_static_mutex
-{
-  typedef asio::detail::scoped_lock<null_static_mutex> scoped_lock;
+struct null_static_mutex {
+    typedef asio::detail::scoped_lock<null_static_mutex> scoped_lock;
 
-  // Initialise the mutex.
-  void init()
-  {
-  }
+    // Initialise the mutex.
+    void init() {
+    }
 
-  // Lock the mutex.
-  void lock()
-  {
-  }
+    // Lock the mutex.
+    void lock() {
+    }
 
-  // Unlock the mutex.
-  void unlock()
-  {
-  }
+    // Unlock the mutex.
+    void unlock() {
+    }
 
-  int unused_;
+    int unused_;
 };
 
 #define ASIO_NULL_STATIC_MUTEX_INIT { 0 }

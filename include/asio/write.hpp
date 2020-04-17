@@ -75,9 +75,9 @@ namespace asio {
  */
 template <typename SyncWriteStream, typename ConstBufferSequence>
 std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
-    typename enable_if<
-      is_const_buffer_sequence<ConstBufferSequence>::value
-    >::type* = 0);
+                  typename enable_if<
+                  is_const_buffer_sequence<ConstBufferSequence>::value
+                  >::type* = 0);
 
 /// Write all of the supplied data to a stream before returning.
 /**
@@ -117,10 +117,10 @@ std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
  */
 template <typename SyncWriteStream, typename ConstBufferSequence>
 std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
-    asio::error_code& ec,
-    typename enable_if<
-      is_const_buffer_sequence<ConstBufferSequence>::value
-    >::type* = 0);
+                  asio::error_code& ec,
+                  typename enable_if<
+                  is_const_buffer_sequence<ConstBufferSequence>::value
+                  >::type* = 0);
 
 /// Write a certain amount of data to a stream before returning.
 /**
@@ -169,12 +169,12 @@ std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
  * std::vector.
  */
 template <typename SyncWriteStream, typename ConstBufferSequence,
-    typename CompletionCondition>
+          typename CompletionCondition>
 std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
-    CompletionCondition completion_condition,
-    typename enable_if<
-      is_const_buffer_sequence<ConstBufferSequence>::value
-    >::type* = 0);
+                  CompletionCondition completion_condition,
+                  typename enable_if<
+                  is_const_buffer_sequence<ConstBufferSequence>::value
+                  >::type* = 0);
 
 /// Write a certain amount of data to a stream before returning.
 /**
@@ -216,12 +216,12 @@ std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
  * number of bytes successfully transferred prior to the error.
  */
 template <typename SyncWriteStream, typename ConstBufferSequence,
-    typename CompletionCondition>
+          typename CompletionCondition>
 std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
-    CompletionCondition completion_condition, asio::error_code& ec,
-    typename enable_if<
-      is_const_buffer_sequence<ConstBufferSequence>::value
-    >::type* = 0);
+                  CompletionCondition completion_condition, asio::error_code& ec,
+                  typename enable_if<
+                  is_const_buffer_sequence<ConstBufferSequence>::value
+                  >::type* = 0);
 
 /// Write all of the supplied data to a stream before returning.
 /**
@@ -252,10 +252,10 @@ std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
  */
 template <typename SyncWriteStream, typename DynamicBuffer>
 std::size_t write(SyncWriteStream& s,
-    ASIO_MOVE_ARG(DynamicBuffer) buffers,
-    typename enable_if<
-      is_dynamic_buffer<typename decay<DynamicBuffer>::type>::value
-    >::type* = 0);
+                  ASIO_MOVE_ARG(DynamicBuffer) buffers,
+                  typename enable_if<
+                  is_dynamic_buffer<typename decay<DynamicBuffer>::type>::value
+                  >::type* = 0);
 
 /// Write all of the supplied data to a stream before returning.
 /**
@@ -286,11 +286,11 @@ std::size_t write(SyncWriteStream& s,
  */
 template <typename SyncWriteStream, typename DynamicBuffer>
 std::size_t write(SyncWriteStream& s,
-    ASIO_MOVE_ARG(DynamicBuffer) buffers,
-    asio::error_code& ec,
-    typename enable_if<
-      is_dynamic_buffer<typename decay<DynamicBuffer>::type>::value
-    >::type* = 0);
+                  ASIO_MOVE_ARG(DynamicBuffer) buffers,
+                  asio::error_code& ec,
+                  typename enable_if<
+                  is_dynamic_buffer<typename decay<DynamicBuffer>::type>::value
+                  >::type* = 0);
 
 /// Write a certain amount of data to a stream before returning.
 /**
@@ -329,13 +329,13 @@ std::size_t write(SyncWriteStream& s,
  * @throws asio::system_error Thrown on failure.
  */
 template <typename SyncWriteStream, typename DynamicBuffer,
-    typename CompletionCondition>
+          typename CompletionCondition>
 std::size_t write(SyncWriteStream& s,
-    ASIO_MOVE_ARG(DynamicBuffer) buffers,
-    CompletionCondition completion_condition,
-    typename enable_if<
-      is_dynamic_buffer<typename decay<DynamicBuffer>::type>::value
-    >::type* = 0);
+                  ASIO_MOVE_ARG(DynamicBuffer) buffers,
+                  CompletionCondition completion_condition,
+                  typename enable_if<
+                  is_dynamic_buffer<typename decay<DynamicBuffer>::type>::value
+                  >::type* = 0);
 
 /// Write a certain amount of data to a stream before returning.
 /**
@@ -375,13 +375,13 @@ std::size_t write(SyncWriteStream& s,
  * number of bytes successfully transferred prior to the error.
  */
 template <typename SyncWriteStream, typename DynamicBuffer,
-    typename CompletionCondition>
+          typename CompletionCondition>
 std::size_t write(SyncWriteStream& s,
-    ASIO_MOVE_ARG(DynamicBuffer) buffers,
-    CompletionCondition completion_condition, asio::error_code& ec,
-    typename enable_if<
-      is_dynamic_buffer<typename decay<DynamicBuffer>::type>::value
-    >::type* = 0);
+                  ASIO_MOVE_ARG(DynamicBuffer) buffers,
+                  CompletionCondition completion_condition, asio::error_code& ec,
+                  typename enable_if<
+                  is_dynamic_buffer<typename decay<DynamicBuffer>::type>::value
+                  >::type* = 0);
 
 #if !defined(ASIO_NO_EXTENSIONS)
 #if !defined(ASIO_NO_IOSTREAM)
@@ -443,7 +443,7 @@ std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b);
  */
 template <typename SyncWriteStream, typename Allocator>
 std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
-    asio::error_code& ec);
+                  asio::error_code& ec);
 
 /// Write a certain amount of data to a stream before returning.
 /**
@@ -481,9 +481,9 @@ std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
  * @throws asio::system_error Thrown on failure.
  */
 template <typename SyncWriteStream, typename Allocator,
-    typename CompletionCondition>
+          typename CompletionCondition>
 std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
-    CompletionCondition completion_condition);
+                  CompletionCondition completion_condition);
 
 /// Write a certain amount of data to a stream before returning.
 /**
@@ -522,9 +522,9 @@ std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
  * number of bytes successfully transferred prior to the error.
  */
 template <typename SyncWriteStream, typename Allocator,
-    typename CompletionCondition>
+          typename CompletionCondition>
 std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
-    CompletionCondition completion_condition, asio::error_code& ec);
+                  CompletionCondition completion_condition, asio::error_code& ec);
 
 #endif // !defined(ASIO_NO_IOSTREAM)
 #endif // !defined(ASIO_NO_EXTENSIONS)
@@ -591,14 +591,14 @@ std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
  * std::vector.
  */
 template <typename AsyncWriteStream, typename ConstBufferSequence,
-    typename WriteHandler>
+          typename WriteHandler>
 ASIO_INITFN_RESULT_TYPE(WriteHandler,
-    void (asio::error_code, std::size_t))
+                        void (asio::error_code, std::size_t))
 async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
-    ASIO_MOVE_ARG(WriteHandler) handler,
-    typename enable_if<
-      is_const_buffer_sequence<ConstBufferSequence>::value
-    >::type* = 0);
+            ASIO_MOVE_ARG(WriteHandler) handler,
+            typename enable_if<
+            is_const_buffer_sequence<ConstBufferSequence>::value
+            >::type* = 0);
 
 /// Start an asynchronous operation to write a certain amount of data to a
 /// stream.
@@ -668,15 +668,15 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
  * std::vector.
  */
 template <typename AsyncWriteStream, typename ConstBufferSequence,
-    typename CompletionCondition, typename WriteHandler>
+          typename CompletionCondition, typename WriteHandler>
 ASIO_INITFN_RESULT_TYPE(WriteHandler,
-    void (asio::error_code, std::size_t))
+                        void (asio::error_code, std::size_t))
 async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
-    CompletionCondition completion_condition,
-    ASIO_MOVE_ARG(WriteHandler) handler,
-    typename enable_if<
-      is_const_buffer_sequence<ConstBufferSequence>::value
-    >::type* = 0);
+            CompletionCondition completion_condition,
+            ASIO_MOVE_ARG(WriteHandler) handler,
+            typename enable_if<
+            is_const_buffer_sequence<ConstBufferSequence>::value
+            >::type* = 0);
 
 /// Start an asynchronous operation to write all of the supplied data to a
 /// stream.
@@ -722,15 +722,15 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
  * asio::io_context::post().
  */
 template <typename AsyncWriteStream,
-    typename DynamicBuffer, typename WriteHandler>
+          typename DynamicBuffer, typename WriteHandler>
 ASIO_INITFN_RESULT_TYPE(WriteHandler,
-    void (asio::error_code, std::size_t))
+                        void (asio::error_code, std::size_t))
 async_write(AsyncWriteStream& s,
-    ASIO_MOVE_ARG(DynamicBuffer) buffers,
-    ASIO_MOVE_ARG(WriteHandler) handler,
-    typename enable_if<
-      is_dynamic_buffer<typename decay<DynamicBuffer>::type>::value
-    >::type* = 0);
+            ASIO_MOVE_ARG(DynamicBuffer) buffers,
+            ASIO_MOVE_ARG(WriteHandler) handler,
+            typename enable_if<
+            is_dynamic_buffer<typename decay<DynamicBuffer>::type>::value
+            >::type* = 0);
 
 /// Start an asynchronous operation to write a certain amount of data to a
 /// stream.
@@ -790,16 +790,16 @@ async_write(AsyncWriteStream& s,
  * asio::io_context::post().
  */
 template <typename AsyncWriteStream, typename DynamicBuffer,
-    typename CompletionCondition, typename WriteHandler>
+          typename CompletionCondition, typename WriteHandler>
 ASIO_INITFN_RESULT_TYPE(WriteHandler,
-    void (asio::error_code, std::size_t))
+                        void (asio::error_code, std::size_t))
 async_write(AsyncWriteStream& s,
-    ASIO_MOVE_ARG(DynamicBuffer) buffers,
-    CompletionCondition completion_condition,
-    ASIO_MOVE_ARG(WriteHandler) handler,
-    typename enable_if<
-      is_dynamic_buffer<typename decay<DynamicBuffer>::type>::value
-    >::type* = 0);
+            ASIO_MOVE_ARG(DynamicBuffer) buffers,
+            CompletionCondition completion_condition,
+            ASIO_MOVE_ARG(WriteHandler) handler,
+            typename enable_if<
+            is_dynamic_buffer<typename decay<DynamicBuffer>::type>::value
+            >::type* = 0);
 
 #if !defined(ASIO_NO_EXTENSIONS)
 #if !defined(ASIO_NO_IOSTREAM)
@@ -847,9 +847,9 @@ async_write(AsyncWriteStream& s,
  */
 template <typename AsyncWriteStream, typename Allocator, typename WriteHandler>
 ASIO_INITFN_RESULT_TYPE(WriteHandler,
-    void (asio::error_code, std::size_t))
+                        void (asio::error_code, std::size_t))
 async_write(AsyncWriteStream& s, basic_streambuf<Allocator>& b,
-    ASIO_MOVE_ARG(WriteHandler) handler);
+            ASIO_MOVE_ARG(WriteHandler) handler);
 
 /// Start an asynchronous operation to write a certain amount of data to a
 /// stream.
@@ -907,12 +907,12 @@ async_write(AsyncWriteStream& s, basic_streambuf<Allocator>& b,
  * asio::io_context::post().
  */
 template <typename AsyncWriteStream, typename Allocator,
-    typename CompletionCondition, typename WriteHandler>
+          typename CompletionCondition, typename WriteHandler>
 ASIO_INITFN_RESULT_TYPE(WriteHandler,
-    void (asio::error_code, std::size_t))
+                        void (asio::error_code, std::size_t))
 async_write(AsyncWriteStream& s, basic_streambuf<Allocator>& b,
-    CompletionCondition completion_condition,
-    ASIO_MOVE_ARG(WriteHandler) handler);
+            CompletionCondition completion_condition,
+            ASIO_MOVE_ARG(WriteHandler) handler);
 
 #endif // !defined(ASIO_NO_IOSTREAM)
 #endif // !defined(ASIO_NO_EXTENSIONS)

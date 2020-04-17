@@ -46,13 +46,17 @@ namespace this_coro {
 struct token_t {};
 
 /// Awaitable object that returns a completion token for the current coroutine.
-constexpr inline token_t token() { return {}; }
+constexpr inline token_t token() {
+    return {};
+}
 
 /// Awaitable type that returns the executor of the current coroutine.
 struct executor_t {};
 
 /// Awaitable object that returns the executor of the current coroutine.
-constexpr inline executor_t executor() { return {}; }
+constexpr inline executor_t executor() {
+    return {};
+}
 
 } // namespace this_coro
 
@@ -75,143 +79,127 @@ constexpr inline executor_t executor() { return {}; }
  * completes, and the result of the operation is returned.
  */
 template <typename Executor>
-class await_token
-{
+class await_token {
 public:
-  /// The associated executor type.
-  typedef Executor executor_type;
+    /// The associated executor type.
+    typedef Executor executor_type;
 
-  /// Copy constructor.
-  await_token(const await_token& other) noexcept
-    : awaiter_(other.awaiter_)
-  {
-  }
+    /// Copy constructor.
+    await_token(const await_token& other) noexcept
+        : awaiter_(other.awaiter_) {
+    }
 
-  /// Move constructor.
-  await_token(await_token&& other) noexcept
-    : awaiter_(std::exchange(other.awaiter_, nullptr))
-  {
-  }
+    /// Move constructor.
+    await_token(await_token&& other) noexcept
+        : awaiter_(std::exchange(other.awaiter_, nullptr)) {
+    }
 
-  /// Get the associated executor.
-  executor_type get_executor() const noexcept
-  {
-    return awaiter_->get_executor();
-  }
+    /// Get the associated executor.
+    executor_type get_executor() const noexcept {
+        return awaiter_->get_executor();
+    }
 
 private:
-  // No assignment allowed.
-  await_token& operator=(const await_token&) = delete;
+    // No assignment allowed.
+    await_token& operator=(const await_token&) = delete;
 
-  template <typename> friend class detail::awaitee_base;
-  template <typename, typename> friend class detail::await_handler_base;
+    template <typename> friend class detail::awaitee_base;
+    template <typename, typename> friend class detail::await_handler_base;
 
-  // Private constructor used by awaitee_base.
-  explicit await_token(detail::awaiter<Executor>* a)
-    : awaiter_(a)
-  {
-  }
+    // Private constructor used by awaitee_base.
+    explicit await_token(detail::awaiter<Executor>* a)
+        : awaiter_(a) {
+    }
 
-  detail::awaiter<Executor>* awaiter_;
+    detail::awaiter<Executor>* awaiter_;
 };
 
 /// The return type of a coroutine or asynchronous operation.
 template <typename T, typename Executor = strand<executor>>
-class awaitable
-{
+class awaitable {
 public:
-  /// The type of the awaited value.
-  typedef T value_type;
+    /// The type of the awaited value.
+    typedef T value_type;
 
-  /// The executor type that will be used for the coroutine.
-  typedef Executor executor_type;
+    /// The executor type that will be used for the coroutine.
+    typedef Executor executor_type;
 
-  /// Move constructor.
-  awaitable(awaitable&& other) noexcept
-    : awaitee_(std::exchange(other.awaitee_, nullptr))
-  {
-  }
-
-  /// Destructor
-  ~awaitable()
-  {
-    if (awaitee_)
-    {
-      detail::coroutine_handle<
-        detail::awaitee<T, Executor>>::from_promise(
-          *awaitee_).destroy();
+    /// Move constructor.
+    awaitable(awaitable&& other) noexcept
+        : awaitee_(std::exchange(other.awaitee_, nullptr)) {
     }
-  }
+
+    /// Destructor
+    ~awaitable() {
+        if (awaitee_) {
+            detail::coroutine_handle<
+            detail::awaitee<T, Executor>>::from_promise(
+                                           *awaitee_).destroy();
+        }
+    }
 
 #if !defined(GENERATING_DOCUMENTATION)
 
-  // Support for co_await keyword.
-  bool await_ready() const noexcept
-  {
-    return awaitee_->ready();
-  }
+    // Support for co_await keyword.
+    bool await_ready() const noexcept {
+        return awaitee_->ready();
+    }
 
-  // Support for co_await keyword.
-  void await_suspend(detail::coroutine_handle<detail::awaiter<Executor>> h)
-  {
-    awaitee_->attach_caller(h);
-  }
+    // Support for co_await keyword.
+    void await_suspend(detail::coroutine_handle<detail::awaiter<Executor>> h) {
+        awaitee_->attach_caller(h);
+    }
 
-  // Support for co_await keyword.
-  template <class U>
-  void await_suspend(detail::coroutine_handle<detail::awaitee<U, Executor>> h)
-  {
-    awaitee_->attach_caller(h);
-  }
+    // Support for co_await keyword.
+    template <class U>
+    void await_suspend(detail::coroutine_handle<detail::awaitee<U, Executor>> h) {
+        awaitee_->attach_caller(h);
+    }
 
-  // Support for co_await keyword.
-  T await_resume()
-  {
-    return awaitee_->get();
-  }
+    // Support for co_await keyword.
+    T await_resume() {
+        return awaitee_->get();
+    }
 
 #endif // !defined(GENERATING_DOCUMENTATION)
 
 private:
-  template <typename, typename> friend class detail::awaitee;
-  template <typename, typename> friend class detail::await_handler_base;
+    template <typename, typename> friend class detail::awaitee;
+    template <typename, typename> friend class detail::await_handler_base;
 
-  // Not copy constructible or copy assignable.
-  awaitable(const awaitable&) = delete;
-  awaitable& operator=(const awaitable&) = delete;
+    // Not copy constructible or copy assignable.
+    awaitable(const awaitable&) = delete;
+    awaitable& operator=(const awaitable&) = delete;
 
-  // Construct the awaitable from a coroutine's promise object.
-  explicit awaitable(detail::awaitee<T, Executor>* a) : awaitee_(a) {}
+    // Construct the awaitable from a coroutine's promise object.
+    explicit awaitable(detail::awaitee<T, Executor>* a) : awaitee_(a) {}
 
-  detail::awaitee<T, Executor>* awaitee_;
+    detail::awaitee<T, Executor>* awaitee_;
 };
 
 /// Spawn a new thread of execution.
 template <typename Executor, typename F, typename CompletionToken,
-    typename = typename enable_if<is_executor<Executor>::value>::type>
-inline auto co_spawn(const Executor& ex, F&& f, CompletionToken&& token)
-{
-  return detail::co_spawn(ex, std::forward<F>(f),
-      std::forward<CompletionToken>(token));
+          typename = typename enable_if<is_executor<Executor>::value>::type>
+inline auto co_spawn(const Executor& ex, F&& f, CompletionToken&& token) {
+    return detail::co_spawn(ex, std::forward<F>(f),
+                            std::forward<CompletionToken>(token));
 }
 
 /// Spawn a new thread of execution.
 template <typename ExecutionContext, typename F, typename CompletionToken,
-    typename = typename enable_if<
-      is_convertible<ExecutionContext&, execution_context&>::value>::type>
-inline auto co_spawn(ExecutionContext& ctx, F&& f, CompletionToken&& token)
-{
-  return detail::co_spawn(ctx.get_executor(), std::forward<F>(f),
-      std::forward<CompletionToken>(token));
+          typename = typename enable_if<
+              is_convertible<ExecutionContext&, execution_context&>::value>::type>
+inline auto co_spawn(ExecutionContext& ctx, F&& f, CompletionToken&& token) {
+    return detail::co_spawn(ctx.get_executor(), std::forward<F>(f),
+                            std::forward<CompletionToken>(token));
 }
 
 /// Spawn a new thread of execution.
 template <typename Executor, typename F, typename CompletionToken>
 inline auto co_spawn(const await_token<Executor>& parent,
-    F&& f, CompletionToken&& token)
-{
-  return detail::co_spawn(parent.get_executor(), std::forward<F>(f),
-      std::forward<CompletionToken>(token));
+                     F&& f, CompletionToken&& token) {
+    return detail::co_spawn(parent.get_executor(), std::forward<F>(f),
+                            std::forward<CompletionToken>(token));
 }
 
 } // namespace experimental

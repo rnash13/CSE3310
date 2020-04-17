@@ -32,7 +32,7 @@ namespace unicast {
  * @par Examples
  * Setting the option:
  * @code
- * asio::ip::udp::socket socket(io_context); 
+ * asio::ip::udp::socket socket(io_context);
  * ...
  * asio::ip::unicast::hops option(4);
  * socket.set_option(option);
@@ -41,7 +41,7 @@ namespace unicast {
  * @par
  * Getting the current option value:
  * @code
- * asio::ip::udp::socket socket(io_context); 
+ * asio::ip::udp::socket socket(io_context);
  * ...
  * asio::ip::unicast::hops option;
  * socket.get_option(option);
@@ -55,10 +55,10 @@ namespace unicast {
 typedef implementation_defined hops;
 #else
 typedef asio::ip::detail::socket_option::unicast_hops<
-  ASIO_OS_DEF(IPPROTO_IP),
-  ASIO_OS_DEF(IP_TTL),
-  ASIO_OS_DEF(IPPROTO_IPV6),
-  ASIO_OS_DEF(IPV6_UNICAST_HOPS)> hops;
+ASIO_OS_DEF(IPPROTO_IP),
+            ASIO_OS_DEF(IP_TTL),
+            ASIO_OS_DEF(IPPROTO_IPV6),
+            ASIO_OS_DEF(IPV6_UNICAST_HOPS)> hops;
 #endif
 
 } // namespace unicast

@@ -56,13 +56,13 @@ using std::allocator_arg_t;
   /**/
 # define ASIO_REBIND_ALLOC(alloc, t) \
   typename std::allocator_traits<alloc>::template rebind_alloc<t>
-  /**/
+/**/
 #else // defined(ASIO_HAS_CXX11_ALLOCATORS)
 struct allocator_arg_t {};
 # define ASIO_USES_ALLOCATOR(t)
 # define ASIO_REBIND_ALLOC(alloc, t) \
   typename alloc::template rebind<t>::other
-  /**/
+/**/
 #endif // defined(ASIO_HAS_CXX11_ALLOCATORS)
 
 } // namespace asio

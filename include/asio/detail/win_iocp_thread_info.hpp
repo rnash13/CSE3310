@@ -22,8 +22,7 @@
 namespace asio {
 namespace detail {
 
-struct win_iocp_thread_info : public thread_info_base
-{
+struct win_iocp_thread_info : public thread_info_base {
 };
 
 } // namespace detail
