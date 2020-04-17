@@ -69,4 +69,4 @@ clean:
 	-rm -rf ${BUILD_DIR}/*
 	-rm -rf ${OBJ_DIR}/*.o
 	-rm -rf ${OBJ_DIR}/*/*.o
-	-rm -rf ${TEST_DIR}/*.o
+	-rm -rf ${TEST_DIR}/*.test

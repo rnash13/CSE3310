@@ -220,9 +220,9 @@ unsigned char HAND::value() {
 std::string HAND::valueStr(){
     if(currentValue == 0x00)
         value();
-    std::stringstream strstr{};
-    strstr << handNameStrings.at((int) currentValue>>4) << " With Rank of " << (int) (currentValue&0x0F); 
-    return strstr.str();
+    std::stringstream str{};
+    str << handNameStrings.at((int) currentValue>>4) << " With Rank of " << (int) (currentValue&0x0F); 
+    return str;
 }
 
 void to_json(nlohmann::json& j, const HAND& hand) {
