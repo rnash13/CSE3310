@@ -30,9 +30,13 @@ const std::vector<Card>& HAND::getCards() {
 
 //Check for four of a kind
 bool HAND::checkFourOfKind(std::vector<Card> cards) {
-    bool flag = (cards[0].rank == cards[3].rank || cards[1].rank == cards[3].rank);
+    /*
+    0&1&2&3!4
+    0!1&2&3&4
+    */
+    bool flag = (cards[0].rank == cards[3].rank || cards[1].rank == cards[4].rank);
     if(flag)
-        swap(3, 4);
+        swap(2, 4);
     return flag;
 }
 
