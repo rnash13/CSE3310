@@ -10,20 +10,20 @@
 *
 ***********************************************************************************************************/
 
-#ifndef _CARD_
-#define _CARD_
+#ifndef _CARDDISPLAY_
+#define _CARDDISPLAY_
 
 #include<gtkmm.h>
 
 #include"GLOBAL.h"
 
 
-class CARD {
+class CARDDISPLAY {
 public:
-    CARD(std::string, Gtk::Box*, bool=false);
-    CARD(std::string, Gtk::Box*, int, bool=false);
-    CARD(std::string, Gtk::Box*, int, int, bool=false);
-    ~CARD();
+    CARDDISPLAY(std::string, Gtk::Box*, bool=false);
+    CARDDISPLAY(std::string, Gtk::Box*, int, bool=false);
+    CARDDISPLAY(std::string, Gtk::Box*, int, int, bool=false);
+    ~CARDDISPLAY();
 
     Gtk::Image* image();
     void image(std::string, bool);

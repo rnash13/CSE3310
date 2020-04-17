@@ -11,11 +11,11 @@
 *
 ***********************************************************************************************************/
 
-#include"PLAYER.h"
+#include"PLAYER_DISPLAY.h"
 
-PLAYER::PLAYER(int player_number, std::string name, Gtk::Box* parent_box, Gtk::Orientation orientation, int spacing) :
+PLAYER_DISPLAY::PLAYER_DISPLAY(int player_display_number, std::string name, Gtk::Box* parent_box, Gtk::Orientation orientation, int spacing) :
     Gtk::Box(orientation, spacing) {
-    _player_number = player_number;
+    _player_number = player_display_number;
     _name = name;
     _parent_box = parent_box;
 
@@ -25,17 +25,17 @@ PLAYER::PLAYER(int player_number, std::string name, Gtk::Box* parent_box, Gtk::O
     this->pack_start(*_name_label);
 }
 
-PLAYER::~PLAYER() {
+PLAYER_DISPLAY::~PLAYER_DISPLAY() {
     this->remove(*_name_label);
 }
 
 
-Gtk::Label* PLAYER::name_label() {
+Gtk::Label* PLAYER_DISPLAY::name_label() {
     return _name_label;
 }
 
 
-void PLAYER::name_label(std::string name) {
+void PLAYER_DISPLAY::name_label(std::string name) {
     this->remove(*_name_label);
     _name_label = Gtk::manage(new Gtk::Label(Glib::ustring(name)));
     this->pack_start(*_name_label);

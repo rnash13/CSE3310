@@ -106,7 +106,7 @@ void DISPLAY::assign_starting_players_to_all_players_array() {
     };
 
     // assign dealer as a PLAYER
-    all_players[0] = new PLAYER(0, "DEALER", box_array[5 - _player_number]);
+    all_players[0] = new PLAYER_DISPLAY(0, "DEALER", box_array[5 - _player_number]);
     all_players[0]->set_spacing(50);
     // copy in order the pointers of the boxes
     for(int x = 6 - _player_number, y = 1; x < 5; x++, y++) {

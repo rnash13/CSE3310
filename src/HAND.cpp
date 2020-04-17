@@ -10,30 +10,34 @@ HAND::HAND() {
     }
 }
 
-HAND::HAND(Card inCards[5]) {
+HAND::HAND(std::vector<Card> inCards) {
     for(int i = 0; i < 5; i++) {
         cards[i] = inCards[i];
     }
 }
 
 void HAND::sort() {
-    std::sort(cards, cards+5, [](Card a, Card b) {
+    std::sort(cards.begin(), cards.end(), [](Card a, Card b) {
         return cardAsInt(a) < cardAsInt(b);
     });
 }
 
+const std::vector<Card>& HAND::getCards(){
+    return cards;
+}
+
 //Check for four of a kind
 //TODO MAKE cards[4] HOLD HIGHEST RANK FROM QUARTET
-bool checkFourOfKind(Card cards[5]) {
+bool checkFourOfKind(std::vector<Card> cards) {
     return (cards[0].rank == cards[3].rank || cards[1].rank == cards[3].rank);
 }
 
-bool checkFullHouse(Card cards[5]) {
+bool checkFullHouse(std::vector<Card> cards) {
     return ((cards[0].rank == cards[1].rank && cards[2].rank == cards[4].rank) || (cards[0].rank == cards[2].rank && cards[3].rank == cards[4].rank));
 }
 
 //Check for Flush
-bool checkFlush(Card cards[5]) {
+bool checkFlush(std::vector<Card> cards) {
     //Save suit of first card to compare to all other cards
     int suit = cards[0].suit;
     //Flag to be swapped if any of the cards fail either suit check or rank check.
@@ -45,7 +49,7 @@ bool checkFlush(Card cards[5]) {
     return flag;
 }
 
-bool checkStraight(Card cards[5]) {
+bool checkStraight(std::vector<Card> cards) {
     int rank = cards[0].rank;
     bool flag = true;
     for(int i = 0; i < 5; i++) {
@@ -57,7 +61,7 @@ bool checkStraight(Card cards[5]) {
 
 //Checks for a set of three of a kind
 //TODO SET card[4] TO RANK OF TRIO
-bool checkThreeOfAKind(Card cards[5]) {
+bool checkThreeOfAKind(std::vector<Card> cards) {
     /*
     0 == 2 && 2 != 3
     0 != 1 && 1 == 3 && 3 !=4
@@ -70,7 +74,7 @@ bool checkThreeOfAKind(Card cards[5]) {
 
 //Helper function that runs == && == && != && != on 8 numbers to check for pairs exhaustively
 //TODO This is probably the wrong way to do this, someone help
-bool checkSpecificPairs(Card cards[5], int pairs[8]) {
+bool checkSpecificPairs(std::vector<Card> cards, int pairs[8]) {
     std::transform(pairs, pairs+8, pairs, [&] (int ind) -> int { return cards[ind].rank; });
 
     return (pairs[0] == pairs[1]) && (pairs[2] == pairs[3]) && (pairs[4] != pairs[5]) && (pairs[6] != pairs[7]);
@@ -78,7 +82,7 @@ bool checkSpecificPairs(Card cards[5], int pairs[8]) {
 
 //Check for two pairs.
 //TODO Make card[4] be one of the cards from the pair with the highest rank
-bool checkTwoPairs(Card cards[5]) {
+bool checkTwoPairs(std::vector<Card> cards) {
     /*
     0&1 2&3 1!2 3!4
     0&1 3&4 1!2 2!3
@@ -99,14 +103,14 @@ bool checkTwoPairs(Card cards[5]) {
 }
 
 //Helper function to check for a single pair by applying a != && == && != set of operations
-bool checkSinglePair(Card cards[5], int pairs[6]) {
+bool checkSinglePair(std::vector<Card> cards, int pairs[6]) {
     std::transform(pairs, pairs+6, pairs, [&] (int ind) -> int { return cards[ind].rank; });
     return (pairs[0] != pairs[1]) && (pairs[2] == pairs[3]) && (pairs[4] != pairs[5]);
 }
 
 //Check for a single pair
 //TODO Set card with rank of pair to card[4]
-bool checkOnePair(Card cards[5]) {
+bool checkOnePair(std::vector<Card> cards) {
     /*
     0&1 1!2
     0!1 1&2 2!3
@@ -131,12 +135,12 @@ bool checkOnePair(Card cards[5]) {
 }
 
 //Check for both a straight and a flush
-bool checkSFlush(Card cards[5]) {
+bool checkSFlush(std::vector<Card> cards) {
     return checkFlush(cards) && checkStraight(cards);
 }
 
 //Check for Flush and verify ranks match royal ranks
-bool checkRFlush(Card cards[5]) {
+bool checkRFlush(std::vector<Card> cards) {
     if(checkFlush(cards)) {
         //Const set of ranks to check royals
         const int ROYALS[5] = {1, 10, 11, 12, 13};

@@ -27,9 +27,6 @@ typedef std::deque<chat_message> chat_message_queue;
 
 //----------------------------------------------------------------------
 
-
-//----------------------------------------------------------------------
-
 //Add participant to chat_room and send them all of the messages sent so far
 void chat_room::join(chat_participant_ptr participant) {
     participants_.insert(participant);
@@ -185,7 +182,7 @@ void chat_server::do_accept() {
             //If there is no error then make a shared chat_session which moves this object's socket to itself and recieves a room_ object, then run start.
             std::make_shared<chat_session>(std::move(socket), room_)->start();
         }
-        //Reassign this function as the listener for acceptor_ (I guess?)
+        //Reassign this function as the listener for acceptor_
         do_accept();
     });
 }

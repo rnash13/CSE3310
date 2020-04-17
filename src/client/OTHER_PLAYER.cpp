@@ -30,7 +30,7 @@ OTHER_PLAYER::~OTHER_PLAYER() {
 
 void OTHER_PLAYER::display_card_backs() {
     remove_all_cards();
-    for(int x = 0; x < 4; x++) _cards[x] = new CARD("Back", _card_box, 25, true);
-    _cards[4] = new CARD("Back", _card_box, true);
+    for(int x = 0; x < 4; x++) _cards[x] = new CARDDISPLAY("Back", _card_box, 25, true);
+    _cards[4] = new CARDDISPLAY("Back", _card_box, true);
 
 }

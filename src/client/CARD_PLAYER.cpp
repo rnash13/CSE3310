@@ -15,7 +15,7 @@
 
 
 CARD_PLAYER::CARD_PLAYER(int player_number, std::string name, Gtk::Box* parent_box, Gtk::Orientation orientation, int spacing) :
-    PLAYER::PLAYER(player_number, name, parent_box, orientation, spacing) {
+    PLAYER_DISPLAY::PLAYER_DISPLAY(player_number, name, parent_box, orientation, spacing) {
     _cards_and_chip_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL));
     this->pack_start(*_cards_and_chip_box);
 
@@ -41,7 +41,7 @@ void CARD_PLAYER::assign_cards(std::vector<std::string> card_names) {
     }
 
     for(int x = 5 - card_names.size(), y = 0; x < 5; x++, y++)
-        _cards[x] = new CARD(card_names[y], _card_box);
+        _cards[x] = new CARDDISPLAY(card_names[y], _card_box);
 }
 
 

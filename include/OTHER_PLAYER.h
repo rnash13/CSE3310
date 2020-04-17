@@ -17,7 +17,7 @@
 
 #include<gtkmm.h>
 
-#include"CARD.h"
+#include"CARDDISPLAY.h"
 #include"CHIP_BOX.h"
 #include"CARD_PLAYER.h"
 

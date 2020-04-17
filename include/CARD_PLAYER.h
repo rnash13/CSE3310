@@ -17,11 +17,11 @@
 
 #include<gtkmm.h>
 
-#include"CARD.h"
+#include"CARDDISPLAY.h"
 #include"CHIP_BOX.h"
-#include"PLAYER.h"
+#include"PLAYER_DISPLAY.h"
 
-class CARD_PLAYER : public PLAYER {
+class CARD_PLAYER : public PLAYER_DISPLAY {
 public:
     CARD_PLAYER(int, std::string, Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_VERTICAL, int=0);
     ~CARD_PLAYER();
@@ -37,7 +37,7 @@ protected:
 
     Gtk::Box* _cards_and_chip_box;
     Gtk::Box* _card_box;
-    CARD* _cards[5] = {NULL};
+    CARDDISPLAY* _cards[5] = {NULL};
 
     CHIP_BOX* _chip_box;
 

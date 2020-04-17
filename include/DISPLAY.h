@@ -17,11 +17,11 @@
 
 #include<gtkmm.h>
 
-#include"CARD.h"
+#include"CARDDISPLAY.h"
 #include"CHIP_BOX.h"
 #include"GLOBAL.h"
 #include"OTHER_PLAYER.h"
-#include"PLAYER.h"
+#include"PLAYER_DISPLAY.h"
 #include"USER.h"
 
 class DISPLAY: public Gtk::Window {
@@ -41,7 +41,7 @@ public:
     USER* user;
 private:
     int _total_players = 1;  // default to just you
-    PLAYER* all_players[6] = {};
+    PLAYER_DISPLAY* all_players[6] = {};
 
     Gtk::Box* main_box;
 

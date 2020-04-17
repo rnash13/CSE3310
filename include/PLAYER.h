@@ -1,38 +1,39 @@
-// 1000845009	Mathew Zinke
+#ifndef PLAYER_inc
+#define PLAYER_inc
 
-/***********************************************************************************************************
-*
-*	created by: MPZinke
-*	on ..
-*
-*	DESCRIPTION:
-*	BUGS:
-*	FUTURE:
-*
-***********************************************************************************************************/
+#include <string>
+#include <vector>
+
+#include "DECK.h"
+#include "HAND.h"
+#include "CARDSTRUCT.h"
+#include "PLAY.h"
+
+class PLAYER {
+    public:
+        PLAYER(std::string name, std::string id);
+
+        void play(PLAY current_play);
 
 
-#ifndef _PLAYER_
-#define _PLAYER_
+        void trade(std::vector<Card> cards, DECK deck); 
+        std::string name(); 
+        std::string id(); 
+        int money(); 
+        int current_bet(); 
+        HAND current_hand(); 
+        PLAY current_play(); 
 
-#include<gtkmm.h>
 
-class PLAYER : public Gtk::Box {
-public:
-    PLAYER(int, std::string, Gtk::Box*, Gtk::Orientation=Gtk::ORIENTATION_VERTICAL, int=0);
-    ~PLAYER();
+    private:
+        std::string _name;
+        std::string _id; 
+        int _money=200; 
 
-    Gtk::Label* name_label();
-    void name_label(std::string);
-
-    virtual void display_card_backs() {}
-
-private:
-    int _player_number;
-    std::string _name;
-
-    Gtk::Label* _name_label;
-    Gtk::Box* _parent_box;
+        HAND _current_hand; 
+        int _current_bet; 
+        PLAY _current_play; 
 };
 
 #endif
+

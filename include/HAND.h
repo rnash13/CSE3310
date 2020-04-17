@@ -19,7 +19,7 @@ enum HAND_ENUM {
 class HAND {
 public:
     HAND();
-    HAND(Card cards[5]);
+    HAND(std::vector<Card> cards);
     HAND(std::string);  // JSON usage
 
     void sort();
@@ -29,10 +29,13 @@ public:
     friend void to_json(nlohmann::json& j, const HAND& hand);
     friend void from_json(const nlohmann::json& j, HAND& hand);
     friend std::string operator<<(std::string, HAND);
+
+    const std::vector<Card>& getCards();
+
     std::string operator+(std::string);
 
 private:
-    Card cards[5];
+    std::vector<Card> cards;
 };
 
 #endif
