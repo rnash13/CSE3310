@@ -21,21 +21,26 @@ USER::USER(int player_number, std::string name, Gtk::Box* parent_box, Gtk::Orien
     _player_actions_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL));
     _cards_and_chip_box->pack_start(*_player_actions_box);
 
+	_check_button = Gtk::manage(new Gtk::Button("check"));
+	_check_button->signal_clicked().connect(sigc::mem_fun(*this, &USER::check));
+	_player_actions_box->pack_start(*_check_button);
+	
+	_bet_button = Gtk::manage(new Gtk::Button("bet"));
+	_player_actions_box->pack_start(*_bet_button);
 
-    _bet_button = Gtk::manage(new Gtk::Button("bet"));
-    _player_actions_box->pack_start(*_bet_button);
-
-    _check_button = Gtk::manage(new Gtk::Button("check"));
-    _check_button->signal_clicked().connect(sigc::mem_fun(*this, &USER::check));
-    _player_actions_box->pack_start(*_check_button);
-
+	_raise_button = Gtk::manage(new Gtk::Button("raise"));
+	_player_actions_box->pack_start(*_raise_button);
+	
+	_call_button = Gtk::manage(new Gtk::Button("call"));
+	_player_actions_box->pack_start(*_call_button);
 
     _fold_button = Gtk::manage(new Gtk::Button("fold"));
     _fold_button->signal_clicked().connect(sigc::mem_fun(*this, &USER::fold));
     _player_actions_box->pack_start(*_fold_button);
 
-    _trade_button = Gtk::manage(new Gtk::Button("trade"));
-    _player_actions_box->pack_start(*_trade_button);
+	//Trade shouldn't be available in first round of betting.... better functionality added soon
+	//_trade_button = Gtk::manage(new Gtk::Button("trade"));
+	//_player_actions_box->pack_start(*_trade_button);
 }
 
 
@@ -72,18 +77,24 @@ void USER::remove_cards(std::vector<std::string> cards_to_remove) {
 
 // —————————————— BUTTON FUNCTIONS ———————————————
 
-void USER::hide_user_actions() {
-    _bet_button->hide();
-    _check_button->hide();
-    _fold_button->hide();
-    _trade_button->hide();
+void USER::hide_user_actions()
+{
+	_check_button->hide();
+	_bet_button->hide();
+	_raise_button->hide();
+	_call_button->hide();
+	_fold_button->hide();
+	//_trade_button->hide();
 }
 
-void USER::show_user_actions() {
-    _bet_button->show();
-    _check_button->show();
-    _fold_button->show();
-    _trade_button->show();
+void USER::show_user_actions()
+{
+	_check_button->show();
+	_bet_button->show();
+	_raise_button->show();
+	_call_button->show();
+	_fold_button->show();
+	//_trade_button->show();
 }
 
 
@@ -92,7 +103,8 @@ void USER::check() {
 }
 
 
-void USER::fold() {
-    remove_all_cards();
-    hide_user_actions();
+void USER::fold()
+{
+	remove_all_cards();
+	hide_user_actions();
 }
