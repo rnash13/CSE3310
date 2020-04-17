@@ -5,28 +5,28 @@
 #include <vector>
 
 class ROUND {
-    public:
-        ROUND();
-         
-            ROUND(int round_number, std::vector<PLAYER*> remaining_players);
+public:
+    ROUND();
 
-            void deal(); 
-            void take_bets(); 
-            void finish_round(); 
+    ROUND(int round_number, std::vector<PLAYER*> remaining_players);
 
-            int round_number(); 
-        
-        ~ROUND();
+    void deal();
+    void take_bets();
+    void finish_round();
 
-    private:
-            int _round_number; 
-            std::vector<PLAYER*>  _remaining_players; 
-            DECK _deck; 
-            int  _current_pot; 
-            int  _current_player; 
+    int round_number();
 
-    protected:
-        
+    ~ROUND();
+
+private:
+    int _round_number;
+    std::vector<PLAYER*>  _remaining_players;
+    DECK _deck;
+    int  _current_pot;
+    int  _current_player;
+
+protected:
+
 
 };
 

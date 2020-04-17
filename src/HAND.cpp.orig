@@ -22,7 +22,7 @@ void HAND::sort() {
     });
 }
 
-const std::vector<Card>& HAND::getCards() {
+const std::vector<Card>& HAND::getCards(){
     return cards;
 }
 

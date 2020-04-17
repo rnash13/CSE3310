@@ -3,7 +3,7 @@
 
 #include "json.hpp"
 
-enum PLAYTYPE {
+enum PLAYTYPE{
     BET,
     CHECK,
     FOLD,
@@ -13,10 +13,10 @@ enum PLAYTYPE {
 
 
 
-typedef struct play {
+typedef struct play{
     PLAYTYPE type;
-    int bet;
-} PLAY;
+    int bet;  
+}PLAY;
 
 void to_json(nlohmann::json& j, const PLAY& play);
 void from_json(const nlohmann::json& j, PLAY& play);

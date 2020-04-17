@@ -14,66 +14,65 @@
 #include"DISPLAY.h"
 
 DISPLAY::DISPLAY(int player_number) :
-_player_number{player_number}
-{
-	main_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
-	add(*main_box);
+    _player_number{player_number} {
+    main_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
+    add(*main_box);
 
-	set_default_size(DISPLAY_WIDTH, DISPLAY_HEIGHT);
-	set_title("Poker++");
-	set_position(Gtk::WIN_POS_CENTER);
+    set_default_size(DISPLAY_WIDTH, DISPLAY_HEIGHT);
+    set_title("Poker++");
+    set_position(Gtk::WIN_POS_CENTER);
 
-	main_box->override_background_color(*COLOR_GREEN);
+    main_box->override_background_color(*COLOR_GREEN);
 
 
-	// ———————————— OTHER PLAYERS & POT ————————————	
-	// ———— TOP ROW ————
-	top_row_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
-	main_box->pack_start(*top_row_box);
-	// —— CELLS ——
-	top_left_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
-	top_row_box->pack_start(*top_left_box );
-	top_center_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
-	top_row_box->pack_start(*top_center_box);
-	top_right_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
-	top_row_box->pack_start(*top_right_box);
+    // ———————————— OTHER PLAYERS & POT ————————————
+    // ———— TOP ROW ————
+    top_row_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
+    main_box->pack_start(*top_row_box);
+    // —— CELLS ——
+    top_left_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
+    top_row_box->pack_start(*top_left_box );
+    top_center_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
+    top_row_box->pack_start(*top_center_box);
+    top_right_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
+    top_row_box->pack_start(*top_right_box);
 
-	// ———— MIDDLE ROW ————
-	middle_row = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
-	main_box->pack_start(*middle_row);
-	// —— CELLS ——
-	middle_left_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
-	middle_row->pack_start(*middle_left_box);
-	pot_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
-	middle_row->pack_start(*pot_box);
-	pot_label = Gtk::manage(new Gtk::Label("POT"));
-	pot_label->override_color(*COLOR_WHITE);
-	pot_box->pack_start(*pot_label);
-	pot = new CHIP_BOX(pot_box);
-	middle_right_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 50));
-	middle_row->pack_start(*middle_right_box);
+    // ———— MIDDLE ROW ————
+    middle_row = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
+    main_box->pack_start(*middle_row);
+    // —— CELLS ——
+    middle_left_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
+    middle_row->pack_start(*middle_left_box);
+    pot_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
+    middle_row->pack_start(*pot_box);
+    pot_label = Gtk::manage(new Gtk::Label("POT"));
+    pot_label->override_color(*COLOR_WHITE);
+    pot_box->pack_start(*pot_label);
+    pot = new CHIP_BOX(pot_box);
+    middle_right_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 50));
+    middle_row->pack_start(*middle_right_box);
 
-	// ———— SETUP PRE-EXISTING PLAYERS AND DEALER ————
-	assign_starting_players_to_all_players_array();
-	// dealer
-	all_players[0]->override_background_color(*COLOR_RED);
-	all_players[0]->name_label()->override_color(*COLOR_WHITE);
+    // ———— SETUP PRE-EXISTING PLAYERS AND DEALER ————
+    assign_starting_players_to_all_players_array();
+    // dealer
+    all_players[0]->override_background_color(*COLOR_RED);
+    all_players[0]->name_label()->override_color(*COLOR_WHITE);
 
-	// ———————————————— PLAYER ————————————————
-	// ———— BOTTOM ROW ————
-	bottom_row_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
-	main_box->pack_start(*bottom_row_box);
-	user = new USER(_player_number, "ME :)", bottom_row_box);
-	user->override_color(*COLOR_WHITE);
+    // ———————————————— PLAYER ————————————————
+    // ———— BOTTOM ROW ————
+    bottom_row_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
+    main_box->pack_start(*bottom_row_box);
+    user = new USER(_player_number, "ME :)", bottom_row_box);
+    user->override_color(*COLOR_WHITE);
 
-	std::vector<std::string> test_names =	{
-												"10 of Spades", "Jack of Spades", "Queen of Spades",
-												"King of Spades", "Ace of Spades"
-											};
-	user->assign_cards(test_names);
-	for(int x = 1; x < _player_number; x++) all_players[x]->display_card_backs();
+    std::vector<std::string> test_names =	{
+        "10 of Spades", "Jack of Spades", "Queen of Spades",
+        "King of Spades", "Ace of Spades"
+    };
+    user->assign_cards(test_names);
+    for(int x = 1; x < _player_number; x++) all_players[x]->display_card_backs();
 
-	main_box->show_all();
+    main_box->show_all();
 }
 
 

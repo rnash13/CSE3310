@@ -20,6 +20,6 @@ card_int cardAsInt(const Card card) {
     return *((card_int*) (&card))&0b00111111;
 }
 
-bool operator==(const Card& card1, const Card& card2) {
+bool operator==(const Card& card1, const Card& card2){
     return (card1.rank == card2.rank) && (card2.suit == card2.suit);
 }
