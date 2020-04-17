@@ -58,12 +58,11 @@ void DECK::mergeDiscarded(){
     shuffle();
 }
 
-/*void from_json(nlohmann::json& j, DECK& deck){
+void from_json(nlohmann::json& j, DECK& deck){
     j.at("cards").get_to(deck._cards);
-    j.at("_next_card_in_deck_index").get_to("_next_card_in_deck_index)");
+    j.at("_next_card_in_deck_index").get_to(deck._next_card_in_deck_index);
 }
 
 void to_json(nlohmann::json& j, const DECK& deck){
-    j["cards"] = deck._cards;
-    j["_next_card_in_deck_index"] = deck._next_card_in_deck_index;
-}*/
+    j = nlohmann::json{{"cards", deck._cards}, {"_next_card_in_deck_index", deck._next_card_in_deck_index}};
+}
