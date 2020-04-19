@@ -20,7 +20,7 @@ HAND::HAND(std::string str) : HAND(nlohmann::json{str}) {
 
 void HAND::sort() {
     std::sort(cards.begin(), cards.end(), [](Card a, Card b) {
-        return cardAsInt(a) < cardAsInt(b);
+        return a.asInt() < b.asInt();
     });
 }
 
@@ -34,9 +34,13 @@ bool HAND::checkFourOfKind(std::vector<Card> cards) {
     0&1&2&3!4
     0!1&2&3&4
     */
-    bool flag = (cards[0].rank == cards[3].rank || cards[1].rank == cards[4].rank);
-    if(flag)
-        swap(2, 4);
+    bool flag = false;
+    if(cards[0].rank == cards[3].rank){
+        flag = true;
+        swap(3, 4);
+    } else if(cards[1].rank == cards[4].rank){
+        flag = true;
+    }
     return flag;
 }
 

@@ -1,14 +1,14 @@
 #include"DECK.h"
-#include"CARDSTRUCT.h"
+#include"CARD.h"
 
 #include <random>
 #include <ctime>
 
 DECK::DECK() {
     std::srand(std::time(nullptr));
-    for(unsigned int i = 0; i < 52; i++) {
-        const unsigned int suit = i%4;
-        const unsigned int rank = (i/13)+1;
+    for(int i = 0; i < 52; i++) {
+        int suit = i%4;
+        int rank = (i/13)+1;
         _cards[i] = Card{suit, rank};
     }
 }

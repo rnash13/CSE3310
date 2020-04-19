@@ -6,7 +6,7 @@
 
 #include "DECK.h"
 #include "HAND.h"
-#include "CARDSTRUCT.h"
+#include "CARD.h"
 #include "PLAY.h"
 
 class PLAYER {

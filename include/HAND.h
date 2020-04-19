@@ -2,7 +2,7 @@
 #define hand_inc
 
 #include "json.hpp"
-#include "CARDSTRUCT.h"
+#include "CARD.h"
 
 #include <map>
 

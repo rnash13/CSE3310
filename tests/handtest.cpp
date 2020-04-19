@@ -1,5 +1,5 @@
 #include "HAND.h"
-#include "CARDSTRUCT.h"
+#include "CARD.h"
 #include "asio.hpp"
 #include "json.hpp"
 

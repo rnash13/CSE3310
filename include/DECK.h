@@ -5,7 +5,7 @@
 #include<string>
 #include<vector>
 
-#include"CARDSTRUCT.h"
+#include"CARD.h"
 
 
 class DECK {

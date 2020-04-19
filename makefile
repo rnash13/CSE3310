@@ -6,6 +6,7 @@ OBJ_DIR=./obj
 CLIENT_DIR=./src/client
 SERVER_DIR=./src/server
 TEST_DIR=./tests
+TEST_OUT_DIR=./tests/bin
 BUILD_DIR=./build
 
 BRACKET_STYLE=java
@@ -20,7 +21,7 @@ TEST_FILES := $(wildcard $(TEST_DIR)/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 CLIENT_OBJ := $(patsubst $(CLIENT_DIR)/%.cpp,$(OBJ_DIR)/client/%.o,$(CLIENT_FILES))
 SERVER_OBJ := $(patsubst $(SERVER_DIR)/%.cpp,$(OBJ_DIR)/server/%.o,$(SERVER_FILES))
-TEST_FILES := $(patsubst $(TEST_DIR)/%.cpp,$(TEST_DIR)/%.test,$(TEST_FILES))
+TEST_OUT := $(patsubst $(TEST_DIR)/%.cpp,$(TEST_DIR)/bin/%.test,$(TEST_FILES))
 
 default: objprepender ${OBJ_FILES} clientprepender client serverprepender server
 	ln -srf Images ./build/Images
@@ -31,17 +32,17 @@ client: ${OBJ_FILES} ${CLIENT_OBJ}
 server: ${OBJ_FILES} ${SERVER_OBJ}
 	${CXX} ${CXXFLAGS} $^ -o ${BUILD_DIR}/${OUTPUT}_Server ${LDLIBS}
 
-test: clean ${OBJ_FILES} ${TEST_FILES}	
+test: ${TEST_OUT}	
 
 debug: CXXFLAGS+=-g 
 debug: clean default 
 
-${TEST_DIR}/%.test: ${TEST_DIR}/%.cpp
-	$(CXX) ${CXXFLAGS} -o $@ ${OBJ_FILES} $<  ${LDLIBS}
+${TEST_OUT_DIR}/%.test: ${OBJ_FILES} ${TEST_DIR}/%.cpp 
+	$(CXX) ${CXXFLAGS} $^ -o $@ ${LDLIBS}
 	$@
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp 
-	$(CXX) ${CXXFLAGS} -c -o $@ $<  ${LDLIBS}
+	$(CXX) ${CXXFLAGS} -c -o $@ $< ${LDLIBS}
 
 */%.o: ${SRC_DIR}/%.cpp 
 	$(CXX) ${CXXFLAGS} -c -o $@ $< ${LDLIBS}
