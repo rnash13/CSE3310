@@ -34,6 +34,9 @@ server: ${OBJ_FILES} ${SERVER_OBJ}
 
 test: ${TEST_OUT}	
 
+preprocess: CXXFLAGS+=-E
+preprocess: default
+
 debug: CXXFLAGS+=-g 
 debug: clean default 
 

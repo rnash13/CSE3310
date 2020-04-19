@@ -46,12 +46,6 @@ public:
 
     void deliver(const chat_message& msg);
 
-    void deliverTo(const chat_message& msg, chat_participant_ptr participant);
-
-    const std::set<chat_participant_ptr>& getChatParticipants();
-
-    std::size_t participantsSize();
-
 private:
     std::set<chat_participant_ptr> participants_;
     // CSE3310 (server) maximum number of messages are stored

@@ -1,4 +1,4 @@
-#include "GAME_SERVER.h"
+/*#include "GAME_SERVER.h"
 
 #include "asio.hpp"
 
@@ -11,4 +11,4 @@ void GAME_SERVER::loop() {
         sleep(1);
         std::cout << &room_ << " " << room_.participantsSize() << std::endl;
     }
-}
+}*/

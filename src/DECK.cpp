@@ -8,8 +8,8 @@ DECK::DECK() {
     std::srand(std::time(nullptr));
     for(int i = 0; i < 52; i++) {
         int suit = i%4;
-        int rank = (i/13)+1;
-        _cards[i] = Card{suit, rank};
+        int rank = (i/4)+1;
+        _cards.push_back(Card{suit, rank});
     }
 }
 

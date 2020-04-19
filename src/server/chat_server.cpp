@@ -31,7 +31,6 @@ typedef std::deque<chat_message> chat_message_queue;
 void chat_room::join(chat_participant_ptr participant) {
     participants_.insert(participant);
     // CSE3310 (server)  previous chat messages are sent to a client
-    std::cout << "User has joined, " << this << " is now at " << participants_.size() << std::endl;
     for (auto msg: recent_msgs_)
         participant->deliver(msg);
 }
@@ -47,24 +46,10 @@ void chat_room::deliver(const chat_message& msg) {
     while (recent_msgs_.size() > max_recent_msgs)
         recent_msgs_.pop_front();
 
+
     // CSE3310 (server)  messages are sent to all connected clients
     for (auto participant: participants_)
         participant->deliver(msg);
-}
-
-//Deliver a message to a specific user from the chatroom
-void chat_room::deliverTo(const chat_message& msg, chat_participant_ptr participant) {
-    participant->deliver(msg);
-}
-
-//Allegedly returns participants but can't confirm it works
-const std::set<chat_participant_ptr>& chat_room::getChatParticipants() {
-    return participants_;
-}
-
-//Get participants_size (can't confirm it works
-std::size_t chat_room::participantsSize() {
-    return participants_.size();
 }
 
 //----------------------------------------------------------------------
@@ -131,8 +116,8 @@ void chat_session::do_read_body() {
         //If there's no error then deliver the message and read the header
         //Otherwise leave the room
         if (!ec) {
-            //Don't want everyone to recieve the messages sent from the players
-            //room_.deliver(read_msg_);
+            //Don't want everyone to receive the messages sent from the players
+            room_.deliver(read_msg_);
             do_read_header();
         } else {
             room_.leave(shared_from_this());
@@ -175,11 +160,11 @@ chat_server::chat_server(asio::io_context& io_context,
 
 //Define the acceptor_ async_accept listener
 void chat_server::do_accept() {
-    //Define lambda function for async_accept, recieves an std::error_code and a tcp::socket
+    //Define lambda function for async_accept, receives an std::error_code and a tcp::socket
     acceptor_.async_accept(
     [this](std::error_code ec, tcp::socket socket) {
         if (!ec) {
-            //If there is no error then make a shared chat_session which moves this object's socket to itself and recieves a room_ object, then run start.
+            //If there is no error then make a shared chat_session which moves this object's socket to itself and receives a room_ object, then run start.
             std::make_shared<chat_session>(std::move(socket), room_)->start();
         }
         //Reassign this function as the listener for acceptor_
