@@ -26,10 +26,10 @@ default: objprepender ${OBJ_FILES} clientprepender client serverprepender server
 	ln -srf Images ./build/Images
 
 client: ${OBJ_FILES} ${CLIENT_OBJ}
-	${CXX} ${CXXFLAGS} ${LDLIBS} $^ -o ${BUILD_DIR}/${OUTPUT}_Client
+	${CXX} ${CXXFLAGS} $^ -o ${BUILD_DIR}/${OUTPUT}_Client ${LDLIBS} 
 
 server: ${OBJ_FILES} ${SERVER_OBJ}
-	${CXX} ${CXXFLAGS} ${LDLIBS} $^ -o ${BUILD_DIR}/${OUTPUT}_Server
+	${CXX} ${CXXFLAGS} $^ -o ${BUILD_DIR}/${OUTPUT}_Server ${LDLIBS}
 
 test: clean ${OBJ_FILES} ${TEST_FILES}	
 
@@ -37,14 +37,14 @@ debug: CXXFLAGS+=-g
 debug: clean default 
 
 ${TEST_DIR}/%.test: ${TEST_DIR}/%.cpp
-	$(CXX) ${CXXFLAGS} ${LDLIBS} -o $@ ${OBJ_FILES} $< 
+	$(CXX) ${CXXFLAGS} -o $@ ${OBJ_FILES} $<  ${LDLIBS}
 	$@
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp 
-	$(CXX) ${CXXFLAGS} ${LDLIBS} -c -o $@ $< 
+	$(CXX) ${CXXFLAGS} -c -o $@ $<  ${LDLIBS}
 
 */%.o: ${SRC_DIR}/%.cpp 
-	$(CXX) ${CXXFLAGS} ${LDLIBS} -c -o $@ $<
+	$(CXX) ${CXXFLAGS} -c -o $@ $< ${LDLIBS}
 
 objprepender:
 	@echo ==============================================
