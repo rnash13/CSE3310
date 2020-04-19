@@ -4,22 +4,24 @@
 #include "json.hpp"
 
 enum PLAYTYPE {
-    BET,
-    CHECK,
-    FOLD,
-    TRADE,
-    OUT
+    BET=0,
+    CHECK=1,
+    FOLD=2,
+    TRADE=3,
+    OUT=4
 };
 
+class PLAY{
+    public:
+        PLAY();
+        PLAY(PLAYTYPE type, int bet);
 
+        friend void to_json(nlohmann::json& j, const PLAY& play);
+        friend void from_json(const nlohmann::json& j, PLAY& play);
 
-typedef struct play {
-    PLAYTYPE type;
-    int bet;
-} PLAY;
-
-void to_json(nlohmann::json& j, const PLAY& play);
-void from_json(const nlohmann::json& j, PLAY& play);
+        PLAYTYPE type;
+        int bet;
+};
 
 #endif
 
