@@ -3,7 +3,7 @@
 #include <thread>
 
 #include "asio.hpp"
-#include "GAME_SERVER.h"
+#include "chat_server.h"
 
 int main(int argc, char* argv[]) {
     try {

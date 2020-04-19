@@ -18,40 +18,11 @@
 #include"chat_client.h"
 #include"asio.hpp"
 
-/*int main(int argc, char* argv[]) {
-    try {
-        asio::io_context io_context;
-
-        tcp::resolver resolver(io_context);
-        auto endpoints = resolver.resolve("localhost", "10000");
-        chat_client c(io_context, endpoints);
-
-        std::thread t([&io_context]() {
-            io_context.run();
-        });
-
-        Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "org.gtkmm.poker");
-        DISPLAY main_window(4);
-
-        app->run(main_window);
-
-        c.close();
-        t.join();
-    } catch (std::exception& e) {
-        std::cerr << "Exception " << e.what() << "\n";
-    }
-
-    return 0;
-}*/
 int main(int argc, char* argv[])
 {
     try
     {
-        Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "org.gtkmm.poker");
-        DISPLAY main_window(4);
-
-        app->run(main_window);
-
+        
 
         /*if (argc != 3)
         {
@@ -68,8 +39,9 @@ int main(int argc, char* argv[])
         std::thread t([&io_context]() {
             io_context.run();
         });
-
+        
         char line[chat_message::max_body_length + 1];
+        std::thread inp([&]() {
         while (std::cin.getline(line, chat_message::max_body_length + 1))
         {
             chat_message msg;
@@ -78,7 +50,14 @@ int main(int argc, char* argv[])
             msg.encode_header();
             c.write(msg);
         }
+        });
+        
+        Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "org.gtkmm.poker");
+        DISPLAY main_window(4);
 
+        app->run(main_window);
+
+        inp.join();
         c.close();
         t.join();
     }

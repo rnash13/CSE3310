@@ -20,6 +20,10 @@ void PLAYER::trade(std::vector<Card> cards, DECK deck) {
     _current_hand = HAND{newCards};
 }
 
+void PLAYER::setHand(std::vector<Card> cards) {
+    _current_hand = HAND{cards};
+}
+
 std::string PLAYER::name() {
     return _name;
 }

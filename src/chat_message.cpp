@@ -12,10 +12,22 @@
 #include <cstdlib>
 #include <cstring>
 
+#include <string>
+
 #include "chat_message.hpp"
 
 chat_message::chat_message()
     : body_length_(0) {
+}
+
+chat_message::chat_message(nlohmann::json msg) : body_length_(msg.dump().size()) {
+    const char* str = msg.dump().c_str();
+    std::memcpy(body(), str, body_length_);
+    encode_header();
+}
+
+nlohmann::json chat_message::getJson(){
+    return nlohmann::json{std::string{body()}};
 }
 
 const char* chat_message::data() const {

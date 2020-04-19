@@ -15,8 +15,9 @@ public:
 
     void play(PLAY current_play);
 
-
     void trade(std::vector<Card> cards, DECK deck);
+    void setHand(std::vector<Card> cards);
+
     std::string name();
     std::string id();
     int money();
