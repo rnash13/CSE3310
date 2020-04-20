@@ -16,13 +16,17 @@
 
 #include "chat_message.hpp"
 
+#include <iostream>
+
 chat_message::chat_message()
     : body_length_(0) {
 }
 
-chat_message::chat_message(nlohmann::json msg) : body_length_(msg.dump().size()) {
-    const char* str = msg.dump().c_str();
-    std::memcpy(body(), str, body_length_);
+chat_message::chat_message(nlohmann::json msg) {
+    std::string msgstr = msg.dump(); 
+    const char* str = msgstr.c_str();
+    body_length(std::strlen(str));
+    std::memcpy(body(), str, body_length());
     encode_header();
 }
 
