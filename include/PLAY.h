@@ -2,6 +2,8 @@
 #define PLAY_inc
 
 #include "json.hpp"
+#include "HAND.h"
+#include "CARD.h"
 
 enum PLAYTYPE {
     BET=0,
@@ -21,6 +23,8 @@ class PLAY{
 
         PLAYTYPE type;
         int bet;
+        std::vector<Card> tradedCards;
+        HAND currenthand;
 };
 
 #endif
