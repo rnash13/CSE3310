@@ -19,15 +19,12 @@ public:
     ~ROUND();
 
 private:
-    int _round_number;
     std::vector<PLAYER*>  _remaining_players;
     DECK _deck;
-    int  _current_pot;
-    int  _current_player;
-
-protected:
-
-
+    int _current_bet;
+    int _current_pot;
+    int _current_player;
+    int _round_number;
 };
 
 #endif

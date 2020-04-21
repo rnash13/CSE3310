@@ -1,5 +1,5 @@
-#ifndef chat_server_inc
-#define chat_server_inc
+#ifndef chat_participant_inc
+#define chat_participant_inc
 //
 // chat_server.cpp
 // ~~~~~~~~~~~~~~~
@@ -18,20 +18,22 @@
 #include <set>
 #include <utility>
 #include "asio.hpp"
-#include "chat_participant.h"
 #include "chat_message.hpp"
-#include "chat_room.h"
 
-class chat_server {
+using asio::ip::tcp;
+
+//----------------------------------------------------------------------
+
+typedef std::deque<chat_message> chat_message_queue;
+
+//----------------------------------------------------------------------
+
+class chat_participant {
 public:
-    chat_server(asio::io_context& io_context,
-                const tcp::endpoint& endpoint);
-
-protected:
-    void do_accept();
-
-    tcp::acceptor acceptor_;
-    chat_room room_;
+    virtual ~chat_participant() {}
+    virtual void deliver(const chat_message& msg) = 0;
 };
+
+typedef std::shared_ptr<chat_participant> chat_participant_ptr;
 
 #endif

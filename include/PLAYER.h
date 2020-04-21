@@ -6,7 +6,7 @@
 
 #include "DECK.h"
 #include "HAND.h"
-#include "CARDSTRUCT.h"
+#include "CARD.h"
 #include "PLAY.h"
 
 class PLAYER {
@@ -15,8 +15,9 @@ public:
 
     void play(PLAY current_play);
 
-
     void trade(std::vector<Card> cards, DECK deck);
+    void setHand(std::vector<Card> cards);
+
     std::string name();
     std::string id();
     int money();

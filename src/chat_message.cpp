@@ -12,10 +12,26 @@
 #include <cstdlib>
 #include <cstring>
 
+#include <string>
+
 #include "chat_message.hpp"
+
+#include <iostream>
 
 chat_message::chat_message()
     : body_length_(0) {
+}
+
+chat_message::chat_message(nlohmann::json msg) {
+    std::string msgstr = msg.dump(); 
+    const char* str = msgstr.c_str();
+    body_length(std::strlen(str));
+    std::memcpy(body(), str, body_length());
+    encode_header();
+}
+
+nlohmann::json chat_message::getJson(){
+    return nlohmann::json{std::string{body()}};
 }
 
 const char* chat_message::data() const {
@@ -51,7 +67,7 @@ void chat_message::body_length(std::size_t new_length) {
 bool chat_message::decode_header() {
     char header[header_length + 1] = "";
     std::strncat(header, data_, header_length);
-    body_length_ = std::atoi(header);
+    body_length_ = std::stoi(header, NULL, 16);
     if (body_length_ > max_body_length) {
         body_length_ = 0;
         return false;
@@ -61,6 +77,6 @@ bool chat_message::decode_header() {
 
 void chat_message::encode_header() {
     char header[header_length + 1] = "";
-    std::sprintf(header, "%4d", static_cast<int>(body_length_));
+    std::sprintf(header, "%3X", static_cast<int>(body_length_));
     std::memcpy(data_, header, header_length);
 }
