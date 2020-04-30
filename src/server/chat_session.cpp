@@ -91,7 +91,7 @@ void chat_session::do_read_body() {
 		if (!ec) {
 			//Don't want everyone to receive the messages sent from the players
 			//MPZinke: send communication to GAME_SERVER
-			room_.move_in_game(read_msg_);
+			room_.message_received(read_msg_);
 
 			// room_.deliver(read_msg_);
 			do_read_header();

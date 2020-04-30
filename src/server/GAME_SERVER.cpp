@@ -28,16 +28,28 @@ void GAME_SERVER::addPlayer(chat_participant_ptr player, chat_message msg) {
 	participants.push_back(player);
 	std::string name = "", id="";
 	players.push_back(new PLAYER{name, id});
-	if(players.size() == 4){
-		for(int i = 0; i < 4; i++){
-			// players[i]->setHand(deck.draw_card(5));
-			auto temp = nlohmann::json{players[i]->current_hand()};
-			participants[i]->deliver(chat_message{temp});
-			std::cout << chat_message{temp}.body() << std::endl; 
-		}
-		currentRound = new ROUND(0, players);
+	if(players.size() == 4) start_game();
+}
+
+
+void GAME_SERVER::start_game()
+{
+	game_started = true;
+	currentRound = new ROUND(0, players);
+
+	for(int i = 0; i < players.size(); i++){
+		auto temp = nlohmann::json{players[i]->current_hand()};
+		participants[i]->deliver(chat_message{temp});
+		std::cout << chat_message{temp}.body() << std::endl; 
 	}
 }
+
+
+bool GAME_SERVER::has_started()
+{
+	return game_started;
+}
+
 
 void GAME_SERVER::processRound() {
 	

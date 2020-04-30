@@ -32,7 +32,7 @@ public:
     void leave(chat_participant_ptr participant);
 
     void deliver(const chat_message& msg);
-    void move_in_game(const chat_message& msg);
+    void message_received(const chat_message& msg);
 
 private:
     GAME_SERVER game;

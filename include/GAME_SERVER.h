@@ -19,6 +19,8 @@ class GAME_SERVER {
 		GAME_SERVER();
 		
 		void addPlayer(chat_participant_ptr player, chat_message msg); 
+		void start_game();
+
 		std::string processPacket(const chat_message& message);
 		void processRound();
 		void updatePlayers();
@@ -26,6 +28,7 @@ class GAME_SERVER {
 		bool updateRound();
 
 	private:
+		bool game_started = false;
 		ROUND* currentRound;
 		std::vector<PLAYER*> players;
 		std::vector<chat_participant_ptr> participants;

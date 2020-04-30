@@ -7,7 +7,8 @@
 ROUND::ROUND(int round_number, std::vector<PLAYER*> remaining_players): _round_number{round_number}, _remaining_players{remaining_players} {
 	_deck = DECK();
 	_deck.shuffle();
-	for(int x = 0; x < _remaining_players.size(); x++) _remaining_players[x]->setHand(_deck.draw_card(5));
+	for(int x = 0; x < _remaining_players.size(); x++) 
+		_remaining_players[x]->setHand(_deck.draw_card(5));
 }
 
 void ROUND::deal(){
