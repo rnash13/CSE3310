@@ -17,6 +17,7 @@
 #include "chat_message.hpp"
 
 #include <iostream>
+#include <sstream>
 
 chat_message::chat_message()
     : body_length_(0) {
@@ -80,3 +81,17 @@ void chat_message::encode_header() {
     std::sprintf(header, "%3X", static_cast<int>(body_length_));
     std::memcpy(data_, header, header_length);
 }
+
+/*void to_json(nlohmann::json& j,const chat_message& msg) {
+    std::stringstream str{};
+    if(msg.decode_header()) {
+        str.write(msg.body(), msg.body_length());
+    }
+    j << str;
+}*/
+
+void from_json(const nlohmann::json& j, chat_message& msg) {
+    chat_message temp{j};
+    msg = temp;
+}
+

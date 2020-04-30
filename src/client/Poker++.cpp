@@ -24,16 +24,16 @@ int main(int argc, char* argv[])
     {
         
 
-        /*if (argc != 3)
+        if (argc != 3)
         {
-            std::cerr << "Usage: chat_client <host> <port>\n";
+            std::cerr << "Usage: " << argv[0] << " <host> <port>\n";
             return 1;
-        }*/
+        }
 
         asio::io_context io_context;
 
         tcp::resolver resolver(io_context);
-        auto endpoints = resolver.resolve(/*argv[1]*/ "localhost" , /*argv[2]*/ "10000");
+        auto endpoints = resolver.resolve(argv[1], argv[2]);
         chat_client c(io_context, endpoints);
 
         std::thread t([&io_context]() {
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
         }
         });
         
-        Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "org.gtkmm.poker");
+        Glib::RefPtr<Gtk::Application> app = Gtk::Application::create("org.gtkmm.poker");
         DISPLAY main_window(4);
 
         app->run(main_window);

@@ -2,6 +2,7 @@
 #include "GAME_SERVER.h"
 #include "ROUND.h"
 #include "PLAYER.h"
+#include "PLAY.h"
 
 typedef std::shared_ptr<chat_participant> chat_participant_ptr;
 
@@ -22,7 +23,8 @@ void GAME_SERVER::addPlayer(chat_participant_ptr player, chat_message msg) {
     if(players.size() == 4){
         for(int i = 0; i < 4; i++){
             players[i]->setHand(deck.draw_card(5));
-            auto temp = nlohmann::json{players[i]->current_hand()};
+            PLAY play{MATCHSTART, players[i]->current_hand()};
+            auto temp = nlohmann::json{play};
             participants[i]->deliver(chat_message{temp});
             std::cout << chat_message{temp}.body() << std::endl; 
         }
