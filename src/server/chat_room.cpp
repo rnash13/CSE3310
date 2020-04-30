@@ -14,7 +14,9 @@
 #include <list>
 #include <memory>
 #include <set>
+#include<string>
 #include <utility>
+
 #include "asio.hpp"
 #include "chat_message.hpp"
 #include "chat_participant.h"
@@ -52,3 +54,9 @@ void chat_room::deliver(const chat_message& msg) {
         participant->deliver(msg);
 }
 
+
+// message received; validate message and send to game to process
+void chat_room::move_in_game(const chat_message& message)
+{
+    game.processPacket(message);
+}
