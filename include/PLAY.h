@@ -5,6 +5,8 @@
 #include "HAND.h"
 #include "CARD.h"
 
+#include <string>
+
 enum PLAYTYPE {
     BET=0,
     CHECK=1,
@@ -25,6 +27,7 @@ class PLAY{
 
         PLAYTYPE type;
         int bet;
+        int ID;
         std::vector<Card> tradedCards;
         HAND currenthand;
 };

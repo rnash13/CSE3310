@@ -25,7 +25,6 @@ public:
     HAND current_hand();
     PLAY current_play();
 
-
 private:
     std::string _name;
     std::string _id;
