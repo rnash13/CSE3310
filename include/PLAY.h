@@ -27,7 +27,7 @@ class PLAY{
 
         PLAYTYPE type;
         int bet;
-        int ID;
+        std::string ID;
         std::vector<Card> tradedCards;
         HAND currenthand;
 };
