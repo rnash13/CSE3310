@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include "chat_server.h"
 #include "GAME_SERVER.h"
 #include "ROUND.h"
@@ -28,6 +30,15 @@ void GAME_SERVER::addPlayer(chat_participant_ptr player, chat_message msg) {
             participants[i]->deliver(chat_message{temp});
             std::cout << chat_message{temp}.body() << std::endl; 
         }
+    }
+}
+
+void GAME_SERVER::processInput(chat_message msg) {
+    if(msg.decode_header()){
+        std::stringstream str;
+        str.write(msg.body(), msg.body_length());
+        nlohmann::json j{str.str()};
+        std::cout << j << std::endl;
     }
 }
 

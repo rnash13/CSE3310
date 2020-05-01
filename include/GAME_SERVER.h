@@ -15,6 +15,7 @@ class GAME_SERVER {
         
         void loop();
         void addPlayer(chat_participant_ptr player, chat_message msg); 
+        void processInput(chat_message);
         void processRound();
         void updatePlayers();
         
