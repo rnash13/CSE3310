@@ -1,6 +1,8 @@
 #include "PLAYER.h"
 
-PLAYER::PLAYER(std::string name, std::string id) : _name{name}, _id{id} {
+int PLAYER::id_count = 0;
+
+PLAYER::PLAYER(): _id{std::to_string(id_count++)} {
 
 }
 
@@ -22,10 +24,6 @@ void PLAYER::trade(std::vector<Card> cards, DECK deck) {
 
 void PLAYER::setHand(std::vector<Card> cards) {
     _current_hand = HAND{cards};
-}
-
-std::string PLAYER::name() {
-    return _name;
 }
 
 std::string PLAYER::id() {

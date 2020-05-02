@@ -11,14 +11,13 @@
 
 class PLAYER {
 public:
-    PLAYER(std::string name, std::string id);
+    PLAYER();
 
     void play(PLAY current_play);
 
     void trade(std::vector<Card> cards, DECK deck);
     void setHand(std::vector<Card> cards);
 
-    std::string name();
     std::string id();
     int money();
     int current_bet();
@@ -26,13 +25,13 @@ public:
     PLAY current_play();
 
 private:
-    std::string _name;
     std::string _id;
     int _money=200;
 
     HAND _current_hand;
     int _current_bet;
     PLAY _current_play;
+    static int id_count;
 };
 
 #endif

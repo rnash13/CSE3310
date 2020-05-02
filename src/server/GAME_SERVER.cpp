@@ -21,7 +21,7 @@ void GAME_SERVER::addPlayer(chat_participant_ptr player, chat_message msg) {
 
     participants.push_back(player);
     std::string name = "", id="";
-    players.push_back(new PLAYER{name, id});
+    players.push_back(new PLAYER{});
     if(players.size() == 4){
         for(int i = 0; i < 4; i++){
             players[i]->setHand(deck.draw_card(5));
