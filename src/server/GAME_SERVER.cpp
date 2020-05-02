@@ -8,7 +8,7 @@
 
 typedef std::shared_ptr<chat_participant> chat_participant_ptr;
 
-GAME_SERVER::GAME_SERVER(): currentRound{ROUND{}}, players{std::vector<PLAYER*>{}}, participants{std::vector<chat_participant_ptr>{}}, deck{DECK{}} {
+GAME_SERVER::GAME_SERVER(): currentRound{ROUND{}}, deck{DECK{}}, players{std::vector<PLAYER*>{}}, participants{std::vector<chat_participant_ptr>{}} {
     deck.shuffle();
 }
 

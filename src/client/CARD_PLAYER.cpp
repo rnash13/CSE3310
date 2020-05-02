@@ -37,7 +37,7 @@ void CARD_PLAYER::assign_cards(std::vector<std::string> card_names) {
         if(card_names.size() > 5) ;  // throw error
         int free_spots = 0;
         for(int x = 0; x < 5; x++) if(!_cards[x]) free_spots++;
-        if(free_spots != card_names.size()) ;  // throw error
+        if(free_spots != (int)  card_names.size()) ;  // throw error
     }
 
     for(int x = 5 - card_names.size(), y = 0; x < 5; x++, y++)

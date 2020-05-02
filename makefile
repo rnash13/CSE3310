@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-std=c++11 -I include/
+CXXFLAGS=-std=c++11 -Wall -I include/
 LDLIBS=`/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
 SRC_DIR=./src
 OBJ_DIR=./obj

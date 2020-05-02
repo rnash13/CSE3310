@@ -4,7 +4,7 @@
 #include "CARD.h"
 
 
-Card::Card(int suit, int rank) : rank{rank}, suit{suit} {
+Card::Card(int suit, int rank) : suit{suit}, rank{rank} {
 
 }
 
@@ -32,5 +32,5 @@ std::string Card::toEnglish(){
 }
 
 bool operator==(const Card& card1, const Card& card2) {
-    return (card1.rank == card2.rank) && (card2.suit == card2.suit);
+    return (card1.rank == card2.rank) && (card1.suit == card2.suit);
 }
