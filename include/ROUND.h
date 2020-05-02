@@ -12,6 +12,7 @@ public:
 
     void deal();
     void take_bets();
+    void process_play(std::string id);
     void finish_round();
 
     int round_number();

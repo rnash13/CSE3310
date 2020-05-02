@@ -30,7 +30,29 @@ int ROUND::round_number(){
     return _round_number;
 }
 
+void ROUND::process_play(nlohmann::json play){
+    if(_remaining_players(_current_player).id != play["id"]) return;
 
+    switch(play["type"]){
+        //BET
+        case 0:
+            break;
+        //CHECK
+        case 1:
+            break;
+        //FOLD
+        case 2:
+            break;
+        //TRADE
+        case 3:
+            break;
+        //OUT
+        case 4:
+            break;
+        default:
+            break;
+    }
+}
 
 ROUND::~ROUND(){
 

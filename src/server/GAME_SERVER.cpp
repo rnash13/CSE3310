@@ -38,7 +38,7 @@ void GAME_SERVER::processInput(chat_message msg) {
         std::stringstream str;
         str.write(msg.body(), msg.body_length());
         nlohmann::json j{str.str()};
-        std::cout << j << std::endl;
+        
     }
 }
 
