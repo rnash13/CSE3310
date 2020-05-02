@@ -42,8 +42,11 @@ void GAME_SERVER::start_game()
 	currentRound = new ROUND(0, players);
 
 	for(int i = 0; i < (int) players.size(); i++){
-		auto temp = nlohmann::json{players[i]->current_hand()};
-		participants[i]->deliver(chat_message{temp});
+        PLAY tempPlay{};
+        tempPlay.type = PLAYTYPE::MATCHSTART;
+        tempPlay.tradedCards = players[i]->current_hand().getCards();
+		auto temp = nlohmann::json{tempPlay};
+        participants[i]->deliver(chat_message{temp});
 		std::cout << chat_message{temp}.body() << std::endl; 
 	}
 }
