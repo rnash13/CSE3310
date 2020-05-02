@@ -20,6 +20,7 @@ public:
 
 	void move(const chat_message& message);
 	std::string return_message();
+    void process_play(nlohmann::json play);
 
 	int round_number();
 	bool round_is_finished();
@@ -27,12 +28,12 @@ public:
 	~ROUND();
 
 private:
+	int _round_number;
 	std::vector<PLAYER*>  _remaining_players;
 	DECK _deck;
 	int _current_bet;
 	int _current_pot;
 	int _current_player;
-	int _round_number;
 };
 
 #endif

@@ -44,7 +44,9 @@ void chat_room::leave(chat_participant_ptr participant) {
 
 //Deliver a message to everyone in the chatroom
 void chat_room::deliver(const chat_message& msg) {
-    recent_msgs_.push_back(msg);
+    game.processInput(msg);
+    
+    /*recent_msgs_.push_back(msg);
     while (recent_msgs_.size() > max_recent_msgs)
         recent_msgs_.pop_front();
 
@@ -52,6 +54,7 @@ void chat_room::deliver(const chat_message& msg) {
     // CSE3310 (server)  messages are sent to all connected clients
     for (auto participant: participants_)
         participant->deliver(msg);
+    */
 }
 
 

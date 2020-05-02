@@ -22,9 +22,11 @@ using asio::ip::tcp;
 typedef std::deque<chat_message> chat_message_queue;
 
 chat_client::chat_client(asio::io_context& io_context,
-                         const tcp::resolver::results_type& endpoints)
+                         const tcp::resolver::results_type& endpoints,
+                         std::iostream& iobuffer)
     : io_context_(io_context),
-      socket_(io_context) {
+      socket_(io_context),
+      iobuffer{iobuffer} {
     do_connect(endpoints);
 }
 
@@ -74,8 +76,8 @@ void chat_client::do_read_body() {
                      asio::buffer(read_msg_.body(), read_msg_.body_length()),
     [this](std::error_code ec, std::size_t /*length*/) {
         if (!ec) {
-            std::cout.write(read_msg_.body(), read_msg_.body_length());
-            std::cout << "\n";
+            iobuffer.write(read_msg_.body(), read_msg_.body_length());
+            iobuffer << "\n";
             do_read_header();
         } else {
             socket_.close();

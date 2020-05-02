@@ -26,7 +26,8 @@ typedef std::deque<chat_message> chat_message_queue;
 class chat_client {
 public:
     chat_client(asio::io_context& io_context,
-                const tcp::resolver::results_type& endpoints);
+                const tcp::resolver::results_type& endpoints,
+                std::iostream& iobuffer);
 
     // CSE3310 (client) message is sent to the chat server.
     void write(const chat_message& msg);
@@ -45,6 +46,7 @@ private:
     tcp::socket socket_;
     chat_message read_msg_;
     chat_message_queue write_msgs_;
+    std::iostream& iobuffer;
 };
 
 #endif

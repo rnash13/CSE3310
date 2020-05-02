@@ -51,7 +51,7 @@ USER::~USER() {
 
 void USER::remove_cards(std::vector<std::string> cards_to_remove) {
     // delete card object
-    for(int x = 0; x < cards_to_remove.size(); x++) {
+    for(int x = 0; x < (int) cards_to_remove.size(); x++) {
         for(int y = 0; y < 5; y++) {
             if(_cards[x] && _cards[x]->name() == cards_to_remove[x]) {
                 delete _cards[x];

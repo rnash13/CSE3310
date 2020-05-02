@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-std=c++11 -I include/
+CXXFLAGS=-std=c++11 -Wall -I include/
 LDLIBS=`/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
 SRC_DIR=./src
 OBJ_DIR=./obj
@@ -51,20 +51,13 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp
 	$(CXX) ${CXXFLAGS} -c -o $@ $< ${LDLIBS}
 
 objprepender:
-	@echo ==============================================
-	@echo ==============MAKING=OBJ_FILES================
-	@echo ==============================================
+	@echo -e  "==============================================\n==============MAKING=OBJ_FILES================\n=============================================="
 
-
-clientprepender: 
-	@echo ==============================================
-	@echo ==============MAKING=CLIENT===================
-	@echo ==============================================
+clientprepender:
+	@echo -e "==============================================\n==============MAKING=CLIENT===================\n=============================================="
 
 serverprepender:
-	@echo ==============================================
-	@echo ==============MAKING=SERVER===================
-	@echo ==============================================
+	@echo -e "==============================================\n==============MAKING=SERVER===================\n=============================================="
 
 prettify:
 	find -type f \( -iname \*.h -o -iname \*.hpp -o -iname \*.cpp \) -exec astyle -n --style=${BRACKET_STYLE} {} \; | grep ^Formatted*

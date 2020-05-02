@@ -1,11 +1,15 @@
+#include <sstream>
+
 #include "chat_server.h"
 #include "GAME_SERVER.h"
 #include "ROUND.h"
 #include "PLAYER.h"
+#include "PLAY.h"
 
 
 GAME_SERVER::GAME_SERVER()
 : players{std::vector<PLAYER*>{}}, participants{std::vector<chat_participant_ptr>{}} {
+
 }
 
 std::string GAME_SERVER::processPacket(const chat_message& message) {
@@ -27,7 +31,7 @@ void GAME_SERVER::addPlayer(chat_participant_ptr player, chat_message msg) {
 
 	participants.push_back(player);
 	std::string name = "", id="";
-	players.push_back(new PLAYER{name, id});
+	players.push_back(new PLAYER{});
 	if(players.size() == 4) start_game();
 }
 
@@ -37,7 +41,7 @@ void GAME_SERVER::start_game()
 	game_started = true;
 	currentRound = new ROUND(0, players);
 
-	for(int i = 0; i < players.size(); i++){
+	for(int i = 0; i < (int) players.size(); i++){
 		auto temp = nlohmann::json{players[i]->current_hand()};
 		participants[i]->deliver(chat_message{temp});
 		std::cout << chat_message{temp}.body() << std::endl; 
@@ -50,6 +54,14 @@ bool GAME_SERVER::has_started()
 	return game_started;
 }
 
+void GAME_SERVER::processInput(chat_message msg) {
+    if(msg.decode_header()){
+        std::stringstream str;
+        str.write(msg.body(), msg.body_length());
+        nlohmann::json j{str.str()};
+        
+    }
+}
 
 void GAME_SERVER::processRound() {
 	

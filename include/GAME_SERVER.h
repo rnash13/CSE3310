@@ -23,9 +23,11 @@ class GAME_SERVER {
 
 		std::string processPacket(const chat_message& message);
 		void processRound();
+        void processInput(chat_message msg);
 		void updatePlayers();
 
 		bool updateRound();
+        bool has_started();
 
 	private:
 		bool game_started = false;

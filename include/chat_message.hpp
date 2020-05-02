@@ -42,6 +42,9 @@ public:
     bool decode_header();
     void encode_header();
 
+    friend void to_json(nlohmann::json& j, const chat_message& msg);
+    friend void from_json(const nlohmann::json& j, chat_message& msg);
+
 private:
     char data_[header_length + max_body_length];
     std::size_t body_length_;
