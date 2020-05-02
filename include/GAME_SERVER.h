@@ -25,6 +25,7 @@ class GAME_SERVER {
 		void processRound();
         void processInput(chat_message msg);
 		void updatePlayers();
+        void leave(chat_participant_ptr participant);
 
 		bool updateRound();
         bool has_started();

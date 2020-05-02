@@ -39,6 +39,7 @@ void chat_room::join(chat_participant_ptr participant) {
 
 //Remove participant form the chatroom
 void chat_room::leave(chat_participant_ptr participant) {
+    game.leave(participant);
     participants_.erase(participant);
 }
 
@@ -46,7 +47,7 @@ void chat_room::leave(chat_participant_ptr participant) {
 void chat_room::deliver(const chat_message& msg) {
     game.processInput(msg);
     
-    /*recent_msgs_.push_back(msg);
+    recent_msgs_.push_back(msg);
     while (recent_msgs_.size() > max_recent_msgs)
         recent_msgs_.pop_front();
 
@@ -54,7 +55,7 @@ void chat_room::deliver(const chat_message& msg) {
     // CSE3310 (server)  messages are sent to all connected clients
     for (auto participant: participants_)
         participant->deliver(msg);
-    */
+    
 }
 
 

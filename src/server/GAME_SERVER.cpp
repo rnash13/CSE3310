@@ -45,6 +45,7 @@ void GAME_SERVER::start_game()
         PLAY tempPlay{};
         tempPlay.type = PLAYTYPE::MATCHSTART;
         tempPlay.tradedCards = players[i]->current_hand().getCards();
+        tempPlay.ID = players[i]->id();
 		auto temp = nlohmann::json{tempPlay};
         participants[i]->deliver(chat_message{temp});
 		std::cout << chat_message{temp}.body() << std::endl; 
@@ -78,4 +79,17 @@ void GAME_SERVER::updatePlayers() {
 bool GAME_SERVER::updateRound() {
 
 	return true;
+}
+
+void GAME_SERVER::leave(chat_participant_ptr participant){
+    int i;
+    bool flag = false;
+    for(i = 0; i < (int) participants.size(); i++){
+        if(flag |= participants[i] == participant)
+            break;
+    }
+    if(flag){
+        participants.erase(participants.begin()+i);
+        players.erase(players.begin()+i);
+    }
 }
