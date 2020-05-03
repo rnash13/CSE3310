@@ -47,6 +47,8 @@ private:
 	int _player_bets[5] = {0, 0, 0, 0, 0};
 	bool _player_folds[5] = {false, false, false, false, false};
 	int _bet_player;
+
+	bool bet_amount_exceeds_other_players_worth(int);
 };
 
 #endif

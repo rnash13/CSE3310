@@ -36,21 +36,10 @@ void GAME_SERVER::start_game()
 		participants[i]->deliver(chat_message{temp});
 		std::cout << chat_message{temp}.body() << std::endl; 
 	}
+	// send first person bet message
+	auto temp = nlohmann::json{PLAY{}};
+	participants[0]->deliver(chat_message{temp});
 }
-
-
-// std::string GAME_SERVER::processPacket(const chat_message& message) {
-// 	currentRound->move(message);
-
-// 	std::string return_message = currentRound->return_message();
-// 	if(currentRound->round_is_finished())
-// 	{
-// 		// create new round
-// 		ROUND* next_round = new ROUND(currentRound->round_number() + 1, &players, &message_queue);
-// 		delete currentRound;
-// 		currentRound = next_round;
-// 	}
-// }
 
 
 void GAME_SERVER::processInput(chat_message msg) {
@@ -60,13 +49,10 @@ void GAME_SERVER::processInput(chat_message msg) {
 		str.write(msg.body(), msg.body_length());
 		nlohmann::json j{str.str()};
 
-		PLAY last_move{j};
-
-		//TODO:
+		currentRound->process_play(PLAY{j});
+		send_queued_messages();
+		if(currentRound->is_finished()) start_new_round();
 	}
-
-	send_queued_messages();
-	if(currentRound->is_finished()) start_new_round();
 }
 
 

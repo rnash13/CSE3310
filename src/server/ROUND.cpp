@@ -25,6 +25,7 @@ void ROUND::process_play(nlohmann::json playJson){
 		if(currently_taking_bets()) return remove_current_player();  // CHEATER! (bad UI)
 
 		(*_remaining_players)[_current_player]->trade(play.tradedCards, _deck);
+		// send player all of their cards
 		PLAY new_hand_play{TRADE, current_player->current_hand()};
 		add_message_to_queue(new_hand_play);
 	}
@@ -81,6 +82,13 @@ void ROUND::remove_current_player()
 }
 
 
+void ROUND::finish_round()
+{
+	// determine winner & give them money
+	// eliminate anyone without money
+}
+
+
 // ———————————————— INDIVIDUAL PLAY —————————————————
 
 
@@ -97,14 +105,17 @@ bool ROUND::all_other_players_have_folded()
 }
 
 
+bool ROUND::bet_amount_exceeds_other_players_worth(int current_bet)
+{
+	for(unsigned int x = 0; x < _remaining_players->size(); x++)
+		if((*_remaining_players)[x]->money() + _player_bets[x] > current_bet) return true;
+	return false;
+}
+
+
 bool ROUND::currently_taking_bets()
 {
 	return _round_phase % 2 == 0;
-}
-
-void ROUND::finish_round()
-{
-
 }
 
 int ROUND::round_number(){
