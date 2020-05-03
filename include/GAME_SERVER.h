@@ -22,7 +22,7 @@ class GAME_SERVER {
 		void addPlayer(chat_participant_ptr player, chat_message msg); 
 		void start_game();
 
-		std::string processPacket(const chat_message& message);
+	private:
 		void processRound();
 		void processInput(chat_message msg);
 		void send_queued_messages();
@@ -30,8 +30,8 @@ class GAME_SERVER {
 
 		bool updateRound();
 		bool has_started();
+		void start_new_round();
 
-	private:
 		bool game_started = false;
 		ROUND* currentRound;
 		std::vector<PLAYER*> players;

@@ -18,19 +18,18 @@ public:
 
 	Card draw_card();
 	std::vector<Card> draw_card(int);
-	void take_bets();
 	void finish_round();
 
-	void move(const chat_message& message);
 	std::string return_message();
 	void process_play(nlohmann::json play);
 
 	int round_number();
-	bool round_is_finished();
+	bool is_finished();
 	bool all_other_players_have_folded();
 	int highest_bet();
-	bool is_taking_bets();
+	bool currently_taking_bets();
 	void remove_current_player();
+	void add_message_to_queue(PLAY);
 
 	~ROUND();
 
@@ -38,7 +37,9 @@ private:
 	int _round_number;
 	int _round_phase = 0;  // whether the round is betting or trading (even bet; odd trade) 5 = end
 	std::vector<PLAYER*>* _remaining_players;
+	MessageQueue* message_queue;
 	DECK _deck;
+
 	int _current_pot;
 	int _current_player;
 

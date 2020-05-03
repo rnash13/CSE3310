@@ -3,7 +3,7 @@
 
 
 ROUND::ROUND(int round_number, std::vector<PLAYER*>* remaining_players, MessageQueue* queue_ptr)
-: _round_number{round_number}, _remaining_players{remaining_players}
+: _round_number{round_number}, _remaining_players{remaining_players}, message_queue{queue_ptr}
 {
 	_deck = DECK();
 	_deck.shuffle();
@@ -13,42 +13,54 @@ ROUND::ROUND(int round_number, std::vector<PLAYER*>* remaining_players, MessageQ
 
 // ——————————————— GAME COMMUNICATION ———————————————
 
-void ROUND::move(const chat_message& message)
-{
-	if(all_other_players_have_folded());  // in case I decide I need to do something with this
-	else
+void ROUND::process_play(nlohmann::json playJson){
+	PLAY play = playJson.get<PLAY>();
+	PLAYER* current_player = (*_remaining_players)[_current_player];
+	if(current_player->id() != play.ID) return;
+
+	if(play.type == OUT) remove_current_player();
+	else if(play.type == FOLD) _player_folds[_current_player] = true;
+	else if(play.type == TRADE)
 	{
-		// trading phase
-		if(_round_phase % 2)
-		{
+		if(currently_taking_bets()) return remove_current_player();  // CHEATER! (bad UI)
 
-		}
-		// betting phase
-		else
-		{
-			int needed_bet = highest_bet() - _player_bets[_current_player];
-		}
+		(*_remaining_players)[_current_player]->trade(play.tradedCards, _deck);
+		PLAY new_hand_play{TRADE, current_player->current_hand()};
+		add_message_to_queue(new_hand_play);
+	}
+	else if(play.type == BET)
+	{
+		if(!currently_taking_bets()) return remove_current_player();  // CHEATER! (bad UI)
 
-
-		if((unsigned int)_current_player >= _remaining_players->size())
+		current_player->money(current_player->money() - play.bet);  // decrement money
+		if(play.bet < highest_bet())
 		{
-			_current_player = 0;
-			_round_phase++;
+			play.bet = highest_bet() - play.bet;  // they still need to match the other player's bet
+			return add_message_to_queue(play);  // stay on current player and request more $$
 		}
 	}
 
-	// all betting and trading has occured
-	if(_round_phase == 5)
+	_current_player++;
+	if((unsigned int)_current_player == _remaining_players->size())
 	{
-		finish_round();
-		return;
+		_current_player = 0;
+		_round_phase++;
 	}
 }
 
 
-bool ROUND::is_taking_bets()
+void ROUND::add_message_to_queue(PLAY current_play)
 {
-	return _round_phase % 2 == 0;
+	auto message = nlohmann::json{current_play};
+	message_queue->push_back({{_current_player, chat_message{message}}});
+}
+
+
+// ——————————————————— UTILITY ———————————————————
+
+bool ROUND::is_finished()
+{
+	return _round_phase == 5;
 }
 
 
@@ -69,41 +81,7 @@ void ROUND::remove_current_player()
 }
 
 
-
 // ———————————————— INDIVIDUAL PLAY —————————————————
-
-void ROUND::process_play(nlohmann::json playJson){
-	PLAY play = playJson.get<PLAY>();
-	if((*_remaining_players)[_current_player]->id() != play.ID) return;
-
-	switch(play.type){
-		//BET
-		case 0:
-			// check if amount is enough (compare with highest bet)
-			// if less, send bet amount
-			// else send next player bet amount
-			break;
-		//CHECK
-		case 1:
-			_current_player++;
-			break;
-		//FOLD
-		case 2:
-			_player_folds[_current_player++] = true;
-			break;
-		//TRADE
-		case 3:
-			(*_remaining_players)[_current_player++]->trade(play.tradedCards, _deck);
-
-			break;
-		//OUT
-		case 4:
-			remove_current_player();
-			break;
-		default:
-			break;
-	}
-}
 
 
 // ——————————————————— UTILITY ———————————————————
@@ -119,22 +97,18 @@ bool ROUND::all_other_players_have_folded()
 }
 
 
-void ROUND::take_bets()
+bool ROUND::currently_taking_bets()
 {
-	
+	return _round_phase % 2 == 0;
 }
 
-void ROUND::finish_round(){
+void ROUND::finish_round()
+{
 
 }
 
 int ROUND::round_number(){
 	return _round_number;
-}
-
-bool ROUND::round_is_finished()
-{
-	return false;
 }
 
 

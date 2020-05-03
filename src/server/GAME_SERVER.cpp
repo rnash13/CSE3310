@@ -39,26 +39,18 @@ void GAME_SERVER::start_game()
 }
 
 
-std::string GAME_SERVER::processPacket(const chat_message& message) {
-	currentRound->move(message);
+// std::string GAME_SERVER::processPacket(const chat_message& message) {
+// 	currentRound->move(message);
 
-	std::string return_message = currentRound->return_message();
-	if(currentRound->round_is_finished())
-	{
-		// create new round
-		ROUND* next_round = new ROUND(currentRound->round_number() + 1, &players, &message_queue);
-		delete currentRound;
-		currentRound = next_round;
-	}
-}
-
-
-// ——————————————————— UTILITY ———————————————————
-
-bool GAME_SERVER::has_started()
-{
-	return game_started;
-}
+// 	std::string return_message = currentRound->return_message();
+// 	if(currentRound->round_is_finished())
+// 	{
+// 		// create new round
+// 		ROUND* next_round = new ROUND(currentRound->round_number() + 1, &players, &message_queue);
+// 		delete currentRound;
+// 		currentRound = next_round;
+// 	}
+// }
 
 
 void GAME_SERVER::processInput(chat_message msg) {
@@ -67,11 +59,31 @@ void GAME_SERVER::processInput(chat_message msg) {
 		std::stringstream str;
 		str.write(msg.body(), msg.body_length());
 		nlohmann::json j{str.str()};
-		
+
+		PLAY last_move{j};
+
 		//TODO:
 	}
 
 	send_queued_messages();
+	if(currentRound->is_finished()) start_new_round();
+}
+
+
+void GAME_SERVER::start_new_round()
+{
+	// check for game over...or don't
+	ROUND* next_round = new ROUND(currentRound->round_number() + 1, &players, &message_queue);
+	delete currentRound;
+	currentRound = next_round;
+}
+
+
+// ——————————————————— UTILITY ———————————————————
+
+bool GAME_SERVER::has_started()
+{
+	return game_started;
 }
 
 
