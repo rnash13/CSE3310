@@ -21,16 +21,16 @@ class GAME_SERVER {
 		
 		void addPlayer(chat_participant_ptr player, chat_message msg); 
 		void start_game();
+        void leave(chat_participant_ptr participant);
+		void processInput(chat_message msg);
+		bool has_started();
 
 	private:
 		void processRound();
-		void processInput(chat_message msg);
 		void send_queued_messages();
 		void updatePlayers();
-        void leave(chat_participant_ptr participant);
 
 		bool updateRound();
-		bool has_started();
 		void start_new_round();
 
 		bool game_started = false;
