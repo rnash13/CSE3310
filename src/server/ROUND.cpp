@@ -47,6 +47,7 @@ void ROUND::process_play(nlohmann::json playJson){
 		_current_player = 0;
 		_round_phase++;
 	}
+	if(is_finished()) finish_round();
 }
 
 
@@ -54,6 +55,13 @@ void ROUND::add_message_to_queue(PLAY current_play)
 {
 	auto message = nlohmann::json{current_play};
 	message_queue->push_back({{_current_player, chat_message{message}}});
+}
+
+
+void ROUND::add_message_to_queue(int player, PLAY play)
+{
+	auto message = nlohmann::json{play};
+	message_queue->push_back({{player, chat_message{message}}});
 }
 
 
@@ -78,14 +86,46 @@ void ROUND::remove_current_player()
 		_player_folds[x] = _player_folds[x+1];
 		_player_bets[x] = _player_bets[x+1];
 	}
+	delete (*_remaining_players)[_current_player];
 	_remaining_players->erase(_remaining_players->begin() + _current_player);
 }
 
 
 void ROUND::finish_round()
 {
-	// determine winner & give them money
+	int highest_hand_value = 0;
+	int pot_total = 0;
+	for(unsigned int x = 0; x < _remaining_players->size(); x++)  // highest hand and total pot
+	{
+		pot_total += _player_bets[x];
+		if((*_remaining_players)[x]->current_hand().value() > highest_hand_value)
+			highest_hand_value = (*_remaining_players)[x]->current_hand().value();
+	}	
+
+	std::vector<std::map<int, PLAYER*>> winners;
+	for(unsigned int x = 0; x < _remaining_players->size(); x++)
+		if((*_remaining_players)[x]->current_hand().value() == highest_hand_value)
+			winners.push_back({{x, (*_remaining_players)[x]}});
+
+	// split winnings and message client(s)
+	int pot_split = pot_total / winners.size();  // integer division to round down (tip the dealer)
+	for(unsigned int x = 0; x < winners.size(); x++)
+	{
+		auto iter = winners[x].begin();
+		iter->second->money(iter->second->money() + pot_split);
+		add_message_to_queue(iter->first, PLAY{BET, pot_split});
+	}
+
 	// eliminate anyone without money
+	for(unsigned int x = 0; x < _remaining_players->size();)  // while() with initialization (keep x hidden)
+	{
+		if((*_remaining_players)[x]->money()) x++;
+		else  // do not increment x because vector just shifted left
+		{
+			delete (*_remaining_players)[x];
+			_remaining_players->erase(_remaining_players->begin() + _current_player);
+		}
+	}
 }
 
 
