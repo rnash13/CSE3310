@@ -29,6 +29,7 @@ public:
 	bool currently_taking_bets();
 	void remove_current_player();
 	void add_message_to_queue(PLAY);
+	void add_message_to_queue(int, PLAY);
 
 	~ROUND();
 
