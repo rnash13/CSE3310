@@ -58,8 +58,6 @@ int main(int argc, char* argv[])
                 DISPLAY main_window(4, inbuffer);
                 app->run(main_window);
             });
-        //sigc::slot<bool> output = sigc::ptr_fun(bufferToOut);
-        //auto timeout = Glib::signal_timeout().connect(output, 1);
         send.join();
         client.join();
         guithread.join();
